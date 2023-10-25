@@ -1,0 +1,66 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Danh sách vé tuyến</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="#">
+                            <i class="flaticon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Quản lý vé tuyến</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Danh sách vé tuyến</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-responsive">
+                <table id="bus_list" class="display table table-striped table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Mã chuyến</th>
+                            <th>Họ và tên</th>
+                            <th>Ngày đi</th>
+                            <th>Tổng số tiền</th>
+                            <th>Trạng thái vé</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$('#bus_list').DataTable({
+    ajax: '/admin/driver_ticket_list_api',
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json'
+    },
+  columns: [
+        // columns according to JSON
+        { data: '0.MaVe' },
+        { data: '2.HoVaTenKhachHang' },
+        { data: '0.NgayDi' },
+        { data: '1.SoTien' },
+        { 'data' : null, wrap: true, "render": function(item) { return  item.TrangThai == 0 ? "Ngưng hoạt động" : "Đang hoạt động"     }  },
+        { 'data': null, wrap: true, "render": function (item) { return '<a href="view_bus_detail/' + item.MaXeBus +'"><div class="btn-group"> <button type="button" value="0" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Xem chi tiết</button></div></a>' } },
+      ],
+}
+);
+
+</script>
+{% endblock %}

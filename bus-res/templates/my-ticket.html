@@ -1,0 +1,82 @@
+{% extends "parent.html" %}
+{% block content %}
+   <body class="bg-light">
+      <!-- My Ticket -->
+      <div class="my-ticket padding-bt">
+         <div class="osahan-header-nav shadow-sm p-3 d-flex align-items-center bg-danger">
+            <h5 class="font-weight-normal mb-0 text-white">
+               <a class="text-danger mr-3" href="/home"><i class="icofont-rounded-left"></i></a>
+               Vé đã đặt
+            </h5>
+            <div class="ml-auto d-flex align-items-center">
+               <a class="toggle osahan-toggle h4 m-0 text-white ml-auto" href="#"><i class="icofont-navigation-menu"></i></a>
+            </div>
+         </div>
+         <!-- You Ticket -->
+         <div class="your-ticket border-top row m-0 p-3">
+            <!-- My Ticket Item -->
+            {% for tk in tickets %}
+            
+            <div class="bg-white rounded-1 shadow-sm p-3 mb-3 w-100">
+               <a href="your-ticket.html">
+                  <div class="d-flex align-items-center mb-2">
+                  
+                     <small class="text-success ml-auto f-10">{{"ĐẶT THÀNH CÔNG" if tk.TrangThai == 1 else "ĐÃ HỦY" }}</small>
+                  </div>
+                  <h6 class="mb-3 l-hght-18 font-weight-bold text-dark"></h6>
+               </a>
+               <div class="row mx-0 mb-3">
+                  <div class="col-6 p-0">
+                     <small class="text-muted mb-1 f-10 pr-1">Đi từ</small>
+                     {% for c in cx %}
+                        {% if tk.MaChuyen == c.MaChuyen%}
+                        <p class="small mb-0 l-hght-14"> {{c.DiemBatDau}}</p>
+                        {% endif %}
+                     {% endfor %}
+                  </div>
+                  <div class="col-6 p-0">
+                     <small class="text-muted mb-1 f-10 pr-1">Tới</small>
+                     {% for c in cx %}
+                        {% if tk.MaChuyen == c.MaChuyen%}
+                        <p class="small mb-0 l-hght-14"> {{c.DiemKetThuc}}</p>
+                        {% endif %}
+                     {% endfor %}
+                  </div>
+               </div>
+               <div class="row mx-0">
+                  <div class="col-6 p-0">
+                     <small class="text-muted mb-1 f-10 pr-1">Ngày đi</small>
+                     <p class="small mb-0 l-hght-14"> {{tk.NgayDi}}</p>
+                  </div>
+                  <div class="col-6 p-0">
+                     <small class="text-muted mb-1 f-10 pr-1">Ngày đặt</small>
+                     <p class="small mb-0 l-hght-14"> {{tk.NgayDat}}</p>
+                  </div>
+               </div>
+               <div style="margin-top: 10px" class="row mx-0">
+                  <div class="col-6 mb-1">
+                     <button class="form-control">Xem chi tiết</button>
+                  </div>
+                  <div class="col-6 mb-1">
+                     <button onclick="showQR('{{qrcode(tk.MaVe)}}')"  class="form-control">Mã QR</button>
+                  </div>
+               </div>
+            </div>
+            
+            {% endfor %}
+         </div>
+      </div>
+      <script>
+         function showQR(image) {
+           
+            Swal.fire({
+               title: 'Quét mã QR để xác nhận vé',
+               imageUrl: image,
+               imageHeight: 300,
+            
+               })
+         }
+         
+      </script>
+      {% endblock %}
+      

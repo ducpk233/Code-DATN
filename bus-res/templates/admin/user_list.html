@@ -1,0 +1,70 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Danh sách khách hàng</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="#">
+                            <i class="flaticon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Quản lý khách hàng</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Danh sách khách hàng</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-responsive">
+                <table id="bus_list" class="display table table-striped table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Mã khách hàng</th>
+                            <th>Họ và tên</th>
+                            <th>Số điện thoại</th>
+                            <th>Ngày tạo</th>
+                           
+                            <th>CMND</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$('#bus_list').DataTable({
+    ajax: '/admin/user_list_api',
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json'
+    },
+  columns: [
+        // columns according to JSON
+        { data: 'MaNguoiDung' },
+        { data: 'HoVaTenKhachHang' },
+        { data: 'SoDienThoai' },
+        { data: 'NgayTao' },
+        
+        { data: 'CMND' },
+        { 'data' : null, wrap: true, "render": function(item) { return  item.TrangThai == 0 ? "Ngưng hoạt động" : "Đang hoạt động"     }  },
+        { 'data': null, wrap: true, "render": function (item) { return '<a href="view_customer_detail/' + item.MaNguoiDung +'"><div class="btn-group"> <button type="button" value="0" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Xem chi tiết</button></div></a>' } },
+      ],
+}
+);
+
+</script>
+{% endblock %}

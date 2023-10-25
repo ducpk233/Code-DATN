@@ -1,0 +1,101 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Danh sách chuyến xe</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="#">
+                            <i class="flaticon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Quản lý chuyến xe</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Danh sách chuyến xe</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-responsive">
+                <table id="route_list" class="display table table-striped table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Mã số chuyến</th>
+                            
+                            <th>Tên chuyến</th>
+                            <th>Mã xe bus</th>
+                            <th>Mã tài xế</th>
+                            <th>Điểm bắt đầu</th>
+                            <th>Điểm kết thúc</th>
+                            <th>Tình trạng</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$table = $('#route_list').DataTable({
+    ajax: '/admin/route_list_api',
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json'
+    },
+  columns: [
+        // columns according to JSON
+        { data: 'MaChuyen' },
+        { data: 'TenChuyen' },
+        { data: 'MaXeBus' },
+        { data: 'MaTaiXe' },
+        { data: 'DiemBatDau' },
+        { data: 'DiemKetThuc' },
+        { 'data' : null, wrap: true, "render": function(item) { return  item.TrangThai == 0 ? "Ngưng hoạt động" : "Đang hoạt động"     }  },
+        { 'data': null, wrap: true, "render": function (item) { return '<div class="btn-group"> <button type="button" onclick="UpdateStatus(this.id)" id="' + item.MaChuyen +'" value="0" class="btn btn-warning">Cập nhật trạng thái</button></div>' } },
+    
+      ],
+}
+);
+function UpdateStatus(id) {
+    console.log(id);
+    Swal.fire({
+        title: 'Bạn muốn cập nhật trạng thái cho tuyến có mã tuyến là?',
+        text : id,
+        
+        showCancelButton: true,
+        confirmButtonText: 'Xác nhận',
+        
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "POST",
+                url: '/admin/update_route_status_api',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({'id' : id}),
+                dataType: "json",
+                success: function(data) {
+                   $table.ajax.reload();   
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+            Swal.fire('Thành công!', '', 'success')
+        } 
+        })
+    
+}
+</script>
+{% endblock %}

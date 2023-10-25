@@ -1,0 +1,153 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+<div class="main-panel">
+    <div class="content">
+        <div class="page-inner">
+            <div class="page-header">
+                <h4 class="page-title">Danh sách xe bus</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="#">
+                            <i class="flaticon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Quản lý xe bus</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">Danh sách xe bus</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="table-responsive">
+                <table id="bus_list" class="display table table-striped table-hover" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>Mã tài xế</th>
+                            
+                            <th>Số điện thoại</th>
+                            <th>Họ và tên</th>
+                            <th>Kinh nghiệm</th>
+                            <th>Tình trạng</th>
+                            <th>Chi tiết</th>
+                         
+                        </tr>
+                    </thead>
+                    
+                </table>
+            </div>
+            <button  data-toggle="modal" data-target="#myModal" class="btn btn-primary">Thêm tài xế</button>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          <h4 class="modal-title">Thêm tài xế</h4>
+        </div>
+        <div class="modal-body">
+            <div id="mess"></div>
+            <form role="form">
+                <div class="form-group">
+                  <label for="usrname"><span class="glyphicon glyphicon-user"></span> Họ và tên</label>
+                  <input type="text" class="form-control" id="fname" >
+                </div>
+                
+                <div class="form-group">
+                    <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Kinh nghiệm</label>
+                    <input type="text" class="form-control" id="exp" >
+                </div>
+                <div class="form-group">
+                    <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Số điện thoại</label>
+                    <input type="text" class="form-control" id="phone" >
+                  </div>
+                <div class="form-group">
+                    <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Mật khẩu</label>
+                    <input type="text" class="form-control" id="pw" >
+                </div>  
+            
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="addd" class="btn btn-success">Thêm tài xế</button>
+            <button type="button" id="del" class="btn btn-primary">Xóa trắng</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<script>
+var table = $('#bus_list').DataTable({
+    ajax: '/admin/driver_list_api',
+    language: {
+        url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json'
+    },
+  columns: [
+        // columns according to JSON
+        { data: 'MaTaiXe' },
+        { data: 'SoDienThoai' },
+        { data: 'HoVaTen' },
+        { data: 'KinhNghiem' },
+        { 'data' : null, wrap: true, "render": function(item) { return  item.TrangThai == 0 ? "Không hoạt động" : "Đang hoạt động"     }  },
+        { 'data': null, wrap: true, "render": function (item) { return '<a href="view_bus_detail/' + item.MaXeBus +'"><div class="btn-group"> <button type="button" value="0" class="btn btn-warning" data-toggle="modal" data-target="#myModal">Xem chi tiết</button></div></a>' } },
+      ],
+}
+);
+$(document).ready(function() {
+$('#del').click(function(){
+    $('#fname').val("") ;
+    $('#phone').val("") ;
+    $('#pw').val("") ;
+    $('#exp').val("") ;
+
+})
+
+$("#addd").click(function() {
+            $fname = $('#fname').val();
+            $phone = $('#phone').val();
+            $pw = $('#pw').val();
+            $exp = $('#exp').val();
+            if (!$fname || !$phone || !$pw || !$exp) {
+                swal("Lỗi!", "Vui lòng kiểm tra các thông tin tài xế còn thiếu và hoàn thành!", {
+                icon : "error",
+                buttons: {
+                    confirm: {
+                        className : 'btn btn-danger'
+                    }
+                },
+            });
+            }
+            else {
+                $.ajax({
+                method: "POST",
+                url: '/admin/add_driver_api',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({'phone': $phone, 'exp': $exp, 'pw': $pw, 'fname' : $fname}),
+                dataType: "json",
+                success: function(data) {
+                    table.ajax.reload();
+                    $('#mess').append('<div id="mss" style="color: red">'+ data['message'] + '</div>');
+                    $("#mss").delay(2000).fadeOut(300)
+                     
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+            }
+        });
+});
+</script>
+{% endblock %}

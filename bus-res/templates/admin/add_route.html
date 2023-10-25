@@ -1,0 +1,241 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+
+<style >
+.events li { 
+  display: flex; 
+  color: #999;
+}
+
+.events time { 
+  position: relative;
+  padding: 0 3em;  }
+
+.events time::after { 
+   content: "";
+   position: absolute;
+   z-index: 2;
+   right: 0;
+   top: 0;
+   transform: translateX(50%);
+   border-radius: 50%;
+   background: #fff;
+   border: 1px #ccc solid;
+   width: 1em;
+   height: 1em;
+}
+
+
+.events span {
+  padding: 0 3em 3em 2em;
+  position: relative;
+}
+
+.events span::before {
+   content: "";
+   position: absolute;
+   z-index: 1;
+   left: 0;
+   height: 100%;
+   border-left: 1px #ccc solid;
+}
+
+.events strong {
+   display: block;
+   font-weight: bolder;
+}
+
+.events { margin: 1em; width: 50%; }
+.events, 
+.events *::before, 
+.events *::after { box-sizing: border-box; font-family: arial; }
+
+</style>
+
+    
+</script>
+		<div class="main-panel">
+			<div class="content">
+				<div class="page-inner">
+					<div class="page-header">
+						<h4 class="page-title">Thêm xe bus mới</h4>
+						<ul class="breadcrumbs">
+							<li class="nav-home">
+								<a href="#">
+									<i class="flaticon-home"></i>
+								</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Quản lý lộ trình</a>
+							</li>
+							<li class="separator">
+								<i class="flaticon-right-arrow"></i>
+							</li>
+							<li class="nav-item">
+								<a href="#">Thêm lộ trình mới</a>
+							</li>
+						</ul>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header">
+									<div class="card-title">Thông tin tuyến đường</div>
+								</div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6 col-lg-6">
+											<div class="form-group">
+												<label for="email2">Tên tuyến</label>
+												<input type="text" class="form-control" id="name" placeholder="Nhập tên tuyến">
+										
+											</div>
+											<div class="form-group">
+												<label for="password">Chọn xe bus</label>
+												<select class="form-control" name="bus" id="bus">
+													{% for bus in buses %}
+													<option value="{{bus['MaXeBus']}}">{{bus['BienSoXe']}}</option>
+													{% endfor %}
+													
+												</select>
+                                                
+											</div>
+
+										</div>
+										<div class="col-md-6 col-lg-6">				
+											<div class="form-group">
+												<label for="email2">Chọn tài xế</label>
+												<select class="form-control" name="driver" id="driver">
+													{% for drv in drivers %}
+													<option value="{{drv['MaTaiXe']}}">{{drv['HoVaTen']}}</option>
+													{% endfor %}
+													
+												</select>
+										
+											</div>
+											<div class="form-group">
+												<label for="password">Giờ khởi hành</label>
+												<input type="time" class="form-control" id="begin_time" placeholder="Nhập số xe...">
+                                                
+											</div>
+										</div>
+                                        <div class="col-md-6 col-lg-6">				
+											<div class="form-group">
+												<label for="email2">Ước tính thời gian</label>
+												<input type="text" class="form-control"  id="est" >
+										
+											</div>
+											<div class="form-group">
+												<label for="password">Giá vé người lớn</label>
+												<input type="number" class="form-control" id="tkadlt">
+                                                
+											</div>
+										</div>
+                                        <div class="col-md-6 col-lg-6">				
+											<div class="form-group">
+												<label for="email2">Lưu ý</label>
+												<input type="text" class="form-control"  id="note">
+										
+											</div>
+											<div class="form-group">
+												<label for="password">Giá vé trẻ em</label>
+												<input type="number" class="form-control" id="tkchild">
+                                                
+											</div>
+										</div>
+										<div class="col-md-12 col-lg-12">				
+											<div class="card-header">
+                                                <div class="card-title">Thông tin lộ trình</div>
+                                            </div>
+										</div>
+                                        
+                                        <div class="col-md-12 col-lg-12">	
+                                            <p class="card-body">Nhập thời gian ước tính ở bên trái thanh lộ trình. Nhập điểm bắt đầu, điểm kết thúc và các điểm đón ở giữa.
+                                                Bạn có thể dùng nút thêm điểm đón ở bên dưới để thêm các điểm đón ở giữa lộ trình.
+                                            </p>			
+                                            <button class="btn btn-primary" id="add_point">Thêm điểm đón</button>
+											<ul class="card-body events">
+                                                <li  >
+                                                  <time><input class="mid_point_time form-control" type="time" value="00:00"></time> 
+                                                  <span><h5>Điểm bắt đầu</h5><input class="mid_point_name form-control" type="text" id="begin_point"></span></li>
+                                                <li id ="end_point">
+                                                    <time><input class="mid_point_time form-control" type="time" value="00:00"></time>  
+                                                <span><h5>Điểm kết thúc</h5><input class="mid_point_name form-control" type="text" id="end_pointt"></span>
+                                                </li>                          
+                                            </ul>
+										
+										</div>
+
+							</div>
+						</div>
+					</div>
+                    <div id="ctn" class="card-action">
+                        <button id="add" class="btn btn-success">Thêm tuyến mới</button>
+                    </div>
+				</div>
+			</div>
+<script>
+
+$('#add_point').click(function() {
+    $("#end_point").before('<li><time><input type="time" class="mid_point_time form-control" ></time><span><input class="mid_point_name form-control" type="text"></span></li>')
+})
+$(document).ready(function() {
+
+
+    $("#add").click(function() {
+                $name = $('#name').val();
+                $est = $('#est').val();
+                $tkadlt = $('#tkadlt').val();
+                $tkchild = $('#tkchild').val();
+                $begin_time = $('#begin_time').val();
+                $begin_point = $('#begin_point').val();
+                $end_point = $('#end_pointt').val();
+                $note = $('#note').val();
+                $driver = $('#driver').val();
+				$bus = $('#bus').val();
+				$mid_point_time = $.map($('.mid_point_time'), function (el) { return el.value; });
+				$mid_point_name = $.map($('.mid_point_name'), function (el) { return el.value; });
+				console.log($mid_point_name);
+                    $.ajax({
+					method: "POST",
+					url: '/admin/add_route_api',
+					contentType: 'application/json;charset=UTF-8',
+					data: JSON.stringify({'name' : $name, 'est' : $est, 'tkadlt' : $tkadlt, 'tkchild' :$tkchild, 'begin_time' : $begin_time,
+											'begin_point' : $begin_point, 'end_point': $end_point, 'note' : $note, 'driver' : $driver, 'bus' : $bus,
+											'mid_point_name' : $mid_point_name, 'mid_point_time' : $mid_point_time
+				}),
+					dataType: "json",
+					success: function(data) {
+						if (data['error'] == false) {
+                            $('#add').prop("disabled", true);
+                            $('#ctn').append('<a href ="/admin/route_list"><button id="back" class="btn btn-success">Xem danh sách tuyến</button></a>')
+                            swal({
+                                title: "Thành công!",
+                                text: "Thêm tuyến mới thành công!",
+                                icon: "success",
+                                buttons: {
+                                    confirm: {
+                                        text: "Xác nhận",
+                                        value: true,
+                                        visible: true,
+                                        className: "btn btn-success",
+                                        closeModal: true
+                                    }
+                                }
+                        });
+                        }	
+					},
+					error: function(err) {
+						console.log(err);
+					}
+				});
+                }
+            );
+
+});
+
+</script>
+{% endblock %}

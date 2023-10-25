@@ -1,0 +1,66 @@
+{% extends "parent.html" %}
+{% block content %}
+   <body class="bg-light">
+      <!-- Profile -->
+      <div class="osahan-profile">
+         <div class="osahan-header-nav shadow-sm bg-danger p-3 d-flex align-items-center">
+            <h5 class="font-weight-normal mb-0 text-white">
+               <a class="text-danger mr-3" href="home"><i class="icofont-rounded-left"></i></a>
+               Thông tin cá nhân
+            </h5>
+            <div class="ml-auto d-flex align-items-center">
+               <a class="toggle osahan-toggle h4 m-0 text-white ml-auto" href="#"><i class="icofont-navigation-menu"></i></a>
+            </div>
+         </div>
+         <!-- Profile -->
+         <div class="px-3 pt-3 pb-5">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            
+               {% for message in messages %}
+                  <h4 style="color: red;">- {{ message }}</li>
+               {% endfor %}
+            
+            {% endif %}
+            {% endwith %}
+            {% block body %}{% endblock %}
+            <form action="account" method="POST">
+               <div class="d-flex justify-content-center rounded-2 mb-4">
+                  <div class="form-profile w-100">
+                     <div class="text-center mb-3 position-relative">
+                        <div class="position-absolute edit-bt">
+                           <label for="upload-photo" class="mb-0"><span class="icofont-pencil-alt-5 text-white"></span></label>
+                           <input type="file" name="photo" id="upload-photo" />
+                        </div>
+                        <img src="img/profile.jpg" class="rounded-pill">
+                     </div>
+                     <div class="form-group">
+                        <label class="text-muted f-10 mb-1">Họ và tên</label>
+                        <input name="fullname" class="form-control" value="{{user_info.HoVaTenKhachHang}}">
+                     </div>
+                     <div class="form-group">
+                        <label class="text-muted f-10 mb-1">Số điện thoại</label>
+                        <input disabled type="text"  class="form-control" value="{{user.SoDienThoai}}">
+                     </div>
+                     <div class="form-group">
+                        <label class="text-muted f-10 mb-1">Địa chỉ</label>
+                        <input name="add" type="text" class="form-control"  value="{{user_info.DiaChi}}">
+                     </div>
+                     <div class="form-group">
+                        <label class="text-muted f-10 mb-1">CMND</label>
+                        <input name="natid" type="number" class="form-control" value="{{user_info.CMND}}">
+                     </div>
+                     <div class="form-group">
+                        <label class="text-muted f-10 mb-1">Ngày tạo</label>
+                        <input disabled type="text" class="form-control"  value="{{user.NgayTao}}">
+                     </div>
+                     
+                     <div class="mb-5">
+                        <input type="submit" class="btn btn-danger btn-block osahanbus-btn rounded-1" value="CẬP NHẬT THÔNG TIN"/>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+      </div>
+   {% endblock %}
