@@ -1,0 +1,313 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+
+<style >
+  *, *:before, *:after {
+    box-sizing: border-box !important;
+    }
+
+    .plane {
+    margin: 40px auto !important;
+    max-width: 400px !important;
+    }
+
+
+    ol {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    }
+
+    .seats {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    }
+
+    .seat {
+      width: 70px;
+      height: 70px;
+    display: flex !important;
+    flex: 0 0 14.28571428571429% !important;
+    padding: 5px !important;
+    position: relative !important;
+    }
+    .seat:nth-child(3) {
+    margin-right: 14.28571428571429% !important;
+    }
+    .seat input[type=checkbox] {
+    
+    position: absolute !important;
+    opacity: 0 !important;
+    }
+    .seat input[type=checkbox]:checked + label {
+    background: black !important;
+    -webkit-animation-name: rubberBand !important;
+    animation-name: rubberBand !important;
+    animation-duration: 300ms !important;
+    animation-fill-mode: both !important;
+    }
+    .seat input[type=checkbox]:disabled + label {
+    background: #dddddd !important;
+    text-indent: -9999px !important;
+    overflow: hidden !important;
+    }
+    .seat input[type=checkbox]:disabled + label:after {
+    content: "X" !important;
+    text-indent: 0 !important;
+    position: absolute !important;
+    top: 4px !important;
+    left: 50% !important;
+    transform: translate(-50%, 0%) !important;
+    }
+    .seat input[type=checkbox]:disabled + label:hover {
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    }
+    .seat label {
+    display: block !important;
+    position: relative !important;
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 14px !important;
+    font-weight: bold !important;
+    line-height: 1.5rem !important;
+    padding: 4px 0 !important;
+    background: lightseagreen !important;
+    border-radius: 5px !important;
+    animation-duration: 300ms !important;
+    animation-fill-mode: both !important;
+    }
+    .seat label:before {
+    content: "" !important;
+    position: absolute !important;
+    width: 75% !important;
+    height: 75% !important;
+    top: 1px !important;
+    left: 50% !important;
+    transform: translate(-50%, 0%) !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    border-radius: 3px !important;
+    }
+    .seat label:hover {
+    cursor: pointer !important;
+    box-shadow: 0 0 0px 2px black !important;
+  }
+
+
+</style>
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="py-3 mb-4"><span class="text-muted fw-light">Thông tin xe bus /</span> Quản lý xe bus > Thông tin xe bus</h4>
+	
+	<div class="row">
+	  <!-- FormValidation -->
+	  <div class="col-12">
+		<div class="card">
+		  <h5 class="card-header">Thông tin xe bus</h5>
+		  <div class="card-body">
+			<form id="add_route_form" class="needs-validation row g-3" novalidate >
+			  <!-- Account Details -->
+			  <div class="col-12">
+				<h6>1. Thông tin xe bus</h6>
+				<hr class="mt-0" />
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+                    <input hidden id="bus_id" value="{{bus.MaXeBus}}" />
+					<input
+					type="text"
+					class="form-control"
+					id="bs"
+					name="bs"
+				    value="{{bus.BienSoXe}}"
+					required />
+				  <label for="bs">Biển số xe</label>
+				  <div class="invalid-feedback">Biển số xe không được để trống!</div>
+				</div>
+			  </div>  
+			
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+					<input value="60" readonly  type="text" class="form-control"  id="sg" name="sg" />
+					<label for="sg">Số ghế</label>
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+					<input value="{{bus.LoaiXe}}" required type="text" class="form-control" id="lx" name="lx" />
+					<label for="lx">Loại xe</label>
+					<div class="invalid-feedback">Loại xe không được để trống!</div>
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+					<input value="{{bus.SoXe}}" required type="text" class="form-control" id="sx" name="sx" />
+					<label for="sx">Số xe</label>
+					<div class="invalid-feedback">Số xe không được để trống!</div>
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+				  <select
+					id="status"
+					name="status"
+					class="form-select select2"
+					data-allow-clear="true"
+					required
+					>
+						<option {{ 'selected' if bus.TinhTrang == 0 else '' }} value="0">Không hoạt động</option>
+            <option {{ 'selected' if bus.TinhTrang == 1 else '' }} value="1">Đang rảnh</option>
+            <option {{ 'selected' if bus.TinhTrang == 2 else '' }} value="2">Đang sử dụng</option>
+						<option {{ 'selected' if bus.TinhTrang == 3 else '' }} value="3">Đang sửa chữa/ bảo trì</option>
+				  </select>
+				  <label for="status">Trạng thái</label>
+				  
+				</div>
+			  </div>
+			  <!-- Ticket Info -->
+			  <div class="col-12">
+          <h6 class="mt-2">2. Thông tin ghế xe</h6>
+          <hr class="mt-0" />
+			  </div>
+			  <!-- ghế xe -->
+			  <div class="row">
+          
+
+          <div class="col-xl">
+            <div class="card ">
+              
+              <div class="card-body">
+                <ol class="cabin fuselage">
+                  {% for i in range(1, 11) %}
+                   
+                    <li class="row row--{{ i }}">
+                        <ol class="seats" type="A">
+                          
+                            {% for seat in seats %}
+                              {% set temp_i = i|string %}
+                              {%  if seat.TenGhe[0]|int == temp_i[0]|int and seat.TenGhe|length == i|string|length + 1  %}
+                                <li onclick="change_status(this, '{{seat.MaGheXe}}')" class="seat">
+                                    <input type="checkbox" value="{{seat.MaGheXe}}" id="{{ seat.TenGhe }}" /> 
+                                    <label for="{{ seat.TenGhe }}">{{ seat.TenGhe  }}</label>
+                                </li>
+                              {% endif %}
+                            {% endfor %}
+                        </ol>
+                    </li>
+                  {% endfor %}
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+			  <!-- /Timeline Basic -->
+			
+			  <div class="col-12">
+				  <button type="submit" name="submitButton" class="btn btn-primary">Cập nhật xe bus</button>
+			  </div>
+			</form>
+		  </div>
+		</div>
+	  </div>
+	  <!-- /FormValidation -->
+	</div>
+  </div>
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		
+		$('#bus').select2();
+		$('#driver').select2();
+		$('#begin_time').flatpickr({
+			enableTime: true,
+			noCalendar: true
+		});
+    	// Mã JavaScript của bạn ở đây
+		(function () {
+			// Init custom option check
+			window.Helpers.initCustomOptionCheck();
+
+			// Bootstrap validation example
+			//------------------------------------------------------------------------------------------
+			// const flatPickrEL = $('.flatpickr-validation');
+			const flatPickrList = [].slice.call(document.querySelectorAll('.flatpickr-validation'));
+			// Flat pickr
+			if (flatPickrList) {
+				flatPickrList.forEach(flatPickr => {
+				flatPickr.flatpickr({
+					allowInput: true,
+					monthSelectorType: 'static'
+				});
+				});
+			}
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			const bsValidationForms = document.querySelectorAll('.needs-validation');
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(bsValidationForms).forEach(function (form) {
+				form.addEventListener(
+				'submit',
+				function (event) {
+					if (!form.checkValidity()) {
+						event.preventDefault();
+						event.stopPropagation();
+					} else {
+						event.preventDefault();
+						event.stopPropagation();
+						update_bus_submit();
+					}
+
+					form.classList.add('was-validated');
+				},
+				false
+				);
+			});
+		})();
+	
+
+    
+	});
+
+function change_status(ip, id) {
+      console.log(this)
+    }  
+function update_bus_submit() {
+  $bs = $('#bs').val();
+  $lx = $('#lx').val();
+  $sx = $('#sx').val();
+  $id = $('#bus_id').val();
+  $status = $('#status').val();
+  $.ajax({
+		method: "POST",
+		url: '/admin/update_bus_api',
+		contentType: 'application/json;charset=UTF-8',
+		data: JSON.stringify({'status': $status, 'id': $id ,'bs': $bs, 'lx': $lx, 'sx' : $sx}),
+		dataType: "json",
+		success: function(data) {
+		  if (data.error === false) {
+                            Swal.fire({
+                                title: "Thành công!",
+                                text: "Cập nhật xe bus thành công!",
+                                icon: "success",
+                                
+                        });
+                        }
+            else {
+                           Swal.fire("Lỗi!", data.message, {
+                            icon : "error",
+                        });
+            }
+						
+					},
+					error: function(err) {
+						console.log(err);
+					}
+	});
+}
+
+
+
+
+</script>
+{% endblock %}

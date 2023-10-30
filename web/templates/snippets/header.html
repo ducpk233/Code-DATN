@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>VNBuz - Hệ thống đặt vé xe bus online</title>
+    <!--== META TAGS ==-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- FAV ICON -->
+    <link rel="shortcut icon" href="static/images/fav.ico">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins%7CQuicksand:400,500,700" rel="stylesheet">
+    <!-- FONT-AWESOME ICON CSS -->
+    <link rel="stylesheet" href="static/css/font-awesome.min.css">
+    <!--== ALL CSS FILES ==-->
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/materialize.css">
+    <link rel="stylesheet" href="static/css/bootstrap.css">
+    <link rel="stylesheet" href="static/css/mob.css">
+    <link rel="stylesheet" href="static/css/animate.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+	<script src="js/html5shiv.js"></script>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status">&nbsp;</div>
+    </div>
+
+    <!-- MOBILE MENU -->
+    <section>
+        <div class="ed-mob-menu">
+            <div class="ed-mob-menu-con">
+                <div class="ed-mm-left">
+                    <div class="wed-logo">
+                        <a href="home"><img src="static/images/logo.png" alt="" />
+						</a>
+                    </div>
+                </div>
+                <div class="ed-mm-right">
+                    <div class="ed-mm-menu">
+                        <a href="#!" class="ed-micon"><i class="fa fa-bars"></i></a>
+                        <div class="ed-mm-inn">
+                            <a href="home" class="ed-mi-close"><i class="fa fa-times"></i></a>
+                            
+                            <a href="home"><h4>Trang chủ</h4></a>
+                            {% if logged_in %}
+                                    
+                              <h4>Cá nhân</h4>
+                              <ul>
+                                    <li><a href="history">Lịch sử đặt vé</a></li>
+                                    <li><a href="profile">Tài khoản của tôi</a></li>
+                                    <li><a href="profile_update">Cập nhật thông tin</a></li>
+                                    <li><a href="logout">Đăng xuất</a></li>
+                              </ul>
+                              {% else %}
+                                    <h4 class="ed-dr-men-mar-top">Người dùng</h4>
+                                    <ul>
+                                    <li><a href="register">Đăng ký</a></li>
+                                    <li><a href="login">Đăng nhập</a></li>
+                                    </ul>
+                              {% endif %}
+                            
+                            
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--HEADER SECTION-->
+    <section>
+        <!-- TOP BAR -->
+        <div class="ed-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="ed-com-t1-left">
+                            <ul>
+                                <li><a href="#">Contact: Lake Road, Suite 180 Farmington Hills, U.S.A.</a>
+                                </li>
+                                <li><a href="#">Phone: +101-1231-1231</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="ed-com-t1-right">
+                              {% if logged_in %}
+                                    
+                                    <ul>
+                                          <li><p><a  href="profile">Xin chào, {{ user_info.HoVaTenKhachHang }}!</a> </p>
+                                          </li>
+                                          <li><a  href="logout">Đăng xuất</a>
+                                          </li>
+                                    </ul>
+                              {% else %}
+                                    <ul>
+                                          <li><a href="login">Đăng nhập</a>
+                                          </li>
+                                          <li><a href="register">Đăng ký</a>
+                                          </li>
+                                    </ul>
+                              {% endif %}
+                            
+                        </div>
+                        <div class="ed-com-t1-social">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGO AND MENU SECTION -->
+        <div class="top-logo" data-spy="affix" data-offset-top="250">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="wed-logo">
+                            <a href="home"><img src="static/images/logo.png" alt="" />
+                            </a>
+                        </div>
+                        <div class="main-menu">
+                            <ul>
+                                <li><a href="home">Trang chủ</a>
+                                </li>
+                               
+                                <li><a href="month_ticket">Đăng ký vé tháng</a></li>
+                                <!--<li><a class='dropdown-button ed-sub-menu' href='#' data-activates='dropdown1'>Courses</a></li>-->
+                        
+                                <li><a href="bus_list">Danh sách xe bus</a>
+                                </li>
+                                <li><a href="driver_list">Danh sách tài xế</a>
+                                </li>
+                                <li><a href="profile">Cá nhân</a>
+                                </li>
+                                <li><a href="contact">Liên hệ</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		
+    </section>
+    <!--END HEADER SECTION-->

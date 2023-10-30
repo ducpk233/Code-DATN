@@ -1,0 +1,143 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+<!-- Content -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Danh sách xe bus /</span> Quản lý xe bus > Danh sách xe bus</h4>
+
+    <!-- DataTable with Buttons -->
+    <div class="card">
+      <h5 class="card-header">Danh sách xe bus</h5>
+      <div class="card-datatable table-responsive pt-0 text-nowrap">
+        
+        <table id="bus_list" class="datatables-basic table table-bordered">
+          <thead>
+            <tr>
+                <th>Mã số xe</th>
+                <th>Biển số xe</th>
+                <th>Loại xe</th>
+               
+                <th>Số xe</th>
+                <th>Tình trạng</th>
+                <th>Hành động</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+   
+    <!--/ DataTable with Buttons -->
+  </div>
+  <!-- / Content -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    $table = $('#bus_list').DataTable({
+        ajax: '/admin/bus_list_api',
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json'
+        },
+        columns: [
+                // columns according to JSON
+                { data: 'MaXeBus' },
+                { data: 'BienSoXe' },
+                { data: 'LoaiXe' },
+           
+                { data: 'SoXe' },
+                { data: 'TinhTrang' },
+                { data: 'MaXeBus' }
+            
+            ],
+            
+        columnDefs: [
+        {
+          // Label
+          targets: -2,
+          render: function (data, type, full, meta) {
+            var $status_number = full['TinhTrang'];
+            var $status = {
+              1: { title: 'Đang rảnh', class: 'bg-label-success' },
+              2: { title: 'Đang sử dụng', class: 'bg-label-info' },  
+              3: { title: 'Đang sửa chữa', class: 'bg-label-warning' },  
+              0: { title: 'Ngưng hoạt động', class: ' bg-label-danger' },
+             
+            };
+            if (typeof $status[$status_number] === 'undefined') {
+              return data;
+            }
+            return (
+              '<span class="badge rounded-pill ' +
+              $status[$status_number].class +
+              '">' +
+              $status[$status_number].title +
+              '</span>'
+            );
+          }
+        },
+        {
+          // Actions
+          targets: -1,
+          title: 'Hành động',
+          orderable: false,
+          render: function (data, type, full, meta) {
+            
+            return (
+              '<div class="d-inline-block">' +
+              '<a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>' +
+              '<div class="dropdown-menu dropdown-menu-end m-0">' +
+              '<a href="/admin/view_bus_detail/' + data + '" class="dropdown-item">Chi tiết</a>' +
+              
+              '<div class="dropdown-divider"></div>' +
+              '<a onclick="delete_bus(' + data + ')" class="dropdown-item text-danger delete-record">Xóa</a>' +
+              '</div>' +
+              '</div>'
+            );
+          }
+        }
+        ],
+            dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            displayLength: 7,
+            lengthMenu: [7, 10, 25, 50, 75, 100],
+            
+        },
+        
+        );
+})
+function delete_bus(id) {
+    console.log(id);
+    Swal.fire({
+        title: 'Xác nhận xóa xe bus có mã là:' + id,
+        text : "Toàn bộ các dữ liệu liên quan tới xe bus này sẽ bị xóa.",
+        showCancelButton: true,
+        confirmButtonText: 'Xác nhận',
+        
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "POST",
+                url: '/admin/del_bus_api',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({'id' : id}),
+                dataType: "json",
+                success: function(data) {
+                    if (data.error === false) {
+                        Swal.fire('Thành công!', data.message , 'success')
+                        $table.ajax.reload();   
+                    }
+                    else {
+                        Swal.fire('Thất bại!', data.message, 'error')
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+            
+        } 
+        })
+}
+
+</script>
+{% endblock %}
+

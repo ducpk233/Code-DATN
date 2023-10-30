@@ -1,0 +1,346 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="py-3 mb-4"><span class="text-muted fw-light">Thêm tuyến đường mới /</span> Quản lý tuyến đường > Thêm tuyến đường mới</h4>
+	
+	<div class="row">
+	  <!-- FormValidation -->
+	  <div class="col-12">
+		<div class="card">
+		  <h5 class="card-header">Thông tin tuyến đường</h5>
+		  <div class="card-body">
+			<form id="add_route_form" class="needs-validation row g-3" novalidate >
+			  <!-- Account Details -->
+			  <div class="col-12">
+				<h6>1. Thông tin cơ bản</h6>
+				<hr class="mt-0" />
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+					<input
+					type="text"
+					class="form-control"
+					id="name"
+					name="name"
+				
+					required />
+				  <label for="name">Tên tuyến đường</label>
+				  <div class="invalid-feedback">Tên tuyến đường không được để trống!</div>
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+				  <select
+					id="bus"
+					name="bus"
+					class="form-select select2"
+					data-allow-clear="true"
+					required
+					>
+					<option value="">Vui lòng chọn</option>
+					{% for bus in buses %}
+						<option value="{{bus['MaXeBus']}}">{{bus['BienSoXe']}}</option>
+					{% endfor %}
+					
+				  </select>
+				  <label for="bus">Chọn xe bus</label>
+				  <div class="invalid-feedback">Xe bus không được để trống!</div>
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+				  <select
+					id="driver"
+					name="driver"
+					class="form-select select2"
+					data-allow-clear="true"
+					required
+					>
+					<option value="">Vui lòng chọn</option>
+					{% for drv in drivers %}
+						<option value="{{drv['MaTaiXe']}}">{{drv['HoVaTen']}}</option>
+					{% endfor %}
+				  </select>
+				  <label for="driver">Chọn tài xế phụ trách</label>
+				  <div class="invalid-feedback">Xe bus không được để trống!</div>
+				</div>
+			  </div>
+			  
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+					<input required type="text" class="form-control" placeholder="HH:MM" id="begin_time" name="begin_time" />
+					<label for="begin_time">Chọn giờ khởi hành</label>
+					<div class="invalid-feedback">Giờ khởi hành không được để trống!</div>
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+					<input required type="text" class="form-control" id="est" name="est" />
+					<label for="est">Ước tính thời gian</label>
+					<div class="invalid-feedback">Ước tính không được để trống!</div>
+				</div>
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+					<input required type="text" class="form-control" id="note" name="note" />
+					<label for="note">Lưu ý</label>
+					<div class="invalid-feedback">Lưu ý không được để trống!</div>
+				</div>
+			  </div>
+			  <!-- Ticket Info -->
+			  <div class="col-12">
+				<h6 class="mt-2">2. Thông tin giá vé</h6>
+				<hr class="mt-0" />
+			  </div>
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+					<input required type="text" class="form-control" id="tkadlt" name="tkadlt" />
+					<label for="tkadlt">Giá vé người lớn</label>
+					<div class="invalid-feedback">Giá vé người lớn không được để trống!</div>
+				</div>
+			  </div>	
+			  <div class="col-md-6">
+				<div class="form-floating form-floating-outline">
+					<input required type="text" class="form-control" id="tkchild" name="tkchild" />
+					<label for="tkchild">Giá vé trẻ em</label>
+					<div class="invalid-feedback">Giá vé trẻ em không được để trống!</div>
+				</div>
+			  </div>
+			  <!-- Personal Info -->
+			  <div class="col-12">
+				<h6 class="mt-2">3. Thông tin lộ trình</h6>
+				<hr class="mt-0" />
+			  </div>
+			  <!-- Timeline Basic-->
+			  <div class="col-12">
+				<button type="button" onclick="addMidPoint()" class="btn btn-primary mb-0" style="margin-bottom: 10px;">Thêm điểm đón</button>
+				<div class="card">
+				
+				  <div class="card-body pb-0" id="timeline_b">
+					
+					<ul class="timeline mb-0">
+					  <li class="timeline-item timeline-item-transparent" id="point_at" >
+						<span class="timeline-point timeline-point-primary"></span>
+						<div class="timeline-event">
+						  <div class="timeline-header border-bottom mb-3">
+							<h6 class="mb-0">Điểm bắt đầu</h6>
+							
+						  </div>
+						  <div class="d-flex justify-content-between flex-wrap mb-2">
+							<div class="form-floating form-floating-outline mb-2">
+								<input required type="text" class="form-control mid_point_name" id="begin_point" name="begin_point" />
+								<label for="begin_point">Điểm bắt đầu</label>
+								<div class="invalid-feedback">Điểm bắt đầu không được để trống!</div>
+							</div>
+							<div class="form-floating form-floating-outline">
+								<input required type="time" class="form-control mid_point_time"  id="begin_time" name="begin_time" />
+								<label for="begin_time">Chọn giờ bắt đầu</label>
+								<div class="invalid-feedback">Giờ bắt đầu không được để trống!</div>
+							</div>
+						  </div>
+						  
+						</div>
+					  </li>
+					  
+					  <!-- new point stay here -->
+					  
+					  <li id="point_after" class="timeline-item timeline-item-transparent border-transparent">
+						<span class="timeline-point timeline-point-warning"></span>
+						<div class="timeline-event">
+						  <div class="timeline-header border-bottom mb-3">
+							<h6 class="mb-0">Điểm kết thúc</h6>
+							
+						  </div>
+						  <div class="d-flex justify-content-between flex-wrap mb-2">
+							<div class="form-floating form-floating-outline mb-2">
+								<input required type="text" class="form-control mid_point_name" id="end_pointt" name="end_pointt" />
+								<label for="end_pointt">Điểm kết thúc</label>
+								<div class="invalid-feedback">Điểm kết thúc không được để trống!</div>
+							</div>
+							<div class="form-floating form-floating-outline">
+								<input required type="time" class="form-control mid_point_time" placeholder="HH:MM"  />
+								<label for="bbegin_time">Chọn giờ kết thúc</label>
+								<div class="invalid-feedback">Giờ kết thúc không được để trống!</div>
+							</div>
+						  </div>
+						  
+						</div>
+					  </li>
+					  
+					</ul>
+				  </div>
+				</div>
+			  </div>
+			  <!-- /Timeline Basic -->
+			
+			  <div class="col-12">
+				<button type="submit" name="submitButton" class="btn btn-primary">Thêm tuyến đường</button>
+			  </div>
+			</form>
+		  </div>
+		</div>
+	  </div>
+	  <!-- /FormValidation -->
+	</div>
+  </div>
+<script>
+	function addMidPoint() {
+		// Tạo một điểm giữa mới (li)
+		var newMidPoint = document.createElement('li');
+		newMidPoint.classList.add('timeline-item', 'timeline-item-transparent');
+		newMidPoint.id = "point_at"
+		// Thêm nội dung của điểm giữa
+		newMidPoint.innerHTML = `
+			<span class="timeline-point timeline-point-info"></span>
+			<div class="timeline-event">
+				<div class="timeline-header border-bottom mb-3">
+					<!-- <h6 class="mb-0">Điểm bắt đầu</h6> -->
+				</div>
+				<div class="d-flex justify-content-between flex-wrap mb-2">
+					<div class="form-floating form-floating-outline mb-2">
+						<input required type="text" class="form-control mid_point_name" />
+						<label for="end_pointt">Tên điểm</label>
+					</div>
+					<div class="form-floating form-floating-outline">
+						<input required type="time" class="form-control mid_point_time"/>
+						<label for="end_pointt">Giờ</label>
+					</div>
+					<button type="button" onclick="deleteListItem(this)" class="btn btn-outline-primary btn-sm my-sm-0 my-3">Xóa</button>
+				</div>
+			</div>
+		`;
+     // Lấy phần tử cuối cùng có ID là 'point_before'
+	 var pointBefore = document.getElementById('point_at');
+
+	// Lấy phần tử cuối cùng có ID là 'point_after'
+	var pointAfter = document.getElementById('point_after');
+	// Kiểm tra xem cả hai phần tử có tồn tại không trước khi thêm điểm giữa mới
+    if (pointBefore && pointAfter) {
+        // Thêm điểm giữa mới giữa 'point_before' và 'point_after'
+        pointBefore.parentNode.insertBefore(newMidPoint, pointAfter);
+    }
+	}
+	function deleteListItem(button) {
+			
+			var listItem = button.closest('.timeline-item');
+
+			
+			if (listItem) {
+				listItem.remove();
+			}
+		}
+	document.addEventListener('DOMContentLoaded', function () {
+		
+		$('#bus').select2();
+		$('#driver').select2();
+		$('#begin_time').flatpickr({
+			enableTime: true,
+			noCalendar: true
+		});
+    	// Mã JavaScript của bạn ở đây
+		(function () {
+			// Init custom option check
+			window.Helpers.initCustomOptionCheck();
+
+			// Bootstrap validation example
+			//------------------------------------------------------------------------------------------
+			// const flatPickrEL = $('.flatpickr-validation');
+			const flatPickrList = [].slice.call(document.querySelectorAll('.flatpickr-validation'));
+			// Flat pickr
+			if (flatPickrList) {
+				flatPickrList.forEach(flatPickr => {
+				flatPickr.flatpickr({
+					allowInput: true,
+					monthSelectorType: 'static'
+				});
+				});
+			}
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			const bsValidationForms = document.querySelectorAll('.needs-validation');
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(bsValidationForms).forEach(function (form) {
+				form.addEventListener(
+				'submit',
+				function (event) {
+					if (!form.checkValidity()) {
+						event.preventDefault();
+						event.stopPropagation();
+					} else {
+						event.preventDefault();
+						event.stopPropagation();
+						add_route_submid();
+					}
+
+					form.classList.add('was-validated');
+				},
+				false
+				);
+			});
+		})();
+	
+    
+	});
+
+
+
+	function add_route_submid() {
+			
+				$name = $('#name').val();
+                $est = $('#est').val();
+                $tkadlt = $('#tkadlt').val();
+                $tkchild = $('#tkchild').val();
+                $begin_time = $('#begin_time').val();
+                $begin_point = $('#begin_point').val();
+                $end_point = $('#end_pointt').val();
+                $note = $('#note').val();
+                $driver = $('#driver').val();
+				$bus = $('#bus').val();
+				$mid_point_time = $.map($('.mid_point_time'), function (el) { return el.value; });
+				$mid_point_name = $.map($('.mid_point_name'), function (el) { return el.value; });
+				console.log($mid_point_name);
+                    $.ajax({
+					method: "POST",
+					url: '/admin/add_route_api',
+					contentType: 'application/json;charset=UTF-8',
+					data: JSON.stringify({'name' : $name, 'est' : $est, 'tkadlt' : $tkadlt, 'tkchild' :$tkchild, 'begin_time' : $begin_time,
+											'begin_point' : $begin_point, 'end_point': $end_point, 'note' : $note, 'driver' : $driver, 'bus' : $bus,
+											'mid_point_name' : $mid_point_name, 'mid_point_time' : $mid_point_time
+				}),
+					dataType: "json",
+					success: function(data) {
+						if (data['error'] == false) {
+        
+                            Swal.fire({
+								icon: 'success',
+								title: 'Thêm tuyến mới thành công!',
+								showConfirmButton: false,
+								timer: 2000,
+								customClass: {
+								confirmButton: 'btn btn-primary waves-effect waves-light'
+							},
+							buttonsStyling: false
+							});
+							window.location = "/admin/route_list"	
+                        }	
+						else {
+							Swal.fire({
+                                title: "Lỗi!",
+                                text: "Đã có lỗi xảy ra. Thử lại sau!",
+                                icon: "error",
+                                
+                        	});
+						}
+					},
+					error: function(err) {
+						console.log(err);
+					}
+		});
+	}
+	
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,518 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+<!-- Content -->
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Danh sách tài xế /</span> Quản lý người dùng > Danh sách tài xế</h4>
+    
+    <!-- DataTable with Buttons -->
+    <div class="card">
+      <h5 class="card-header">Danh sách tài xế</h5>
+      <button onclick="add_driver()" class="btn btn-primary w-100 mb-0" style="max-width: 200px; margin: 20px;" >Thêm tài xế</button>
+      <div class="card-datatable table-responsive pt-0 text-nowrap">
+        
+        <table id="user_list" class="datatables-basic table table-bordered">
+          <thead>
+            <tr>
+                <th>Mã tài xế</th>
+                
+                <th>Số điện thoại</th>
+                <th>Họ và tên</th>
+                <th>Kinh nghiệm</th>
+                <th>Tình trạng</th>
+                <th>Chi tiết</th>
+             
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+   
+    <!--/ DataTable with Buttons -->
+  </div>
+  <!-- / Content -->
+<!-- add User Modal -->
+<div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+      <div class="modal-content p-3 p-md-5">
+        <div class="modal-body py-3 py-md-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="text-center mb-4">
+            <h3 class="mb-2">Thêm tài xế</h3>
+            <p class="pt-1">Nhập thông tin tài xế.</p>
+          </div>
+          <form id="editUserForm" class="needs-validation row g-4" novalidate>
+            <div class="col-12 col-md-12">
+              <div class="form-floating form-floating-outline">
+                <input
+                  type="email"
+                  id="dmail"
+                  name="dmail"
+                  class="form-control"
+                  required
+                  placeholder="" />
+                <label for="dmail">Email</label>
+                <div class="invalid-feedback">Email không được để trống!</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-floating form-floating-outline">
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  class="form-control"
+                  required
+                   />
+                <label for="phone">Số điện thoại</label>
+                <div class="invalid-feedback">Số điện thoại không được để trống!</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-floating form-floating-outline">
+                  <input
+                    type="text"
+                    id="pw"
+                    name="pw"
+                    class="form-control"
+                    required
+                     />
+                  <label for="phone">Mật khẩu</label>
+                  <div class="invalid-feedback">Mật khẩu!</div>
+                </div>
+              </div>
+            <div class="col-12">
+              <div class="form-floating form-floating-outline">
+                <input
+                  type="text"
+                  id="fname"
+                  name="fname"
+                  class="form-control"
+                  required
+                   />
+                <label for="fname">Họ và tên</label>
+                <div class="invalid-feedback">Họ và tên không được để trống</div>
+              </div>
+            </div>
+            
+            <div class="col-12 col-md-12">
+                <div class="form-floating form-floating-outline">
+                  <textarea
+                    type="text"
+                    id="exp"
+                    name="exp"
+                    class="form-control" rows="3"
+                    required
+                    ></textarea>
+                  <label for="exp">Kinh nghiệm làm việc</label>
+                </div>
+            </div>
+            <div hidden class="col-12 col-md-6">
+              <div class="form-floating form-floating-outline">
+                <select
+                  id="modalEditUserStatus"
+                  name="modalEditUserStatus"
+                  class="form-select"
+                  aria-label="Default select example">
+                  <option selected>Status</option>
+                  <option value="1">Active</option>
+                  <option value="2">Inactive</option>
+                  <option value="3">Suspended</option>
+                </select>
+                <label for="modalEditUserStatus">Status</label>
+              </div>
+            </div>
+            
+
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary me-sm-3 me-1">Thêm tài xế</button>
+              <button
+                type="reset"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+                aria-label="Close">
+                Hủy
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ add User Modal -->
+  <!-- Edit User Modal -->
+<div class="modal fade" id="UserInfoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+      <div class="modal-content p-3 p-md-5">
+        <div class="modal-body py-3 py-md-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="text-center mb-4">
+            <h3 class="mb-2">Thông tin tài xế</h3>
+          </div>
+          <form id="UserInfoForm" class="needs-validation row g-4" novalidate>
+            <div class="col-12 col-md-12">
+              <div class="form-floating form-floating-outline">
+                <input hidden id="id_ud"  />
+                <input
+                  type="email"
+                  id="dmail_ud"
+                  name="dmail_ud"
+                  class="form-control"
+                  required
+                  placeholder="" />
+                <label for="dmail_ud">Email</label>
+                <div class="invalid-feedback">Email không được để trống!</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-floating form-floating-outline">
+                <input
+                  type="text"
+                  id="phone_ud"
+                  name="phone_ud"
+                  class="form-control"
+                  required
+                   />
+                <label for="phone_ud">Số điện thoại</label>
+                <div class="invalid-feedback">Số điện thoại không được để trống!</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-floating form-floating-outline">
+                  <input
+                    type="text"
+                    id="pw_ud"
+                    name="pw_ud"
+                    class="form-control"
+                    required
+                     />
+                  <label for="pw_ud">Mật khẩu</label>
+                  <div class="invalid-feedback">Mật khẩu!</div>
+                </div>
+              </div>
+            <div class="col-12 col-md-6">
+              <div class="form-floating form-floating-outline">
+                <input
+                  type="text"
+                  id="fname_ud"
+                  name="fname_ud"
+                  class="form-control"
+                  required
+                   />
+                <label for="fname_ud">Họ và tên</label>
+                <div class="invalid-feedback">Họ và tên không được để trống</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-floating form-floating-outline">
+                  <select
+                    id="status_ud"
+                    name="status_ud"
+                    class="form-select"
+                    aria-label="Default select example">
+                    <option value="0">Không hoạt động</option>
+                    <option value="1">Đang rảnh</option>
+                    <option value="2">Đang hoạt động</option>
+                    <option value="3">Đang tạm nghỉ</option>
+                  </select>
+                  <label for="status_ud">Trạng Thái</label>
+                </div>
+              </div>
+            <div class="col-12 col-md-12">
+                <div class="form-floating form-floating-outline">
+                  <textarea
+                    type="text"
+                    id="exp_ud"
+                    name="exp_ud"
+                    class="form-control" rows="3"
+                    required
+                    ></textarea>
+                  <label for="exp_ud">Kinh nghiệm làm việc</label>
+                </div>
+            </div>
+            
+            
+
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary me-sm-3 me-1">Cập nhật tài xế</button>
+              <button
+                type="reset"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+                aria-label="Close">
+                Hủy
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Edit User Modal -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    $table = $('#user_list').DataTable({
+        ajax: '/admin/driver_list_api',
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json'
+        },
+        columns: [
+                // columns according to JSON
+                { data: 'MaTaiXe' },
+                { data: 'SoDienThoai' },
+                { data: 'HoVaTen' },
+                { data: 'KinhNghiem' },
+                { data: 'TrangThai' },
+                { data: 'MaTaiXe' },
+            
+            ],
+            
+        columnDefs: [
+        {
+          // Label
+          targets: -2,
+          render: function (data, type, full, meta) {
+            var $status_number = full['TrangThai'];
+            var $status = {
+              1: { title: 'Đang rảnh', class: 'bg-label-success' },
+              2: { title: 'Đang hoạt động', class: 'bg-label-info' },  
+              3: { title: 'Nghỉ tạm thời', class: 'bg-label-warning' },  
+              0: { title: 'Ngưng hoạt động', class: ' bg-label-danger' },
+             
+            };
+            if (typeof $status[$status_number] === 'undefined') {
+              return data;
+            }
+            return (
+              '<span class="badge rounded-pill ' +
+              $status[$status_number].class +
+              '">' +
+              $status[$status_number].title +
+              '</span>'
+            );
+          }
+        },
+        {
+          // Actions
+          targets: -1,
+          title: 'Hành động',
+          orderable: false,
+          render: function (data, type, full, meta) {
+            
+            return (
+              '<div class="d-inline-block">' +
+              '<a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>' +
+              '<div class="dropdown-menu dropdown-menu-end m-0">' +
+              '<a onclick="view_driver(' + data + ')" class="dropdown-item">Chi tiết</a>' +
+              
+              '<div class="dropdown-divider"></div>' +
+              '<a onclick="delete_driver(' + data + ')" class="dropdown-item text-danger delete-record">Xóa</a>' +
+              '</div>' +
+              '</div>'
+            );
+          }
+        }
+        ],
+            dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            displayLength: 7,
+            lengthMenu: [7, 10, 25, 50, 75, 100],
+            
+        },
+        
+        );
+        // Mã JavaScript của bạn ở đây
+		(function () {
+			// Init custom option check
+			window.Helpers.initCustomOptionCheck();
+
+			// Bootstrap validation example
+			//------------------------------------------------------------------------------------------
+			// const flatPickrEL = $('.flatpickr-validation');
+			const flatPickrList = [].slice.call(document.querySelectorAll('.flatpickr-validation'));
+			// Flat pickr
+			if (flatPickrList) {
+				flatPickrList.forEach(flatPickr => {
+				flatPickr.flatpickr({
+					allowInput: true,
+					monthSelectorType: 'static'
+				});
+				});
+			}
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			const bsValidationForms = document.querySelectorAll('.needs-validation');
+
+			// Loop over them and prevent submission
+			Array.prototype.slice.call(bsValidationForms).forEach(function (form) {
+				form.addEventListener(
+				'submit',
+				function (event) {
+                   
+					if (!form.checkValidity()) {
+						event.preventDefault();
+						event.stopPropagation();
+					} else {
+						event.preventDefault();
+						event.stopPropagation();
+                        if (form.id === "UserInfoForm") {
+                            update_driver_submit();
+                        }
+                        else {
+                            add_driver_submit();
+                        }
+						
+					}
+
+					form.classList.add('was-validated');
+				},
+				false
+				);
+			});
+		})();
+})
+function add_driver() {
+    $('#editUser').modal('show');
+}
+function view_driver(id) {
+    $.ajax({
+                method: "GET",
+                url: '/admin/get_driver_api/' + id,
+              
+                dataType: "json",
+                success: function(data) {
+                    if (data.error === false) {
+                        console.log(data.data.driver_info)
+                        $('#id_ud').val(data.data.driver_info.MaTaiXe);
+                        $('#fname_ud').val(data.data.driver_info.HoVaTen);
+                        $('#phone_ud').val(data.data.driver_info.SoDienThoai);
+                        $('#dmail_ud').val(data.data.user_info.TaiKhoan);
+                        $('#pw_ud').val(data.data.user_info.MatKhau);
+                        $('#exp_ud').val(data.data.driver_info.KinhNghiem);
+                        $('#status_ud').val(data.data.driver_info.TrangThai);
+                        
+                    }
+                    else {
+                        Swal.fire('Thất bại!', data.message, 'error')
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+    $('#UserInfoModal').modal('show');
+}
+function delete_driver(id) {
+    console.log(id);
+    Swal.fire({
+        title: 'Xác nhận xóa tài xế có mã là:' + id,
+        text : "Toàn bộ các dữ liệu liên quan tới tài xế này sẽ bị xóa.",
+        showCancelButton: true,
+        confirmButtonText: 'Xác nhận',
+        
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "POST",
+                url: '/admin/del_driver_api',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({'id' : id}),
+                dataType: "json",
+                success: function(data) {
+                    if (data.error === false) {
+                        Swal.fire('Thành công!', data.message , 'success')
+                        $table.ajax.reload();
+                    }
+                    else {
+                        Swal.fire('Thất bại!', data.message, 'error')
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+            
+        } 
+        })
+}
+function update_driver_submit() {
+            $id = $('#id_ud').val();
+            $fname = $('#fname_ud').val();
+            $phone = $('#phone_ud').val();
+            $dmail = $('#dmail_ud').val();
+            $pw = $('#pw_ud').val();
+            $exp = $('#exp_ud').val();
+            $status = $('#status_ud').val();
+            $.ajax({
+                method: "POST",
+                url: '/admin/update_driver_api/' + $id,
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({'status' : $status, 'dmail' : $dmail, 'phone': $phone, 'exp': $exp, 'pw': $pw, 'fname' : $fname}),
+                dataType: "json",
+                success: function(data) {
+                    
+                    if (data.error === false) {
+                        
+                        
+                        $table.ajax.reload();
+                        Swal.fire({
+                            title: "Thành công!",
+                            text: data.message,
+                            icon: "success",
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Lỗi!",
+                            text: data.message,
+                            icon: "error",
+                        })
+                    }
+                     
+                },
+                error: function(err) {
+                    console.log(err); }
+            })
+            
+        
+}
+function add_driver_submit() {
+            $fname = $('#fname').val();
+            $phone = $('#phone').val();
+            $dmail = $('#dmail').val();
+            $pw = $('#pw').val();
+            $exp = $('#exp').val();
+            
+            $.ajax({
+                method: "POST",
+                url: '/admin/add_driver_api',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({'dmail' : $dmail, 'phone': $phone, 'exp': $exp, 'pw': $pw, 'fname' : $fname}),
+                dataType: "json",
+                success: function(data) {
+                    
+                    if (data.error === false) {
+                        $('#editUser').modal('hide');
+                        $('#editUserForm').trigger('reset');
+                        $table.ajax.reload();
+                        Swal.fire({
+                            title: "Thành công!",
+                            text: data.message,
+                            icon: "success",
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Lỗi!",
+                            text: data.message,
+                            icon: "error",
+                        })
+                    }
+                     
+                },
+                error: function(err) {
+                    console.log(err); }
+            })   
+}
+</script>
+{% endblock %}

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2023 at 07:37 PM
+-- Generation Time: Oct 26, 2023 at 03:46 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -588,16 +588,19 @@ CREATE TABLE `khachhang` (
   `HoVaTenKhachHang` varchar(100) DEFAULT NULL,
   `DiaChi` varchar(500) DEFAULT NULL,
   `SoDienThoai` varchar(45) DEFAULT NULL,
-  `CMND` varchar(20) DEFAULT NULL
+  `CMND` varchar(20) DEFAULT NULL,
+  `AnhDaiDien` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `khachhang`
 --
 
-INSERT INTO `khachhang` (`MaKhachHang`, `MaNguoiDung`, `HoVaTenKhachHang`, `DiaChi`, `SoDienThoai`, `CMND`) VALUES
-(5, 23, 'Lê Huỳnh Đức', 'Bình Dương', '0344118081', '0123'),
-(10, 40, 'Lê Huỳnh Nam11', 'Bình Dương111', '0344118081111', '0123111111');
+INSERT INTO `khachhang` (`MaKhachHang`, `MaNguoiDung`, `HoVaTenKhachHang`, `DiaChi`, `SoDienThoai`, `CMND`, `AnhDaiDien`) VALUES
+(5, 23, 'Lê Huỳnh Đức', 'Bình Dương', '0344118081', '0123', NULL),
+(10, 40, 'Lê Huỳnh Nam1112321', 'Bình Dương111xxx', '034411808111132', '0123111111312111', '20231026000300.jpg'),
+(13, 43, 'zzz', 'zzz', '111', 'zz', NULL),
+(14, 45, 'Thắng Nguyễn', NULL, '1111111', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -713,7 +716,9 @@ INSERT INTO `nguoidung` (`MaNguoiDung`, `TaiKhoan`, `MatKhau`, `SoDienThoai`, `T
 (30, '023456789', '123', '023456789', 1, '2022-07-05', 1),
 (33, '1', '1', '1', 1, '2023-10-18', 1),
 (34, '{}', '112', '+84843067467', 1, '2023-10-18', 1),
-(40, 's2kirbys2@gmail.com1111', '123111', '0344118081111', 1, '2022-06-16', 0);
+(40, 's2kirbys2@gmail.com', '123', '034411808111132', 1, '2022-06-16', 0),
+(43, '111', '111', '111', 1, '2023-10-19', 0),
+(45, 's2kirbys2zz@gmail.com32', 'zzz', '1111111', 1, '2023-10-25', 0);
 
 -- --------------------------------------------------------
 
@@ -907,7 +912,7 @@ ALTER TABLE `ghexebus`
 -- AUTO_INCREMENT for table `khachhang`
 --
 ALTER TABLE `khachhang`
-  MODIFY `MaKhachHang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `MaKhachHang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `lichlaixe`
@@ -931,7 +936,7 @@ ALTER TABLE `lotrinh`
 -- AUTO_INCREMENT for table `nguoidung`
 --
 ALTER TABLE `nguoidung`
-  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `phuongthucthanhtoan`

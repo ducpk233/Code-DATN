@@ -1,0 +1,153 @@
+{% extends "parent.html" %}
+{% block content %}
+
+	
+	<!--DASHBOARD-->
+	<section>
+		<div class="db">
+			<!--LEFT SECTION-->
+			<div class="db-l">
+				<div class="db-l-1">
+					<ul>
+						<li><img style="width: 350px; height: 250px;" src="static/{{'uploads/' + user_info.AnhDaiDien if user_info.AnhDaiDien else 'images/db-profile.jpg'}}" alt="" />
+						</li>
+						<li><span>80%</span> profile compl</li>
+						<li><span>18</span> Notifications</li>
+					</ul>
+				</div>
+				<div class="db-l-2">
+					<ul>
+						<li>
+							<a href="ticket_history"><img src="static/images/icon/dbl1.png" alt="" /> Lịch sử đặt vé</a>
+						</li>
+						<li>
+							<a href="db-travel-booking.html"><img src="static/images/icon/dbl2.png" alt="" /> Travel Bookings</a>
+						</li>
+						<li>
+							<a href="db-hotel-booking.html"><img src="static/images/icon/dbl3.png" alt="" /> Hotel Bookings</a>
+						</li>
+						<li>
+							<a href="db-event-booking.html"><img src="static/images/icon/dbl4.png" alt="" /> Event Bookings</a>
+						</li>
+						<li>
+							<a href="profile"><img src="static/images/icon/dbl6.png" alt="" /> Thông tin cá nhân</a>
+						</li>
+						<li>
+							<a href="db-all-payment.html"><img src="static/images/icon/dbl9.png" alt="" /> Ví & Thanh toán</a>
+						</li>
+						<li>
+							<a href="db-refund.html"><img src="static/images/icon/dbl7.png" alt="" /> Claim & Refund</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!--CENTER SECTION-->
+			<div class="db-2">
+				<div class="db-2-com db-2-main">
+					<h4>Thông tin cá nhân</h4>
+					<div class="db-2-main-com db-2-main-com-table">
+						<table class="responsive-table">
+							<tbody>
+								<tr>
+									<td>Họ và tên</td>
+									<td>:</td>
+									<td>{{user_info.HoVaTenKhachHang}}</td>
+								</tr>
+								<tr>
+									<td>Mật khẩu</td>
+									<td>:</td>
+									<td>************</td>
+								</tr>
+								<tr>
+									<td>Email</td>
+									<td>:</td>
+									<td>{{user.TaiKhoan}}</td>
+								</tr>
+								<tr>
+									<td>Số điện thoại</td>
+									<td>:</td>
+									<td>{{user_info.SoDienThoai}}</td>
+								</tr>
+                                <tr>
+									<td>CMND/CCCD</td>
+									<td>:</td>
+									<td>{{user_info.CMND}}</td>
+								</tr>
+								<tr>
+									<td>Ngày tạo</td>
+									<td>:</td>
+									<td>{{user.NgayTao}}</td>
+								</tr>
+								
+								<tr>
+									<td>Trạng thái</td>
+									<td>:</td>
+									<td><span class="db-done">Đang hoạt động</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="db-mak-pay-bot">
+							<a href="profile_update" class="waves-effect waves-light btn-large">Cập nhật thông tin</a> </div>
+					</div>
+				</div>
+			</div>
+			<!--RIGHT SECTION-->
+			<div class="db-3">
+				<h4>Thông báo</h4>
+				<ul>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr1.jpg" alt="" />
+							<h5>50% Discount Offer</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr2.jpg" alt="" />
+							<h5>paris travel package</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr3.jpg" alt="" />
+							<h5>Group Trip - Available</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr4.jpg" alt="" />
+							<h5>world best travel agency</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr5.jpg" alt="" />
+							<h5>special travel coupons</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr6.jpg" alt="" />
+							<h5>70% Offer 2018</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr7.jpg" alt="" />
+							<h5>Popular Cities</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr8.jpg" alt="" />
+							<h5>variations of passages</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<!--END DASHBOARD-->
+
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "parent.html" %}
+{% block content %}
+		
+    <section>
+		<div class="tr-register">
+			<div class="tr-regi-form">
+				<h4>Đăng ký tài khoản</h4>
+				<p>Nhập thông tin vào biểu mẫu bên dưới để đăng ký.</p>
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                    
+                    {% for message in messages %}
+                        <h4 style="color: red; font-size: 16px;">- {{ message }}</li>
+                    {% endfor %}
+                    
+                    {% endif %}
+                {% endwith %}
+                
+				<form method="post" action="register" class="col s12">
+					<div class="row">
+						<div class="input-field col m6 s12">
+							<input required name="fname" type="text" class="validate">
+							<label>Tên</label>
+						</div>
+						<div class="input-field col m6 s12">
+							<input required name="lname" type="text" class="validate">
+							<label>Họ</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input required name="phone" type="number" class="validate">
+							<label>Số điện thoại</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input required name="email" type="email" class="validate">
+							<label>Email</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input required name="password" type="password" class="validate">
+							<label>Mật khẩu</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input required name="confirm_pw" type="password" class="validate">
+							<label>Xác nhận mật khẩu</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<input type="submit" value="Đăng ký" class="waves-effect waves-light btn-large full-btn"> </div>
+					</div>
+				</form>
+				<p>Bạn đã có tài khoản ? <a href="login">Đăng nhập</a>
+				</p>
+			</div>
+		</div>
+	</section>
+	<!--END DASHBOARD-->
+{% endblock %}
