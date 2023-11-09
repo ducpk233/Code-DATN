@@ -1,7 +1,8 @@
 {% extends "parent.html" %}
 {% block content %}
 
-	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 	<!--DASHBOARD-->
 	<section>
 		<div class="db">
@@ -44,62 +45,45 @@
 			<!--CENTER SECTION-->
 			<div class="db-2">
 				<div class="db-2-com db-2-main">
-					<h4>Cập nhật thông tin </h4>
-					<div class="db-2-main-com db2-form-pay db2-form-com">
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        
-                        {% for message in messages %}
-                            <h4 style="color: red;">- {{ message }}</li>
-                        {% endfor %}
-                        
-                        {% endif %}
-                        {% endwith %}
-                      
-						<form enctype="multipart/form-data" method="POST" action="profile_update" class="col s12">
-							<div class="row">
-								<div class="input-field col s12">
-									<input type="text" name="fullname" id="fullname" value="{{ get_user_info.HoVaTenKhachHang }}" required class="validate">
-									<label>Họ và tên</label>
-								</div>
-							</div>
+					<h4>Thông tin ví</h4>
+					<div class="db-2-main-com db-2-main-com-table">
+						<table class="responsive-table">
+							<tbody>
+								<tr>
+									<td>Số dư</td>
+									<td>:</td>
+									<td>{{wallet.SoDu}}đ</td>
+								</tr>
 							
-							<div class="row">
-								<div class="input-field col s12 m6">
-									<input type="email" readonly disabled class="validate" value="{{ get_user.TaiKhoan}}">
-									<label>Email</label>
-								</div>
-								<div class="input-field col s12 m6">
-									<input type="number" name="phone" required id="phone" value="{{ get_user.SoDienThoai}}" class="validate">
-									<label>Số điện thoại</label>
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="input-field col s12">
-									<input id="natid" name="natid" type="number" required class="validate" value="{{ get_user_info.CMND}}">
-									<label for="natid">CMND</label>
-								</div>
-							</div>
-                            <div class="row">
-								<div class="input-field col s12">
-									<input id="add" name="add" type="text" required class="validate" value="{{ get_user_info.DiaChi}}">
-									<label for="add">Địa chỉ</label>
-								</div>
-							</div>
-							<div class="row db-file-upload">
-								<div class="file-field input-field">
-									<div class="db-up-btn"> <span>Ảnh đại diện</span>
-										<input name="user_image" type="file"> </div>
-									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text"> </div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s12">
-									<input type="submit" value="Xác nhận" class="waves-effect waves-light full-btn"> </div>
-							</div>
-						</form>
+							</tbody>
+						</table>
+						<div class="db-mak-pay-bot">
+							<a onclick="add_fund()" class="waves-effect waves-light btn-large">Nạp thêm tiền</a> </div>
+					</div>
+				</div>
+				<div class="db-2-com db-2-main">
+					<h4>Lịch sử ví</h4>
+					<div class="db-2-main-com db-2-main-com-table">
+						<table class="responsive-table">
+							<thead>
+								<tr>
+									<th>Tên giao dịch</th>
+									<th>Số tiền</th>
+									<th>Ngày</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for his in wallet_hist %}
+								<tr>
+									<td>{{his.TenGiaoDich}}</td>
+									<td>{{his.SoTien}}</td>
+									<td>{{his.NgayGiaoDich}}</td>
+									
+									
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -159,6 +143,55 @@
 			</div>
 		</div>
 	</section>
+	<style>
+        /* Định dạng input text */
+        .swal2-input {
+			
+			border: 2px solid #3498db;
+			border-radius: 5px;
+			padding: 10px;
+			margin: 0px;
+			font-size: 16px;
+        }
+
+    </style>
 	<!--END DASHBOARD-->
-	<!--====== TIPS BEFORE TRAVEL ==========-->
+	<script>
+		function add_fund() {
+			Swal.fire({
+                title: 'Nạp thêm tiền vào ví',
+                text: 'Vui lòng nhập số tiền bạn muốn nạp (> 50.000đ)',
+                input: 'number',
+                
+                showCancelButton: true,
+                confirmButtonText: 'Xác nhận',
+                
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                    if (result.isConfirmed) {
+						if (result.value < 50000) {
+							alert("Số tiền nạp vào phải lớn hơn 50.000đ")
+							return false;
+						}
+                        $.ajax({
+						url : '/add_fund_build_url',
+						type : 'POST',
+									
+						data : JSON.stringify({'amount' : result.value}),
+						contentType: "application/json;charset=utf-8",
+						dataType:'json',
+						success : function(res) { 
+							window.location = res
+						},
+						error : function(request,error)
+								{
+									console.log("Request: "+JSON.stringify(request));
+								}
+								});
+							}
+						})
+		}
+
+
+	</script>
 {% endblock %}

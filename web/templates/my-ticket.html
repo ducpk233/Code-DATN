@@ -44,62 +44,37 @@
 			<!--CENTER SECTION-->
 			<div class="db-2">
 				<div class="db-2-com db-2-main">
-					<h4>Cập nhật thông tin </h4>
-					<div class="db-2-main-com db2-form-pay db2-form-com">
-                        {% with messages = get_flashed_messages() %}
-                        {% if messages %}
-                        
-                        {% for message in messages %}
-                            <h4 style="color: red;">- {{ message }}</li>
-                        {% endfor %}
-                        
-                        {% endif %}
-                        {% endwith %}
-                      
-						<form enctype="multipart/form-data" method="POST" action="profile_update" class="col s12">
-							<div class="row">
-								<div class="input-field col s12">
-									<input type="text" name="fullname" id="fullname" value="{{ get_user_info.HoVaTenKhachHang }}" required class="validate">
-									<label>Họ và tên</label>
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="input-field col s12 m6">
-									<input type="email" readonly disabled class="validate" value="{{ get_user.TaiKhoan}}">
-									<label>Email</label>
-								</div>
-								<div class="input-field col s12 m6">
-									<input type="number" name="phone" required id="phone" value="{{ get_user.SoDienThoai}}" class="validate">
-									<label>Số điện thoại</label>
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="input-field col s12">
-									<input id="natid" name="natid" type="number" required class="validate" value="{{ get_user_info.CMND}}">
-									<label for="natid">CMND</label>
-								</div>
-							</div>
-                            <div class="row">
-								<div class="input-field col s12">
-									<input id="add" name="add" type="text" required class="validate" value="{{ get_user_info.DiaChi}}">
-									<label for="add">Địa chỉ</label>
-								</div>
-							</div>
-							<div class="row db-file-upload">
-								<div class="file-field input-field">
-									<div class="db-up-btn"> <span>Ảnh đại diện</span>
-										<input name="user_image" type="file"> </div>
-									<div class="file-path-wrapper">
-										<input class="file-path validate" type="text"> </div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="input-field col s12">
-									<input type="submit" value="Xác nhận" class="waves-effect waves-light full-btn"> </div>
-							</div>
-						</form>
+					<h4>Lịch sử đặt vé</h4>
+					<div class="db-2-main-com db-2-main-com-table">
+						<table class="responsive-table">
+							<thead>
+								<tr>
+									<th>Mã vé</th>
+									<th>Ngày đặt</th>
+									<th>Tuyến</th>
+									<th>Điểm đón</th>
+									<th>Tổng tiền</th>
+									<th>Trạng thái</th>
+									<th>Thanh toán</th>
+									<th>Chi tiết</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for tk in tickets %}
+								<tr>
+									<td>{{tk[0].MaVe}}</td>
+									<td>{{tk[0].NgayDat}}</td>
+									<td>{{tk[1].TenChuyen}}</td>
+									<td>{{tk[0].DiemDon}}</td>
+									<td>{{tk[2].SoTien}}đ</td>
+									<td><span class='{{"db-done" if tk[0].TrangThai == 1 else "db-not-done" }}'>{{"ĐẶT THÀNH CÔNG" if tk[0].TrangThai == 1 else "ĐÃ HỦY" }}</span></td>
+									<td><span class='{{"db-done" if tk[2].TrangThai == 1 else "db-not-done" }}'>{{ "Đã thanh toán" if tk[2].TrangThai == 1 else ("Chưa thanh toán" if tk[2].TrangThai == 0 else "Đã hoàn tiền") }}</span></td>
+									<td><a href="ticket_detail?id={{tk[0].MaVe}}" class="db-done">Xem</a>
+									</td>
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -160,5 +135,5 @@
 		</div>
 	</section>
 	<!--END DASHBOARD-->
-	<!--====== TIPS BEFORE TRAVEL ==========-->
+
 {% endblock %}

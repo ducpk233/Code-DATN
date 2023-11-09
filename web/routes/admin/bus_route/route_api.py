@@ -135,6 +135,10 @@ def del_route_api():
     _json = request.json
     id = _json['id']
     cx = app.db_session.query(chuyenxe).filter_by(MaChuyen = id).first()
+    current_bus = app.db_session.query(xebus).filter_by(MaXeBus = cx.MaXeBus).first()
+    current_bus.TinhTrang = 1
+    current_driver = app.db_session.query(taixe).filter_by(MaTaiXe = cx.MaTaiXe).first()
+    current_driver.TinhTrang = 1
     if cx:
         app.db_session.delete(cx)
         app.db_session.commit()

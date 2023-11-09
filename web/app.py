@@ -16,7 +16,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.secret_key = "super secret key"
 
 app.config['SQLALCHEMY_DATABASE_URI_1'] = 'mysql://root@localhost:3306/quanlydatvexe'
-
+app.config['SQLALCHEMY_ECHO'] = True
 
 engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI_1'])
 
@@ -40,7 +40,7 @@ class datve(Base):
 class lichlaixe(Base):
     __table__ = Base.metadata.tables['lichlaixe']  
 class phuongthucthanhtoan(Base):
-    __table__ = Base.metadata.tables['phuongthucthanhtoan']  
+    __table__ = Base.metadata.tables['lichsuthanhtoan']  
 class chuyenxe(Base):
     __table__ = Base.metadata.tables['chuyenxe']  
 class taixe(Base):
@@ -49,6 +49,10 @@ class lotrinh(Base):
     __table__ = Base.metadata.tables['lotrinh']  
 class lichsudatghe(Base):
     __table__ = Base.metadata.tables['lichsudatghe']  
+class vinguoidung(Base):
+    __table__ = Base.metadata.tables['vinguoidung']  
+class lichsuvi(Base):
+    __table__ = Base.metadata.tables['lichsuvi']  
 QRcode(app)
 app.db_session = scoped_session(sessionmaker(bind=engine))
 

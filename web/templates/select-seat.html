@@ -1,0 +1,776 @@
+
+{% extends "parent.html" %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style >
+	*, *:before, *:after {
+  box-sizing: border-box !important;
+ }
+ 
+ .plane {
+  margin: 30px auto !important;
+  max-width: 200px !important;
+ }
+ 
+ 
+ ol {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+ }
+ 
+ .seats {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: flex-start !important;
+ }
+ 
+ .seat {
+	
+	width: 60px;
+	height: 60px;
+  display: flex !important;
+  flex: 0 0 14.28571428571429% !important;
+  padding: 5px !important;
+  position: relative !important;
+ }
+ .seat:nth-child(3) {
+  margin-right: 14.28571428571429% !important;
+ }
+ .seat input[type=checkbox] {
+   
+  position: absolute !important;
+  opacity: 0 !important;
+ }
+ .seat input[type=checkbox]:checked + label {
+	color: white !important;
+  background: black !important;
+  -webkit-animation-name: rubberBand !important;
+  animation-name: rubberBand !important;
+  animation-duration: 300ms !important;
+  animation-fill-mode: both !important;
+ }
+ .seat input[type=checkbox]:disabled + label {
+	
+  background: #dddddd !important;
+  text-indent: -9999px !important;
+  overflow: hidden !important;
+ }
+ .seat input[type=checkbox]:disabled + label:after {
+	
+  content: "X" !important;
+  text-indent: 0 !important;
+  position: absolute !important;
+  top: 4px !important;
+  left: 50% !important;
+  transform: translate(-50%, 0%) !important;
+ }
+ .seat input[type=checkbox]:disabled + label:hover {
+	
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+ }
+ .seat label {
+  display: block !important;
+  position: relative !important;
+  width: 50% !important;
+  color: black !important;
+  text-align: center !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  line-height: 1.5rem !important;
+  padding: 4px 0 !important;
+  background: lightseagreen !important;
+  border-radius: 5px !important;
+  animation-duration: 300ms !important;
+  animation-fill-mode: both !important;
+ }
+ .seat label:before {
+  content: "" !important;
+  position: absolute !important;
+  width: 75% !important;
+  height: 75% !important;
+  top: 1px !important;
+  
+  left: 50% !important;
+  transform: translate(-50%, 0%) !important;
+  background: rgba(255, 255, 255, 0.4) !important;
+  border-radius: 3px !important;
+ }
+ .seat label:hover {
+	color: black !important;
+  cursor: pointer !important;
+  box-shadow: 0 0 0px 2px black !important;
+ }
+
+	</style>
+	<!--====== BANNER ==========-->
+	<section>
+		<div class="rows inner_banner inner_banner_4">
+			<div class="container">
+				<h2><span>{{route.DiemBatDau}} -</span> {{route.DiemKetThuc}}</h2>
+				<ul>
+					<li><a href="#inner-page-title">Trang chủ</a>
+					</li>
+					<li><i class="fa fa-angle-right" aria-hidden="true"></i> </li>
+					<li><a href="#inner-page-title" class="bread-acti">{{route.TenChuyen}}</a>
+					</li>
+				</ul>
+				
+			</div>
+		</div>
+	</section>
+	<!--====== TOUR DETAILS - BOOKING ==========-->
+	<section>
+		<div class="rows banner_book" id="inner-page-title">
+			<div class="container">
+				<div class="banner_book_1">
+					<ul>
+						<li class="dl1">Giờ khởi hành: {{route.GioKhoiHanh}}</li>
+						<li class="dl2">Giá vé: {{"{:,.0f}đ".format(route.GiaVeNguoiLon)}}</li>
+						<li class="dl3">Ước tính: {{route.UocTinhThoiGian}} </li>
+						<li class="dl4"><a href="booking.html">Book Now</a> </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--====== TOUR DETAILS ==========-->
+	<section>
+		<div class="rows inn-page-bg com-colo">
+			<div class="container inn-page-con-bg tb-space">
+				<div class="col-md-9">
+					<!--====== TOUR TITLE ==========-->
+					<div class="tour_head">
+						<h2>{{route.TenChuyen}} <span class="tour_star"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-half-o" aria-hidden="true"></i></span><span class="tour_rat">4.5</span></h2> </div>
+					
+					<div class="tour_head1 l-info-pack-days days">
+							<h3>Thông tin ghế trống</h3>
+							<div class="select-seat">
+								<div class="checkboxes-seat mt-4">
+								   
+								   <ol class="cabin fuselage">
+														   
+									  <li class="row row--1">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox"  id="1A" />
+											<label for="1A">1A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="1B" />
+											<label for="1B">1B</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="1C" />
+											<label for="1C">1C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="1D" />
+											<label for="1D">1D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="1E" />
+											<label for="1E">1E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="1F" />
+											<label for="1F">1F</label>
+										  </li>
+										</ol>
+									  </li>
+									  <li class="row row--2">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="2A" />
+											<label for="2A">2A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="2B" />
+											<label for="2B">2B</label>
+										  </li>
+										  <li class="seat">
+											<input  name="seat" type="checkbox" id="2C" />
+											<label for="2C">2C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="2D" />
+											<label for="2D">2D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="2E" />
+											<label for="2E">2E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="2F" />
+											<label for="2F">2F</label>
+										  </li>
+										</ol>
+									  </li>
+									  <li class="row row--3">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="3A" />
+											<label for="3A">3A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="3B" />
+											<label for="3B">3B</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="3C" />
+											<label for="3C">3C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="3D" />
+											<label for="3D">3D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="3E" />
+											<label for="3E">3E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="3F" />
+											<label for="3F">3F</label>
+										  </li>
+										</ol>
+									  </li>
+									  <li class="row row--4">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="4A" />
+											<label for="4A">4A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="4B" />
+											<label for="4B">4B</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="4C" />
+											<label for="4C">4C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="4D" />
+											<label for="4D">4D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="4E" />
+											<label for="4E">4E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="4F" />
+											<label for="4F">4F</label>
+										  </li>
+										</ol>
+									  </li>
+									  <li class="row row--5">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="5A" />
+											<label for="5A">5A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="5B" />
+											<label for="5B">5B</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="5C" />
+											<label for="5C">5C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="5D" />
+											<label for="5D">5D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="5E" />
+											<label for="5E">5E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="5F" />
+											<label for="5F">5F</label>
+										  </li>
+										</ol>
+									  </li>
+									  <li class="row row--6">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="6A" />
+											<label for="6A">6A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="6B" />
+											<label for="6B">6B</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="6C" />
+											<label for="6C">6C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="6D" />
+											<label for="6D">6D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="6E" />
+											<label for="6E">6E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="6F" />
+											<label for="6F">6F</label>
+										  </li>
+										</ol>
+									  </li>
+									  <li class="row row--7">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="7A" />
+											<label for="7A">7A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="7B" />
+											<label for="7B">7B</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="7C" />
+											<label for="7C">7C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="7D" />
+											<label for="7D">7D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="7E" />
+											<label for="7E">7E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="7F" />
+											<label for="7F">7F</label>
+										  </li>
+										</ol>
+									  </li>
+									  <li class="row row--8">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="8A" />
+											<label for="8A">8A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="8B" />
+											<label for="8B">8B</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="8C" />
+											<label for="8C">8C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="8D" />
+											<label for="8D">8D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="8E" />
+											<label for="8E">8E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="8F" />
+											<label for="8F">8F</label>
+										  </li>
+										</ol>
+									  </li>
+									  <li class="row row--9">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="9A" />
+											<label for="9A">9A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="9B" />
+											<label for="9B">9B</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="9C" />
+											<label for="9C">9C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="9D" />
+											<label for="9D">9D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="9E" />
+											<label for="9E">9E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="9F" />
+											<label for="9F">9F</label>
+										  </li>
+										</ol>
+									  </li>
+									  <li class="row row--10">
+										<ol class="seats" type="A">
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="10A" />
+											<label for="10A">10A</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" disabled type="checkbox" id="10B" />
+											<label for="10B">10B</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="10C" />
+											<label for="10C">10C</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="10D" />
+											<label for="10D">10D</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="10E" />
+											<label for="10E">10E</label>
+										  </li>
+										  <li class="seat">
+											<input name="seat" type="checkbox" id="10F" />
+											<label for="10F">10F</label>
+										  </li>
+										</ol>
+									  </li>
+									</ol>
+								   </div>
+								</div>
+								<hr>
+								<div class="list_item d-flex col-12 m-0 p-3 bg-white shadow-sm rounded-1 shadow-sm">
+									<div class="d-flex w-100">
+									   <div class="bus_details w-100 pl-3">
+										  <p class="mb-2 l-hght-18 font-weight-bold">Thông tin vé</p>
+										  
+										  <div class="col-md-6 l-hght-10 d-flex align-items-center my-2">
+											 <p class="text-muted mb-0 pr-1">Ngày đi</p>
+											 <p class=" mb-0 ml-auto l-hght-14" id="date"> </p>
+										  </div>
+										  <div class="col-md-6 l-hght-10 d-flex align-items-center my-2">
+											 <p class="text-muted mb-0 pr-1">Giá vé 1 ghế</p>
+											 <p class=" mb-0 ml-auto l-hght-14"> {{route['GiaVeNguoiLon']}}đ</p>
+										  </div>
+										  
+										  <div class="col-md-6 l-hght-10 d-flex align-items-center mt-3">
+											<p class="mb-0 pr-1">Số ghế đã đặt</p>
+											<p id="take_seat" class="mb-0 ml-auto l-hght-14 text-danger">0</p>
+										 </div>
+										  <div class="col-md-6 l-hght-10 d-flex align-items-center mt-3">
+											 <p class="mb-0 pr-1">Tổng thanh toán</p>
+											 <p id="total" class="mb-0 ml-auto l-hght-14 text-danger">0đ</p>
+										  </div>
+										  <div style="margin-bottom: 20px !important" class="col-md-12 l-hght-10 d-flex align-items-center mt-3">
+											<p class="mb-0 pr-1">Chọn điểm đón</p>
+											<div class="input-field col s12">
+												<select required id="bg_point" name="bg_point">
+													
+													{% for name in path %}
+													{% if not loop.last %}
+														<option value="{{name.TenDiem}} - {{name.Gio}}">{{name.TenDiem}} - {{name.Gio}} </option>
+														{% set iterated = true %}
+													{% endif %}
+													{% endfor %}
+			
+												</select>
+											  
+											</div>
+										 </div>	
+										 
+										    {% if logged_in %}
+												<center ><button id="book" class="btn btn-primary" >Đặt vé</button></center>
+											{% else %}
+												<center ><a href="login"><button id="login" class="btn btn-primary" >Đăng nhập để đặt vé</button></a></center>
+													
+											{% endif %}
+									   </div>
+									</div>
+								 </div>
+								
+					</div>
+					<div class="tour_head1 tout-map map-container">
+						<h3>Bản đồ</h3>
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6290415.157581651!2d-93.99661009218904!3d39.661150926343694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x880b2d386f6e2619%3A0x7f15825064115956!2sIllinois%2C+USA!5e0!3m2!1sen!2sin!4v1467884030780" allowfullscreen></iframe>
+					</div>
+					
+					<!--====== DURATION ==========-->
+					<div class="tour_head1 l-info-pack-days days">
+						<h3>Chi tiết lộ trình</h3>
+						<ul>
+							{% for p in path %}
+							<li class="l-info-pack-plac"> <i class="fa fa-clock-o" aria-hidden="true"></i>
+								<h4><span>Điểm {{ loop.index }}:</span> {{ p.TenDiem }}</h4>
+								<p>Thời gian: {{p.Gio}}</p>
+							</li>
+							{% endfor %}
+							
+						</ul>
+					</div>
+					
+					<div>
+						<div class="dir-rat">
+							<div class="dir-rat-inn dir-rat-title">
+								<h3>Để lại đánh giá của bạn tại đây</h3>
+								<p>If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text</p>
+								<fieldset class="rating">
+									<input type="radio" id="star5" name="rating" value="5" />
+									<label class="full" for="star5" title="Awesome - 5 stars"></label>
+									<input type="radio" id="star4half" name="rating" value="4 and a half" />
+									<label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+									<input type="radio" id="star4" name="rating" value="4" />
+									<label class="full" for="star4" title="Pretty good - 4 stars"></label>
+									<input type="radio" id="star3half" name="rating" value="3 and a half" />
+									<label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+									<input type="radio" id="star3" name="rating" value="3" />
+									<label class="full" for="star3" title="Meh - 3 stars"></label>
+									<input type="radio" id="star2half" name="rating" value="2 and a half" />
+									<label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+									<input type="radio" id="star2" name="rating" value="2" />
+									<label class="full" for="star2" title="Kinda bad - 2 stars"></label>
+									<input type="radio" id="star1half" name="rating" value="1 and a half" />
+									<label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+									<input type="radio" id="star1" name="rating" value="1" />
+									<label class="full" for="star1" title="Sucks big time - 1 star"></label>
+									<input type="radio" id="starhalf" name="rating" value="half" />
+									<label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+								</fieldset>
+							</div>
+							<div class="dir-rat-inn">
+								<form class="dir-rat-form">
+									<div class="form-group col-md-6 pad-left-o">
+										<input type="text" class="form-control" id="email11" placeholder="Enter Name"> </div>
+									<div class="form-group col-md-6 pad-left-o">
+										<input type="number" class="form-control" id="email12" placeholder="Enter Mobile"> </div>
+									<div class="form-group col-md-6 pad-left-o">
+										<input type="email" class="form-control" id="email13" placeholder="Enter Email id"> </div>
+									<div class="form-group col-md-6 pad-left-o">
+										<input type="text" class="form-control" id="email14" placeholder="Enter your City"> </div>
+									<div class="form-group col-md-12 pad-left-o">
+										<textarea placeholder="Write your message"></textarea>
+									</div>
+									<div class="form-group col-md-12 pad-left-o">
+										<input type="submit" value="SUBMIT" class="link-btn"> </div>
+								</form>
+							</div>
+							<!--COMMENT RATING-->
+							<div class="dir-rat-inn dir-rat-review">
+								<div class="row">
+									<div class="col-md-3 dir-rat-left"> <img src="static/images/reviewer/4.jpeg" alt="">
+										<p>Orange Fab & Weld <span>19th January, 2017</span> </p>
+									</div>
+									<div class="col-md-9 dir-rat-right">
+										<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>
+										<p>Michael & his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>
+										<ul>
+											<li><a href="#"><span>Like</span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Dis-Like</span><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Report</span> <i class="fa fa-flag-o" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Comments</span> <i class="fa fa-commenting-o" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Share Now</span>  <i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!--COMMENT RATING-->
+							<div class="dir-rat-inn dir-rat-review">
+								<div class="row">
+									<div class="col-md-3 dir-rat-left"> <img src="static/images/reviewer/3.jpeg" alt="">
+										<p>Orange Fab & Weld <span>19th January, 2017</span> </p>
+									</div>
+									<div class="col-md-9 dir-rat-right">
+										<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>
+										<p>Michael & his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>
+										<ul>
+											<li><a href="#"><span>Like</span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Dis-Like</span><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Report</span> <i class="fa fa-flag-o" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Comments</span> <i class="fa fa-commenting-o" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Share Now</span>  <i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!--COMMENT RATING-->
+							<div class="dir-rat-inn dir-rat-review">
+								<div class="row">
+									<div class="col-md-3 dir-rat-left"> <img src="static/images/reviewer/1.jpg" alt="">
+										<p>Orange Fab & Weld <span>19th January, 2017</span> </p>
+									</div>
+									<div class="col-md-9 dir-rat-right">
+										<div class="dir-rat-star"> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </div>
+										<p>Michael & his team have been helping us with our eqiupment finance for the past 5 years - I think that says a quite a lot.. Michael is always ready to go the extra mile, always available, always helpfull that goes the same for his team that work with him - definatley our first phone call.</p>
+										<ul>
+											<li><a href="#"><span>Like</span><i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Dis-Like</span><i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Report</span> <i class="fa fa-flag-o" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Comments</span> <i class="fa fa-commenting-o" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><span>Share Now</span>  <i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+											<li><a href="#"><i class="fa fa-youtube" aria-hidden="true"></i></a> </li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3 tour_r">
+					<!--====== SPECIAL OFFERS ==========-->
+					<div class="tour_right tour_offer">
+						<div class="band1"><img src="static/images/offer.png" alt="" /> </div>
+						<p>Special Offer</p>
+						<h4>$500<span class="n-td">
+								<span class="n-td-1">$800</span>
+								</span>
+							</h4> <a href="booking.html" class="link-btn">Book Now</a> </div>
+					<!--====== TRIP INFORMATION ==========-->
+					<div class="tour_right tour_incl tour-ri-com">
+						<h3>Thông tin tài xế</h3>
+						<ul>
+							<li>Họ và tên: {{driver.HoVaTen}}</li>
+							<li>Số điện thoại: {{driver.SoDienThoai}}</li>
+							<li>Kinh nghiệm: {{driver.KinhNghiem}}</li>
+							
+						</ul>
+					</div>
+					<div class="tour_right tour_incl tour-ri-com">
+						<h3>Thông tin xe bus</h3>
+						<ul>
+							<li>Biển số xe: {{bus.BienSoXe}}</li>
+							<li>Loại xe: {{bus.LoaiXe}}</li>
+							
+						</ul>
+					</div>
+					<!--====== PACKAGE SHARE ==========-->
+					<div class="tour_right head_right tour_social tour-ri-com">
+						<h3>Share This Package</h3>
+						<ul>
+							<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> </li>
+							<li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a> </li>
+							<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a> </li>
+							<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a> </li>
+							<li><a href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i></a> </li>
+						</ul>
+					</div>
+					<!--====== HELP PACKAGE ==========-->
+					<div class="tour_right head_right tour_help tour-ri-com">
+						<h3>Tổng đài hỗ trợ</h3>
+						<div class="tour_help_1">
+							<h4 class="tour_help_1_call">Call Us Now</h4>
+							<h4><i class="fa fa-phone" aria-hidden="true"></i> 10-800-123-000</h4> </div>
+					</div>
+					<!--====== PUPULAR TOUR PACKAGES ==========-->
+					<div class="tour_right tour_rela tour-ri-com">
+						<h3>Popular Packages</h3>
+						<div class="tour_rela_1"> <img src="static/images/related1.png" alt="" />
+							<h4>Dubai 7Days / 6Nights</h4>
+							<p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text</p> <a href="#" class="link-btn">View this Package</a> </div>
+						<div class="tour_rela_1"> <img src="static/images/related2.png" alt="" />
+							<h4>Mauritius 4Days / 3Nights</h4>
+							<p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text</p> <a href="#" class="link-btn">View this Package</a> </div>
+						<div class="tour_rela_1"> <img src="static/images/related3.png" alt="" />
+							<h4>India 14Days / 13Nights</h4>
+							<p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text</p> <a href="#" class="link-btn">View this Package</a> </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<input hidden id="giave" value="{{route["GiaVeNguoiLon"]}}"/>
+    <input hidden id="route_id" value="{{route["MaChuyen"]}}"/>
+	<input hidden id="user_id" value="{{user.MaNguoiDung}}"/>
+	<script>
+		window.addEventListener("DOMContentLoaded", function () {
+			$date = new URLSearchParams(window.location.search)
+		$param = $date.get('date')
+		console.log($param);
+		$('#date').text($param);
+		$route_id = $('#route_id').val();
+		$.ajax({
+			   url : '/check_avai_seat',
+			   type : 'POST',
+			   data : JSON.stringify({'date' : $param,  'route_id' : $route_id}),
+			   contentType: "application/json;charset=utf-8",
+			   dataType:'json',
+			   success : function(res) { 
+				   console.log(res['data']);
+				   $.each(res['data'], function (i, item) {
+					$('#' + item.IDGhe).attr('disabled', true);
+				 }); 
+			   },
+			   error : function(request,error)
+			   {
+				   console.log("Request: "+JSON.stringify(request));
+			   }
+		});
+
+		$('.seat').on('change', function(e) { 
+		   $giave = $('#giave').val();
+		   // From the other examples
+		   if (!this.checked) {
+			  $numberOfChecked = $('input:checkbox:checked').length;
+			  $total = $giave * + $numberOfChecked
+			  console.log($numberOfChecked);
+			  $('#take_seat').text($numberOfChecked);
+			  $('#total').text(+$giave * + $numberOfChecked + "đ");
+		   }
+		});
+		$('#book').click(function() {
+		   $user_id = $('#user_id').val();
+		   $route_id = $('#route_id').val();
+		   $total = $('#total').text();
+		   $bg_point_name = $('#bg_point').val();
+		   $value = parseInt($total);
+		   if ($value === 0) {
+			  alert("Bạn chưa chọn ghế nào để đặt vé!")
+			  return false;
+		   }
+		   $selectedSeat = []
+		   $('input[name="seat"]:checked').each(function() {
+			  $selectedSeat.push(this.id);
+		   });
+		   if (!$bg_point_name) {
+			  alert("Bạn chưa chọn điểm đón!")
+			  return false;
+		   }
+		   else {
+				 $.ajax({
+					url : '/book_ticket_api',
+					type : 'POST',
+					data : JSON.stringify({'seat' : $selectedSeat,  'route_id' : $route_id, 'user_id' : $user_id, 'total' : $total, 'date' : $param, 'bg_point_name' : $bg_point_name}),
+					contentType: "application/json;charset=utf-8",
+					dataType:'json',
+					success : function(res) { 
+					   Swal.fire({
+						  title: 'Thành công!',
+						  text: 'Đặt vé thành công!',
+						  icon: 'warning',
+						  
+						  confirmButtonText: 'Về danh sách vé',
+						  allowOutsideClick: false,
+						  allowEscapeKey: false
+					   }).then((result) => {
+						  if (result.isConfirmed) {
+							 window.location.href = "/my_ticket";
+						  } 
+						  })
+					},
+					error : function(request,error)
+					{
+					   console.log("Request: "+JSON.stringify(request));
+					}
+			  });
+		   }
+		})
+		});
+		
+	 </script>
+{% endblock %}

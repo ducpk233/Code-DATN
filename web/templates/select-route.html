@@ -1,0 +1,153 @@
+
+{% extends "parent.html" %}
+{% block content %}
+	
+	<!--====== ROUTE LIST ==========-->
+	<section class="hot-page2-alp hot-page2-pa-sp-top all-hot-bg">
+		<div class="container">
+			<div class="row inner_banner inner_banner_3 bg-none">
+				<div class="hot-page2-alp-tit">
+					<h1>Kết quả tìm kiếm </h1>
+					<ul>
+						<li><a href="#inner-page-title">Trang chủ</a> </li>
+						<li><i class="fa fa-angle-right" aria-hidden="true"></i> </li>
+						<li><a href="#inner-page-title" class="bread-acti">Tìm kiếm</a> </li>
+					</ul>
+					<p>Từ {{bg_point}} đến {{arr_point}} </p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="hot-page2-alp-con">
+					<!--LEFT LISTINGS-->
+					<div class="col-md-3 hot-page2-alp-con-left">
+						<!--PART 1 : LEFT LISTINGS-->
+						<div class="hot-page2-alp-con-left-1">
+							<h3>Lọc kết quả</h3> </div>
+						<!--PART 2 : LEFT LISTINGS-->
+						<div class="hot-page2-alp-l3 hot-page2-alp-l-com">
+							<h4><i class="fa fa-star-o" aria-hidden="true"></i> Chọn đánh giá</h4>
+							<div class="hot-page2-alp-l-com1 hot-page2-alp-p5">
+								<form>
+									<ul>
+										<li>
+											<div class="checkbox checkbox-info checkbox-circle">
+												<input id="chp61" class="styled" type="checkbox" checked="">
+												<label for="chp61"> <span class="ho-hot-rat-star-list">
+                                                        <span class="hot-list-left-part-rat">5.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i> </span>
+												</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-info checkbox-circle">
+												<input id="chp62" class="styled" type="checkbox">
+												<label for="chp62"> <span class="ho-hot-rat-star-list">
+                                                        <span class="hot-list-left-part-rat">4.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </span>
+												</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-info checkbox-circle">
+												<input id="chp63" class="styled" type="checkbox">
+												<label for="chp63"> <span class="ho-hot-rat-star-list">
+                                                        <span class="hot-list-left-part-rat">3.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </span>
+												</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-info checkbox-circle">
+												<input id="chp64" class="styled" type="checkbox">
+												<label for="chp64"> <span class="ho-hot-rat-star-list">
+                                                        <span class="hot-list-left-part-rat">2.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </span>
+												</label>
+											</div>
+										</li>
+										<li>
+											<div class="checkbox checkbox-info checkbox-circle">
+												<input id="chp65" class="styled" type="checkbox">
+												<label for="chp65"> <span class="ho-hot-rat-star-list">
+                                                        <span class="hot-list-left-part-rat">1.0</span> <i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i><i class="fa fa-star-o" aria-hidden="true"></i> </span>
+												</label>
+											</div>
+										</li>
+									</ul>
+								</form> <a href="javascript:void(0);" class="hot-page2-alp-p5-btn-s">view more</a> </div>
+						</div>
+						<!--PART 7 : LEFT LISTINGS-->
+						<div class="hot-page2-alp-l3 hot-page2-alp-l-com">
+							<h4><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Tìm kiếm mới</h4>
+							<div class="hot-page2-alp-l-com1 hot-room-ava-check">
+								<form>
+									<ul>
+										<li>
+											<label>Nhập địa điểm đón</label>
+											<input type="text" placeholder="Enter City"> </li>
+										<li>
+												<label>Nhập địa điểm xuống</label>
+												<input type="text" placeholder="Enter City"> </li>
+										<li>
+											<label>Ngày đi</label>
+											<input type="date"> </li>
+										
+										<li>
+											<input type="submit" value="Tìm kiếm"> </li>
+									</ul>
+								</form>
+							</div>
+						</div>
+						<!--END PART 5 : LEFT LISTINGS-->
+						
+						
+						
+					</div>
+					<!--END LEFT LISTINGS-->
+					<!--RIGHT LISTINGS-->
+					<div class="col-md-9 hot-page2-alp-con-right">
+						<div class="hot-page2-alp-con-right-1">
+							<!--LISTINGS-->
+							<div class="row">
+								<!--LISTINGS START-->
+								{% for r in route %}
+								<div class="hot-page2-alp-r-list">
+									<div class="col-md-3 hot-page2-alp-r-list-re-sp">
+										<a href="javascript:void(0);">
+											<div class="hotel-list-score">4.5</div>
+											<div class="hot-page2-hli-1"> <img src="static/images/hotels/l1.jpeg" alt=""> </div>
+											<div class="hom-hot-av-tic hom-hot-av-tic-list"> Số ghế trống: 42 </div>
+										</a>
+									</div>
+									<div class="col-md-6">
+										<div class="hot-page2-alp-ri-p2"> <a href="#"><h3>{{r.TenChuyen}}</h3></a>
+											<ul>
+												<li>
+													{% for route_info in route_string %}
+														{% if route_info['route_id'] == r.MaChuyen %}
+															{{ route_info['route_string'] }}
+														{% endif %}
+													{% endfor %}
+
+												</li>
+												<li>
+													Giờ khởi hành: {{r.GioKhoiHanh}}
+
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div class="col-md-3">
+										<div class="hot-page2-alp-ri-p3">
+											<div class="hot-page2-alp-r-hot-page-rat">25%Off</div> <span class="hot-list-p3-1">Giá vé</span> <span class="hot-list-p3-2">{{"{:,.0f}đ".format(r.GiaVeNguoiLon)}}</span><span class="hot-list-p3-4">
+												<a href="/select_seat?id={{r.MaChuyen}}&date={{date}}" class="hot-page2-alp-quot-btn">Đặt vé</a>
+											</span> </div>
+									</div>
+								</div>
+								<!--END LISTINGS-->
+								{% endfor %}					
+							</div>
+						</div>
+					</div>
+					<!--END RIGHT LISTINGS-->
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

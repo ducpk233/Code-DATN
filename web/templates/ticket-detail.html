@@ -1,0 +1,318 @@
+{% extends "parent.html" %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+	<!--DASHBOARD-->
+	<section>
+		<div class="db">
+			<!--LEFT SECTION-->
+			<div class="db-l">
+				<div class="db-l-1">
+					<ul>
+						<li><img style="width: 350px; height: 250px;" src="static/{{'uploads/' + user_info.AnhDaiDien if user_info.AnhDaiDien else 'images/db-profile.jpg'}}" alt="" />
+						</li>
+						<li><span>80%</span> profile compl</li>
+						<li><span>18</span> Notifications</li>
+					</ul>
+				</div>
+				<div class="db-l-2">
+					<ul>
+						<li>
+							<a href="my_ticket"><img src="static/images/icon/dbl1.png" alt="" /> Lịch sử đặt vé</a>
+						</li>
+						<li>
+							<a href="db-travel-booking.html"><img src="static/images/icon/dbl2.png" alt="" /> Travel Bookings</a>
+						</li>
+						<li>
+							<a href="db-hotel-booking.html"><img src="static/images/icon/dbl3.png" alt="" /> Hotel Bookings</a>
+						</li>
+						<li>
+							<a href="db-event-booking.html"><img src="static/images/icon/dbl4.png" alt="" /> Event Bookings</a>
+						</li>
+						<li>
+							<a href="profile"><img src="static/images/icon/dbl6.png" alt="" /> Thông tin cá nhân</a>
+						</li>
+						<li>
+							<a href="wallet"><img src="static/images/icon/dbl9.png" alt="" /> Ví & Thanh toán</a>
+						</li>
+						<li>
+							<a href="db-refund.html"><img src="static/images/icon/dbl7.png" alt="" /> Claim & Refund</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!--CENTER SECTION-->
+			<div class="db-2">
+				<div class="db-2-com db-2-main">
+					<h4>Chi tiết vé</h4>
+					<div class="db-2-main-com db-2-main-com-table">
+						<table class="responsive-table" id="ticket_detail">
+							<tbody>
+								<tr>
+									<td>Ngày đặt vé</td>
+									<td>:</td>
+									<td>{{ticket[0].NgayDat}}</td>
+								</tr>
+								<tr>
+									<td>Ngày đi</td>
+									<td>:</td>
+									<td>{{ticket[0].NgayDi}}</td>
+								</tr>
+								<tr>
+									<td>Tên tuyến</td>
+									<td>:</td>
+									<td>{{ticket[1].TenChuyen}}</td>
+								</tr>
+								<tr>
+									<td>Điểm đón</td>
+									<td>:</td>
+									<td>{{ticket[0].DiemDon}}</td>
+								</tr>
+                                <tr>
+									<td>Tổng tiền</td>
+									<td>:</td>
+									<td>{{ticket[2].SoTien}}đ</td>
+								</tr>
+								<tr>
+									<td>Ghế đã đặt</td>
+									<td>:</td>
+									<td>
+                                        {% for s in taken_seat %}
+                                            {{s.IDGhe}},  
+                                        {% endfor %}
+                                    </td>
+								</tr>
+								
+								<tr>
+									<td>Trạng thái vé</td>
+									<td>:</td>
+									<td><span class='{{"db-done" if ticket[0].TrangThai == 1 else "db-not-done" }}'>{{"ĐẶT THÀNH CÔNG" if ticket[0].TrangThai == 1 else "ĐÃ HỦY" }}</span>
+									</td>
+								</tr>
+                                <tr>
+									<td>Trạng thái thanh toán</td>
+									<td>:</td>
+									<td><span class='{{"db-done" if ticket[2].TrangThai == 1 else "db-not-done" }}'>{{ "Đã thanh toán" if ticket[2].TrangThai == 1 else ("Chưa thanh toán" if ticket[2].TrangThai == 0 else "Đã hoàn tiền") }}</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+                        <div class="row">
+                            <div class="db-mak-pay-bot col-md-6">
+                                <a  onclick="showQR('{{qrcode(ticket[0].MaVe)}}')" class="waves-effect waves-light btn-large">Mã QR</a>
+                                <a hidden  onclick="printTicket()" class="waves-effect waves-light btn-large">In vé</a> 
+                            </div>
+                                {% set now = fmt_now %}
+                                    <div class="db-mak-pay-bot col-md-6">
+                                        {% if ticket[2].TrangThai == 1 and ticket[0].TrangThai == 1 and ticket[0].NgayDi > now  %}
+                                            <a onclick="cancel_ticket()" class="waves-effect waves-light btn-large">Hủy vé & hoàn tiền</a>
+                                        {% elif  ticket[2].TrangThai == 0 and ticket[0].TrangThai == 1 and ticket[0].NgayDi > now   %}
+                                            <a onclick="pay()" class="waves-effect waves-light btn-large">Thanh toán vé</a>
+                                            <a onclick="cancel_ticket()" class="waves-effect waves-light btn-large">Hủy vé</a>
+                                        {% endif %}
+                                    </div>
+                                
+                        </div>
+                        <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+						<script>
+                            
+                            function printTicket() {
+                                var element = document.getElementById("ticket_detail");
+
+                                html2pdf(element, {
+                                    margin: 10,
+                                    filename: 'ticket.pdf',
+                                    image: { type: 'jpeg', quality: 0.98 },
+                                    html2canvas: { scale: 2 },
+                                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                                });
+                            }
+                            </script>
+					</div>
+				</div>
+			</div>
+			<!--RIGHT SECTION-->
+			<div class="db-3">
+				<h4>Thông báo</h4>
+				<ul>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr1.jpg" alt="" />
+							<h5>50% Discount Offer</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr2.jpg" alt="" />
+							<h5>paris travel package</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr3.jpg" alt="" />
+							<h5>Group Trip - Available</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr4.jpg" alt="" />
+							<h5>world best travel agency</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr5.jpg" alt="" />
+							<h5>special travel coupons</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr6.jpg" alt="" />
+							<h5>70% Offer 2018</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr7.jpg" alt="" />
+							<h5>Popular Cities</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+					<li>
+						<a href="#!"> <img src="static/images/icon/dbr8.jpg" alt="" />
+							<h5>variations of passages</h5>
+							<p>All the Lorem Ipsum generators on the</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<!--END DASHBOARD-->
+    <style>
+        [type="radio"]:not(:checked), [type="radio"]:checked {
+            position: relative; 
+            opacity: 1; 
+        }
+            
+  </style>
+    <script>
+        function pay() {
+            Swal.fire({
+                title: 'Chọn hình thức thanh toán',
+                html: `
+                    <a onclick="pay_with_wallet()" class="waves-effect waves-light btn-large">Số dư ví</a>
+                    <a onclick="get_pay_url()" class="waves-effect waves-light btn-large">VNPay</a>
+
+                    `,
+                confirmButtonText: 'Đóng', 
+            })
+        }
+        function cancel_ticket() {
+            Swal.fire({
+                title: 'Xác nhận hủy vé?',
+        
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Có',
+                cancelButtonText: 'Không',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                    type: "POST",
+                    url: "/cancel_ticket_api",
+                    data: JSON.stringify({'id' : '{{ticket[0].MaVe}}' }),
+                    dataType: 'json',
+                    contentType: "application/json;charset=utf-8",
+                    success: function(response) {
+                            if (response.error === false) {
+                                
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Hủy vé thành công!',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500 
+                                });
+                                window.location.reload()
+                                
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi',
+                                    text: response.message,
+                                });
+                            }
+                        },
+                        
+                    });    
+                } else {
+                    
+                    
+                }
+                });
+            
+            
+        }
+        function get_pay_url() {
+            $.ajax({
+                    type: "POST",
+                    url: "/build_vnpay_url",
+                    data: JSON.stringify({'id' : '{{ticket[0].MaVe}}', 'desc' : 'Thanh toán cho vé có mã {{ticket[0].MaVe}}, đặt ngày {{ticket[0].NgayDat}}, tuyến {{ticket[1].TenChuyen}}', 'amount' : '{{ticket[2].SoTien}}' }),
+                    dataType: 'json',
+                    
+                    contentType: "application/json;charset=utf-8",
+                    success: function(response) {
+                        window.location = response
+                    },
+                    
+                });    
+        }
+        function pay_with_wallet() {
+           
+            $.ajax({
+                    type: "POST",
+                    url: "/pay_with_wallet",
+                    data: JSON.stringify({'ticket_id' : '{{ticket[0].MaVe}}' }),
+                    dataType: 'json',
+                    contentType: "application/json;charset=utf-8",
+                    success: function(response) {
+                        console.log(response);
+                        if (response.error === false) {
+                            // Sử dụng SweetAlert để hiển thị thông báo
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thanh toán thành công!',
+                                showConfirmButton: false,
+                                timer: 2500 // Tự động đóng thông báo sau 1.5 giây
+                            });
+                            window.location.reload()
+                            
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: response.message,
+                            });
+                        }
+                    },
+                    error: function() {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: '',
+                        });
+                    }
+                });
+        }
+        function showQR(image) {
+          
+           Swal.fire({
+              title: 'Quét mã QR để xác nhận vé',
+              imageUrl: image,
+              imageHeight: 300,
+           
+              })
+        }
+        
+     </script>
+{% endblock %}

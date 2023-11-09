@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 26, 2023 at 03:46 AM
+-- Generation Time: Nov 08, 2023 at 05:13 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -48,10 +48,8 @@ CREATE TABLE `chuyenxe` (
 --
 
 INSERT INTO `chuyenxe` (`MaChuyen`, `TenChuyen`, `MaXeBus`, `MaTaiXe`, `DiemBatDau`, `DiemKetThuc`, `GioKhoiHanh`, `UocTinhThoiGian`, `GiaVeNguoiLon`, `GiaVeTreEm`, `GiamGia`, `LuuY`, `TrangThai`) VALUES
-(14, 'Tuyến số  11', 16, 10, 'BX Khách Tỉnh', 'Mỹ Phước 23', '00:01:00', 233, 150003, 70003, NULL, '32321332133', 1),
-(15, 'Tuyến số 2', 12, 6, 'BX Khách Tỉnh Bình Dương', 'Bệnh viện Đa khoa Tỉnh Bình Phước', '05:00:00', 30, 15000, 7000, NULL, '', 1),
-(17, 'Tuyến số 4', 14, 8, 'Đại Học Thủ Dầu Một', 'Xa Lộ Đại Hàn', '11:00:00', 60, 15000, 7500, NULL, '', 1),
-(20, '3123', 14, 9, '3312', '331', '14:06:00', 312, 311323, 12313, NULL, '312', 1);
+(32, 'Tuyến ĐH Bình Dương - KCN Visip 1', 19, 18, 'Đại học Bình Dương ', 'Đại học Bình Dương', '07:00:00', 3, 15000, 10000, NULL, 'z', 1),
+(33, 'Tuyến đại học Thủ Dầu Một - Bệnh Viện 512', 8, 5, 'Đại học Thủ Dầu Một', 'Đại học Thủ Dầu Một', '13:00:00', 4, 15000, 10000, NULL, 'z', 1);
 
 -- --------------------------------------------------------
 
@@ -65,16 +63,20 @@ CREATE TABLE `datve` (
   `MaKhachHang` int(11) DEFAULT NULL,
   `NgayDat` datetime DEFAULT NULL,
   `TrangThai` tinyint(4) DEFAULT NULL,
-  `NgayDi` date DEFAULT NULL
+  `NgayDi` date DEFAULT NULL,
+  `DiemDon` varchar(500) DEFAULT NULL,
+  `DiemTra` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `datve`
 --
 
-INSERT INTO `datve` (`MaVe`, `MaChuyen`, `MaKhachHang`, `NgayDat`, `TrangThai`, `NgayDi`) VALUES
-(26, 14, 5, '2022-07-05 08:33:40', 1, '2022-07-14'),
-(27, 17, 7, '2022-07-05 10:38:38', 1, '2022-07-06');
+INSERT INTO `datve` (`MaVe`, `MaChuyen`, `MaKhachHang`, `NgayDat`, `TrangThai`, `NgayDi`, `DiemDon`, `DiemTra`) VALUES
+(36, 32, 10, '2023-11-08 10:33:14', 1, '2023-11-11', 'Ngã 3 Phong Vũ - 07:15:00', NULL),
+(37, 32, 10, '2023-11-08 15:20:03', 0, '2023-11-09', 'KCN Visip 1 - 10:00:00', NULL),
+(39, 33, 10, '2023-11-08 20:27:06', 0, '2023-11-11', 'Đại học Bình Dương - 14:00:00', NULL),
+(40, 32, 10, '2023-11-08 22:55:36', 1, '2023-11-09', 'Đại học Bình Dương - 07:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -574,7 +576,67 @@ INSERT INTO `ghexebus` (`MaGheXe`, `MaXeBus`, `TenGhe`, `SoGhe`, `DaDat`) VALUES
 (777, 17, '10C', 60, 0),
 (778, 17, '10D', 60, 0),
 (779, 17, '10E', 60, 0),
-(780, 17, '10F', 60, 0);
+(780, 17, '10F', 60, 0),
+(841, 19, '1A', 60, 0),
+(842, 19, '1B', 60, 0),
+(843, 19, '1C', 60, 0),
+(844, 19, '1D', 60, 0),
+(845, 19, '1E', 60, 0),
+(846, 19, '1F', 60, 0),
+(847, 19, '2A', 60, 0),
+(848, 19, '2B', 60, 0),
+(849, 19, '2C', 60, 0),
+(850, 19, '2D', 60, 0),
+(851, 19, '2E', 60, 0),
+(852, 19, '2F', 60, 0),
+(853, 19, '3A', 60, 0),
+(854, 19, '3B', 60, 0),
+(855, 19, '3C', 60, 0),
+(856, 19, '3D', 60, 0),
+(857, 19, '3E', 60, 0),
+(858, 19, '3F', 60, 0),
+(859, 19, '4A', 60, 0),
+(860, 19, '4B', 60, 0),
+(861, 19, '4C', 60, 0),
+(862, 19, '4D', 60, 0),
+(863, 19, '4E', 60, 0),
+(864, 19, '4F', 60, 0),
+(865, 19, '5A', 60, 0),
+(866, 19, '5B', 60, 0),
+(867, 19, '5C', 60, 0),
+(868, 19, '5D', 60, 0),
+(869, 19, '5E', 60, 0),
+(870, 19, '5F', 60, 0),
+(871, 19, '6A', 60, 0),
+(872, 19, '6B', 60, 0),
+(873, 19, '6C', 60, 0),
+(874, 19, '6D', 60, 0),
+(875, 19, '6E', 60, 0),
+(876, 19, '6F', 60, 0),
+(877, 19, '7A', 60, 0),
+(878, 19, '7B', 60, 0),
+(879, 19, '7C', 60, 0),
+(880, 19, '7D', 60, 0),
+(881, 19, '7E', 60, 0),
+(882, 19, '7F', 60, 0),
+(883, 19, '8A', 60, 0),
+(884, 19, '8B', 60, 0),
+(885, 19, '8C', 60, 0),
+(886, 19, '8D', 60, 0),
+(887, 19, '8E', 60, 0),
+(888, 19, '8F', 60, 0),
+(889, 19, '9A', 60, 0),
+(890, 19, '9B', 60, 0),
+(891, 19, '9C', 60, 0),
+(892, 19, '9D', 60, 0),
+(893, 19, '9E', 60, 0),
+(894, 19, '9F', 60, 0),
+(895, 19, '10A', 60, 0),
+(896, 19, '10B', 60, 0),
+(897, 19, '10C', 60, 0),
+(898, 19, '10D', 60, 0),
+(899, 19, '10E', 60, 0),
+(900, 19, '10F', 60, 0);
 
 -- --------------------------------------------------------
 
@@ -626,15 +688,73 @@ CREATE TABLE `lichsudatghe` (
   `MaChuyen` int(11) NOT NULL,
   `MaNguoiDung` int(11) NOT NULL,
   `IDGhe` varchar(5) NOT NULL,
-  `NgayDat` date NOT NULL
+  `NgayDat` date NOT NULL,
+  `MaVe` int(11) DEFAULT NULL,
+  `MaXeBus` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `lichsudatghe`
 --
 
-INSERT INTO `lichsudatghe` (`id`, `MaChuyen`, `MaNguoiDung`, `IDGhe`, `NgayDat`) VALUES
-(45, 14, 23, '9E', '2022-07-14');
+INSERT INTO `lichsudatghe` (`id`, `MaChuyen`, `MaNguoiDung`, `IDGhe`, `NgayDat`, `MaVe`, `MaXeBus`) VALUES
+(62, 32, 40, '1A', '2023-11-11', 36, NULL),
+(63, 32, 40, '2A', '2023-11-11', 36, NULL),
+(64, 32, 40, '9D', '2023-11-08', 40, NULL),
+(65, 32, 40, '10D', '2023-11-08', 40, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lichsuthanhtoan`
+--
+
+CREATE TABLE `lichsuthanhtoan` (
+  `id` int(11) NOT NULL,
+  `MaKhachHang` int(11) DEFAULT NULL,
+  `MaVe` int(11) DEFAULT NULL,
+  `PhuongThucThanhToan` varchar(45) DEFAULT NULL,
+  `TrangThai` tinyint(4) DEFAULT NULL,
+  `SoTien` int(11) DEFAULT NULL,
+  `NgayThanhToan` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `lichsuthanhtoan`
+--
+
+INSERT INTO `lichsuthanhtoan` (`id`, `MaKhachHang`, `MaVe`, `PhuongThucThanhToan`, `TrangThai`, `SoTien`, `NgayThanhToan`) VALUES
+(33, 10, 36, '2', 1, 45000, '2023-11-08 20:07:11'),
+(34, 10, 37, '0', 0, 30000, NULL),
+(36, 10, 39, '0', 0, 30000, NULL),
+(37, 10, 40, '1', 1, 30000, '2023-11-08 23:00:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lichsuvi`
+--
+
+CREATE TABLE `lichsuvi` (
+  `MaLichSuVi` int(11) NOT NULL,
+  `MaVi` int(11) DEFAULT NULL,
+  `TenGiaoDich` varchar(5000) DEFAULT NULL,
+  `NgayGiaoDich` datetime DEFAULT NULL,
+  `SoTien` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lichsuvi`
+--
+
+INSERT INTO `lichsuvi` (`MaLichSuVi`, `MaVi`, `TenGiaoDich`, `NgayGiaoDich`, `SoTien`) VALUES
+(1, 1, 'Hoàn tiền cho việc hủy vé có mã 36', '2023-11-08 20:48:19', 45000),
+(2, 1, 'Hoàn tiền cho việc hủy vé có mã 36. +45000đ', '2023-11-08 20:53:55', 45000),
+(3, 1, 'Hoàn tiền cho việc hủy vé có mã 36. +45000đ', '2023-11-08 20:55:35', 45000),
+(4, 1, 'Thanh toán cho vé có mã 36. -45000đ', '2023-11-08 21:48:17', 45000),
+(5, 1, 'Nạp tiền từ VNPAY. +50000.0đ', '2023-11-08 22:23:55', 50000),
+(9, 1, 'Nạp tiền từ VNPAY. +50000.0đ', '2023-11-08 22:46:08', 50000),
+(10, 1, 'Nạp tiền từ VNPAY. +100000.0đ', '2023-11-08 22:49:06', 100000);
 
 -- --------------------------------------------------------
 
@@ -657,29 +777,26 @@ CREATE TABLE `lotrinh` (
 --
 
 INSERT INTO `lotrinh` (`id`, `TenDiem`, `Gio`, `MaChuyen`, `ThuTu`, `KinhDo`, `ViDo`) VALUES
-(40, 'BX Khách Tỉ', '00:00:00', 15, 0, NULL, NULL),
-(41, 'Đại Lộ Bình', '12:18:00', 15, 1, NULL, NULL),
-(42, 'Ngã Tư Sở S', '12:30:00', 15, 2, NULL, NULL),
-(43, 'ĐT 741', '12:45:00', 15, 3, NULL, NULL),
-(44, 'Cổng Xanh', '12:50:00', 15, 4, NULL, NULL),
-(45, 'Bệnh viện Đ', '13:00:00', 15, 5, NULL, NULL),
-(52, 'Đại Học Thủ', '11:00:00', 17, 0, NULL, NULL),
-(53, 'Đại Lộ 13', '11:15:00', 17, 1, NULL, NULL),
-(54, 'Đường Cách ', '11:30:00', 17, 2, NULL, NULL),
-(55, 'Mỹ Phước', '11:45:00', 17, 3, NULL, NULL),
-(56, 'Xa Lộ Đại H', '00:00:00', 17, 4, NULL, NULL),
-(68, '3312', '14:06:00', 20, 0, NULL, NULL),
-(69, '312312', '15:06:00', 20, 1, NULL, NULL),
-(70, '3123', '14:06:00', 20, 2, NULL, NULL),
-(71, '331', '14:06:00', 20, 3, NULL, NULL),
-(243, 'BX Khách Tỉnh', '10:00:00', 14, 0, NULL, NULL),
-(244, 'Cách mạng t', '09:15:00', 14, 1, NULL, NULL),
-(245, 'Cầu Ông Đàn', '10:30:00', 14, 2, NULL, NULL),
-(246, 'Chợ Cây Dừa3', '11:00:00', 14, 3, NULL, NULL),
-(247, 'Mũi Tàu', '11:20:00', 14, 4, NULL, NULL),
-(248, 'Quốc lộ 133', '11:41:00', 14, 5, NULL, NULL),
-(249, '312321', '02:12:00', 14, 6, NULL, NULL),
-(250, 'Mỹ Phước 23', '11:21:00', 14, 7, NULL, NULL);
+(251, 'Đại học Bình Dương', '07:00:00', 32, 0, NULL, NULL),
+(252, 'Ngã 3 Phong Vũ', '07:15:00', 32, 1, NULL, NULL),
+(253, 'Vòng xoay An Phú', '07:45:00', 32, 2, NULL, NULL),
+(254, 'Chợ ngã 6', '20:15:00', 32, 3, NULL, NULL),
+(255, 'Khu du lịch Đại Nam', '09:00:00', 32, 4, NULL, NULL),
+(256, 'KCN Visip 1', '10:00:00', 32, 5, NULL, NULL),
+(257, 'Khu du lịch Đại Nam', '10:30:00', 32, 6, NULL, NULL),
+(258, 'Chợ ngã 6', '11:15:00', 32, 7, NULL, NULL),
+(259, 'Vòng xoay An Phú', '12:20:00', 32, 8, NULL, NULL),
+(260, 'Ngã 3 Phong Vũ', '13:00:00', 32, 9, NULL, NULL),
+(261, 'Đại học Bình Dương', '13:15:00', 32, 10, NULL, NULL),
+(271, 'Đại học Thủ Dầu Một', '13:00:00', 33, 0, NULL, NULL),
+(272, 'Vòng xoay An Phú', '13:30:00', 33, 1, NULL, NULL),
+(273, 'Ngã 3 Phong Vũ', '13:40:00', 33, 2, NULL, NULL),
+(274, 'Đại học Bình Dương', '14:00:00', 33, 3, NULL, NULL),
+(275, 'Bệnh viện 512', '14:30:00', 33, 4, NULL, NULL),
+(276, 'Đại học Bình Dương', '14:40:00', 33, 5, NULL, NULL),
+(277, 'Ngã 3 Phong Vũ', '15:00:00', 33, 6, NULL, NULL),
+(278, 'Vòng xoay An Phú', '15:30:00', 33, 7, NULL, NULL),
+(279, 'Đại học Thủ Dầu Một', '17:30:00', 33, 8, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -708,7 +825,7 @@ INSERT INTO `nguoidung` (`MaNguoiDung`, `TaiKhoan`, `MatKhau`, `SoDienThoai`, `T
 (17, '1213131', '123', '1213131', 1, '2022-07-03', 1),
 (21, '123123', '123', '123123', 1, '2022-07-04', 1),
 (23, '0344118081', '123', '0344118081', 1, '2022-07-04', 0),
-(24, '0857822083', '123', '0857822083', 1, '2022-07-04', 1),
+(24, '0857822083@gmail.com', '123', '0857822083', 1, '2022-07-04', 1),
 (25, '0344118081', '123', '0344118081', 1, '2022-07-04', 1),
 (26, '03441456565', '123', '03441456565', 1, '2022-07-04', 1),
 (28, '0123456789', '123', '0123456789', 1, '2022-07-05', 1),
@@ -718,30 +835,8 @@ INSERT INTO `nguoidung` (`MaNguoiDung`, `TaiKhoan`, `MatKhau`, `SoDienThoai`, `T
 (34, '{}', '112', '+84843067467', 1, '2023-10-18', 1),
 (40, 's2kirbys2@gmail.com', '123', '034411808111132', 1, '2022-06-16', 0),
 (43, '111', '111', '111', 1, '2023-10-19', 0),
-(45, 's2kirbys2zz@gmail.com32', 'zzz', '1111111', 1, '2023-10-25', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `phuongthucthanhtoan`
---
-
-CREATE TABLE `phuongthucthanhtoan` (
-  `id` int(11) NOT NULL,
-  `MaKhachHang` int(11) DEFAULT NULL,
-  `MaVe` int(11) DEFAULT NULL,
-  `PhuongThucThanhToan` varchar(45) DEFAULT NULL,
-  `TrangThai` tinyint(4) DEFAULT NULL,
-  `SoTien` int(11) DEFAULT NULL,
-  `NgayThanhToan` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `phuongthucthanhtoan`
---
-
-INSERT INTO `phuongthucthanhtoan` (`id`, `MaKhachHang`, `MaVe`, `PhuongThucThanhToan`, `TrangThai`, `SoTien`, `NgayThanhToan`) VALUES
-(23, 5, 26, '0', 0, 15000, NULL);
+(45, 's2kirbys2zz@gmail.com32', 'zzz', '1111111', 1, '2023-10-25', 0),
+(46, 'drv1@gmail.com', '123', '0999222111', 1, '2023-11-07', 1);
 
 -- --------------------------------------------------------
 
@@ -772,7 +867,27 @@ INSERT INTO `taixe` (`MaTaiXe`, `SoDienThoai`, `HoVaTen`, `KinhNghiem`, `MaNguoi
 (7, '03441456565', 'Trần Anh Kiệt', '2', 26, 2),
 (8, '0123456789', 'Trần Thị Thu', '3 năm', 28, 2),
 (9, '012345678', 'Trần Thị ThuBơ', '3 năm', 29, 0),
-(10, '023456789', 'Phạm Anh Duy', '4', 30, 2);
+(10, '023456789', 'Phạm Anh Duy', '4', 30, 2),
+(18, '0999222111', 'Nguyên An Hòa', '3 năm', 46, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vinguoidung`
+--
+
+CREATE TABLE `vinguoidung` (
+  `MaVi` int(11) NOT NULL,
+  `MaNguoiDung` int(11) DEFAULT NULL,
+  `SoDu` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vinguoidung`
+--
+
+INSERT INTO `vinguoidung` (`MaVi`, `MaNguoiDung`, `SoDu`) VALUES
+(1, 40, 440000);
 
 -- --------------------------------------------------------
 
@@ -801,7 +916,8 @@ INSERT INTO `xebus` (`MaXeBus`, `BienSoXe`, `LoaiXe`, `SoGhe`, `SoXe`, `TinhTran
 (12, '61L-7895', 'Thaco City', '{}', 7, 2),
 (14, '67A-5487', 'Thaco City 2020', '{}', 9, 2),
 (16, '3123213', '321312', '{}', 312312, 2),
-(17, '1111', '11111', '{}', 11111, 2);
+(17, '1111', '11111', '{}', 11111, 2),
+(19, '61K-94222', 'Thaco Bus 2013 60', '{}', 12, 2);
 
 --
 -- Indexes for dumped tables
@@ -852,6 +968,21 @@ ALTER TABLE `lichsudatghe`
   ADD KEY `fk_nd` (`MaNguoiDung`);
 
 --
+-- Indexes for table `lichsuthanhtoan`
+--
+ALTER TABLE `lichsuthanhtoan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_PhuongThucThanhToan_DatVe1_idx` (`MaVe`),
+  ADD KEY `fk_PhuongThucThanhToan_KhachHang1_idx` (`MaKhachHang`);
+
+--
+-- Indexes for table `lichsuvi`
+--
+ALTER TABLE `lichsuvi`
+  ADD PRIMARY KEY (`MaLichSuVi`),
+  ADD KEY `fk_lichsuvi_vinguoidung1_idx` (`MaVi`);
+
+--
 -- Indexes for table `lotrinh`
 --
 ALTER TABLE `lotrinh`
@@ -865,19 +996,18 @@ ALTER TABLE `nguoidung`
   ADD PRIMARY KEY (`MaNguoiDung`);
 
 --
--- Indexes for table `phuongthucthanhtoan`
---
-ALTER TABLE `phuongthucthanhtoan`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_PhuongThucThanhToan_DatVe1_idx` (`MaVe`),
-  ADD KEY `fk_PhuongThucThanhToan_KhachHang1_idx` (`MaKhachHang`);
-
---
 -- Indexes for table `taixe`
 --
 ALTER TABLE `taixe`
   ADD PRIMARY KEY (`MaTaiXe`),
   ADD KEY `fk_TaiXe_NguoiDung1_idx` (`MaNguoiDung`);
+
+--
+-- Indexes for table `vinguoidung`
+--
+ALTER TABLE `vinguoidung`
+  ADD PRIMARY KEY (`MaVi`),
+  ADD KEY `fk_vinguoidung_nguoidung1_idx` (`MaNguoiDung`);
 
 --
 -- Indexes for table `xebus`
@@ -894,19 +1024,19 @@ ALTER TABLE `xebus`
 -- AUTO_INCREMENT for table `chuyenxe`
 --
 ALTER TABLE `chuyenxe`
-  MODIFY `MaChuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `MaChuyen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `datve`
 --
 ALTER TABLE `datve`
-  MODIFY `MaVe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `MaVe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `ghexebus`
 --
 ALTER TABLE `ghexebus`
-  MODIFY `MaGheXe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=841;
+  MODIFY `MaGheXe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901;
 
 --
 -- AUTO_INCREMENT for table `khachhang`
@@ -924,37 +1054,49 @@ ALTER TABLE `lichlaixe`
 -- AUTO_INCREMENT for table `lichsudatghe`
 --
 ALTER TABLE `lichsudatghe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- AUTO_INCREMENT for table `lichsuthanhtoan`
+--
+ALTER TABLE `lichsuthanhtoan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+
+--
+-- AUTO_INCREMENT for table `lichsuvi`
+--
+ALTER TABLE `lichsuvi`
+  MODIFY `MaLichSuVi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `lotrinh`
 --
 ALTER TABLE `lotrinh`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=251;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=280;
 
 --
 -- AUTO_INCREMENT for table `nguoidung`
 --
 ALTER TABLE `nguoidung`
-  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
-
---
--- AUTO_INCREMENT for table `phuongthucthanhtoan`
---
-ALTER TABLE `phuongthucthanhtoan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `taixe`
 --
 ALTER TABLE `taixe`
-  MODIFY `MaTaiXe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `MaTaiXe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `vinguoidung`
+--
+ALTER TABLE `vinguoidung`
+  MODIFY `MaVi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `xebus`
 --
 ALTER TABLE `xebus`
-  MODIFY `MaXeBus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `MaXeBus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- Constraints for dumped tables
@@ -1000,23 +1142,35 @@ ALTER TABLE `lichsudatghe`
   ADD CONSTRAINT `pk_mc` FOREIGN KEY (`MaChuyen`) REFERENCES `chuyenxe` (`MaChuyen`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `lichsuthanhtoan`
+--
+ALTER TABLE `lichsuthanhtoan`
+  ADD CONSTRAINT `fk_PhuongThucThanhToan_DatVe1` FOREIGN KEY (`MaVe`) REFERENCES `datve` (`MaVe`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_PhuongThucThanhToan_KhachHang1` FOREIGN KEY (`MaKhachHang`) REFERENCES `khachhang` (`MaKhachHang`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `lichsuvi`
+--
+ALTER TABLE `lichsuvi`
+  ADD CONSTRAINT `fk_lichsuvi_vinguoidung1` FOREIGN KEY (`MaVi`) REFERENCES `vinguoidung` (`MaVi`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `lotrinh`
 --
 ALTER TABLE `lotrinh`
   ADD CONSTRAINT `pk_chuyen` FOREIGN KEY (`MaChuyen`) REFERENCES `chuyenxe` (`MaChuyen`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
--- Constraints for table `phuongthucthanhtoan`
---
-ALTER TABLE `phuongthucthanhtoan`
-  ADD CONSTRAINT `fk_PhuongThucThanhToan_DatVe1` FOREIGN KEY (`MaVe`) REFERENCES `datve` (`MaVe`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_PhuongThucThanhToan_KhachHang1` FOREIGN KEY (`MaKhachHang`) REFERENCES `khachhang` (`MaKhachHang`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
 -- Constraints for table `taixe`
 --
 ALTER TABLE `taixe`
   ADD CONSTRAINT `fk_TaiXe_NguoiDung1` FOREIGN KEY (`MaNguoiDung`) REFERENCES `nguoidung` (`MaNguoiDung`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `vinguoidung`
+--
+ALTER TABLE `vinguoidung`
+  ADD CONSTRAINT `fk_vinguoidung_nguoidung1` FOREIGN KEY (`MaNguoiDung`) REFERENCES `nguoidung` (`MaNguoiDung`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
