@@ -28,6 +28,8 @@ def login_page():
 def logout():
     if 'admin_id' in session:
         session.pop('admin_id')
+    elif 'cashier_id' in session:
+        session.pop('cashier_id')
     else:
         session.pop('driver_id')
     return redirect('/admin/login_page')
@@ -37,12 +39,14 @@ def login():
     email = _json['email']
     pw = _json['pw']
     if email and pw:
-        exist = app.db_session.query(nguoidung).filter_by(TaiKhoan = email, MatKhau = pw).filter((nguoidung.VaiTro ==3) | (nguoidung.VaiTro == 1)).first()
+        exist = app.db_session.query(nguoidung).filter_by(TaiKhoan = email, MatKhau = pw).filter((nguoidung.VaiTro ==3) | (nguoidung.VaiTro == 1) | (nguoidung.VaiTro == 2)).first()
         if bool(exist):
             if exist.VaiTro == 3:
                 session["admin_id"] = exist.MaNguoiDung
-            else:
+            elif exist.VaiTro == 1:
                 session["driver_id"] = exist.MaNguoiDung
+            else:
+                session["cashier_id"] = exist.MaNguoiDung
             session["role"] = exist.VaiTro
             session["p"] = exist.SoDienThoai
             resp = jsonify({'error' : 'false'})
@@ -55,7 +59,12 @@ def login():
         return resp
 
 @padmin.route("/test_qr")
-
 def test_qr():
     
     return render_template('admin/test_qr.html')
+
+
+# Custom error handler for 403 Forbidden
+@app.errorhandler(403)
+def forbidden_error(error):
+    return render_template('admin/403.html'), 403

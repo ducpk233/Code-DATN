@@ -4,23 +4,25 @@ from flask import Blueprint, jsonify, redirect, render_template, request, sessio
 
 from app import ghexebus, xebus, app
 
-from routes.admin.helper import login_required
+from routes.admin.helper import login_required, roles_required
 from routes.admin.helper import serialize
 
 #quản lý xe bus
 #page
 @padmin.route("/add_new_bus")
 @login_required
+@roles_required("3")
 def add_new_bus():
     return render_template('admin/add_new_bus.html')        
 @padmin.route("/bus_list")
-
 @login_required
+@roles_required("3")
 def bus_list():
     return render_template('admin/bus_list.html')   
 
 @padmin.route("/view_bus_detail/<int:id>", methods=['GET'])
 @login_required
+@roles_required("3")
 def view_bus_detail(id):
     get_bus = app.db_session.query(xebus).filter_by(MaXeBus = id).first()
     get_seats = app.db_session.query(ghexebus).filter_by(MaXeBus = id).all()

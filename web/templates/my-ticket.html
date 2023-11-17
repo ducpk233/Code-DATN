@@ -61,17 +61,17 @@
 							</thead>
 							<tbody>
 								{% for tk in tickets %}
-								<tr>
-									<td>{{tk[0].MaVe}}</td>
-									<td>{{tk[0].NgayDat}}</td>
-									<td>{{tk[1].TenChuyen}}</td>
-									<td>{{tk[0].DiemDon}}</td>
-									<td>{{tk[2].SoTien}}đ</td>
-									<td><span class='{{"db-done" if tk[0].TrangThai == 1 else "db-not-done" }}'>{{"ĐẶT THÀNH CÔNG" if tk[0].TrangThai == 1 else "ĐÃ HỦY" }}</span></td>
-									<td><span class='{{"db-done" if tk[2].TrangThai == 1 else "db-not-done" }}'>{{ "Đã thanh toán" if tk[2].TrangThai == 1 else ("Chưa thanh toán" if tk[2].TrangThai == 0 else "Đã hoàn tiền") }}</span></td>
-									<td><a href="ticket_detail?id={{tk[0].MaVe}}" class="db-done">Xem</a>
-									</td>
-								</tr>
+									<tr>
+										<td>{{tk[0].MaVe}}</td>
+										<td>{{tk[0].NgayDat}}</td>
+										<td>{{tk[1].TenChuyen}}</td>
+										<td>{{tk[0].DiemDon}}</td>
+										<td>{{tk[2].SoTien}}đ</td>
+										<td><span class='{{"db-done" if tk[0].TrangThai == 1 else "db-not-done" }}'>{{"ĐẶT THÀNH CÔNG" if tk[0].TrangThai == 1 else "ĐÃ HỦY" }}</span></td>
+										<td><span class='{{"db-done" if tk[2].TrangThai == 1 else "db-not-done" }}'>{{ "Đã thanh toán" if tk[2].TrangThai == 1 else ("Chưa thanh toán" if tk[2].TrangThai == 0 else "Đã hoàn tiền") }}</span></td>
+										<td><a href="ticket_detail?id={{tk[0].MaVe}}" class="db-done">Xem</a>
+										</td>
+									</tr>
 								{% endfor %}
 							</tbody>
 						</table>

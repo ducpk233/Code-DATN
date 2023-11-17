@@ -245,6 +245,7 @@
 
           <div class="col-12 text-center">
             <button type="submit" class="btn btn-primary me-sm-3 me-1">Cập nhật khách hàng</button>
+            <a id="customer_profile_link"><button type="button" class="btn btn-primary me-sm-3 me-1">Chi tiết khách hàng</button></a>
             <button
               type="reset"
               class="btn btn-outline-secondary"
@@ -401,7 +402,7 @@ function view_customer(id) {
                         $('#c_addr').val(data.data.cus_info.DiaChi);
                         $('#c_cmnd').val(data.data.cus_info.CMND);
                         $('#c_status').val(data.data.user_info.TrangThai);
-                        
+                        $('#customer_profile_link').attr('href', '/admin/customer_detail/'+id);
                     }
                     else {
                         Swal.fire('Thất bại!', data.message, 'error')

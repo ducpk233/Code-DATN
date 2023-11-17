@@ -147,6 +147,7 @@
 					
 					<div class="tour_head1 l-info-pack-days days">
 							<h3>Thông tin ghế trống</h3>
+							
 							<div class="select-seat">
 								<div class="checkboxes-seat mt-4">
 								   
@@ -432,9 +433,32 @@
 										  </li>
 										</ol>
 									  </li>
+									  <p>Chú thích</p>
+									  <li class="row row--11">
+										<ol class="seats" type="A">
+											<label style="all: unset !important" >Có thể chọn</label>
+										  <li class="seat">
+											<input readonly name="seat" type="checkbox" id="avai" />
+											<label readonly for="avai">1A</label>
+											
+										  </li>
+										  <label style="all: unset !important" >Đã đặt/Không thể chọn</label>
+										  <li class="seat">
+											<input name="seat" disabled type="checkbox" id="dsbl" />
+											<label for="dsbl">1A</label>
+										  </li>
+										  <label style="all: unset !important" >Đang chọn</label>
+										  <li class="seat">
+											<input readonly name="seat"  checked  type="checkbox" />
+											<label >1A</label>
+										  </li>
+										  
+										</ol>
+									  </li>
 									</ol>
 								   </div>
 								</div>
+								
 								<hr>
 								<div class="list_item d-flex col-12 m-0 p-3 bg-white shadow-sm rounded-1 shadow-sm">
 									<div class="d-flex w-100">
@@ -686,7 +710,9 @@
 	</section>
 	<input hidden id="giave" value="{{route["GiaVeNguoiLon"]}}"/>
     <input hidden id="route_id" value="{{route["MaChuyen"]}}"/>
-	<input hidden id="user_id" value="{{user.MaNguoiDung}}"/>
+	{% if logged_in %}
+		<input hidden id="user_id" value="{{user.MaNguoiDung}}"/>
+	{% endif %}
 	<script>
 		window.addEventListener("DOMContentLoaded", function () {
 			$date = new URLSearchParams(window.location.search)
@@ -749,17 +775,18 @@
 					contentType: "application/json;charset=utf-8",
 					dataType:'json',
 					success : function(res) { 
+						$id = res['id'];
 					   Swal.fire({
 						  title: 'Thành công!',
 						  text: 'Đặt vé thành công!',
 						  icon: 'warning',
 						  
-						  confirmButtonText: 'Về danh sách vé',
+						  confirmButtonText: 'Xem chi tiết vé',
 						  allowOutsideClick: false,
 						  allowEscapeKey: false
 					   }).then((result) => {
 						  if (result.isConfirmed) {
-							 window.location.href = "/my_ticket";
+							 window.location.href = "/ticket_detail?id=" + $id;
 						  } 
 						  })
 					},

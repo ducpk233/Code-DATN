@@ -637,7 +637,16 @@
 					alert('Vui lòng chọn điểm bắt đầu, kết thúc và ngày khởi hành để tìm kiếm');
 					return false;
 				}
-			});
+			});	
+
+			var today = new Date();
+            today.setDate(today.getDate() + 1);
+            
+
+            var minDate = today.toISOString().split('T')[0];
+
+            $("#date").attr("min", minDate);
+            
 		});
 		
 

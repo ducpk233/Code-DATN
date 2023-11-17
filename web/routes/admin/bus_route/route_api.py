@@ -1,6 +1,6 @@
 from json import dumps
 from flask import jsonify, render_template, request
-from routes.admin.helper import login_required, serialize
+from routes.admin.helper import login_required, roles_required, serialize
 from app import chuyenxe, app, lotrinh, taixe, xebus
 from routes.admin import  *
 from sqlalchemy import or_
@@ -9,18 +9,21 @@ from sqlalchemy import or_
 #page
 @padmin.route("/add_route")
 @login_required
+@roles_required("3")
 def add_route():
     get_bus = app.db_session.query(xebus).filter_by(TinhTrang = 1).all()
     get_driver = app.db_session.query(taixe).filter_by(TrangThai = 1).all()
     return render_template('admin/add_route.html', buses = get_bus, drivers = get_driver)    
 @padmin.route("/route_list")
 @login_required
+@roles_required("3")
 def route_list():
     return render_template('admin/route_list.html')  
 
 
 @padmin.route("/route_detail/<int:id>")
 @login_required
+@roles_required("3")
 def route_detail(id):
     get_route = app.db_session.query(chuyenxe).filter_by(MaChuyen = id).first()
     if (get_route != None):

@@ -37,9 +37,11 @@ def welcome():
 	bg_point = []
 	get_route = app.db_session.query(chuyenxe).filter_by(TrangThai = 1).all()
 	bg_point = list(set([item.DiemBatDau for item in get_route]))
-	print(bg_point)
-	return render_template('mindex.html', bg_point = bg_point)
+	unique_bg_point = app.db_session.query(lotrinh.TenDiem).distinct().all()
+
+	return render_template('mindex.html', bg_point = [item[0] for item in unique_bg_point])
 	
+
 	
 @client .route('/logout')
 def logout():
@@ -418,8 +420,8 @@ def cancel_ticket_api():
 			pay.TrangThai = 2
 			print(pay.TrangThai)
 			wallet = app.db_session.query(vinguoidung).filter_by(MaNguoiDung = user_id).first()
-			wallet.SoDu = wallet.SoDu + pay.SoTien
-			wallet_his = lichsuvi(MaVi = wallet.MaVi, TenGiaoDich = 'Hoàn tiền cho việc hủy vé có mã ' + str(tick.MaVe) + '. +' + str(pay.SoTien) + 'đ' , NgayGiaoDich = datetime.now(), SoTien = pay.SoTien)
+			wallet.SoDu = wallet.SoDu + pay.SoTien*0.9
+			wallet_his = lichsuvi(MaVi = wallet.MaVi, TenGiaoDich = 'Hoàn tiền cho việc hủy vé có mã ' + str(tick.MaVe) + '. +' + str(pay.SoTien*0.9) + 'đ' , NgayGiaoDich = datetime.now(), SoTien = pay.SoTien)
 			app.db_session.add(wallet_his)
 			resp = {'error' : False, 'message' : 'Đã hủy vé thành công! Số tiền đã thanh toán sẽ được hoàn lại vào trong ví. Vui lòng kiểm tra'}
 		else:
@@ -449,7 +451,7 @@ def book_ticket_api():
 	app.db_session.commit()
     # we can then use this for your particular example
 	
-	resp = {'error' : 'false', 'message' : 'Đặt vé thành công'}
+	resp = {'error' : 'false', 'message' : 'Đặt vé thành công', 'id' : vx.MaVe}
 	return resp
 
 

@@ -53,6 +53,12 @@ class vinguoidung(Base):
     __table__ = Base.metadata.tables['vinguoidung']  
 class lichsuvi(Base):
     __table__ = Base.metadata.tables['lichsuvi']  
+class vethang(Base):
+    __table__ = Base.metadata.tables['vethang']
+class lichsuve(Base):
+    __table__ = Base.metadata.tables['lichsuvethang']  
+class dondangky(Base):
+    __table__ = Base.metadata.tables['dondangkyvethang']      
 QRcode(app)
 app.db_session = scoped_session(sessionmaker(bind=engine))
 

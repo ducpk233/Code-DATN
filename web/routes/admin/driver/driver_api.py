@@ -1,6 +1,6 @@
 from json import dumps
 from flask import jsonify, render_template, request, session
-from routes.admin.helper import login_required, serialize
+from routes.admin.helper import login_required, roles_required, serialize
 from app import app, chuyenxe, datve, khachhang, lichsudatghe, nguoidung, phuongthucthanhtoan, taixe
 from datetime import datetime
 from routes.admin import  *
@@ -9,25 +9,31 @@ from routes.admin import  *
 #page
 @padmin.route("/driver_ticket_list")
 @login_required
+@roles_required("1")
 def driver_ticket_list():
     
     return render_template('admin/driver_ticket_list.html')  
 
 @padmin.route("/driver_list", methods=['GET'])
 @login_required
+@roles_required("3")
 def driver_list():
     return render_template('admin/driver_list.html')   
 
 @padmin.route("/add_new_driver", methods=['GET'])
 @login_required
+@roles_required("3")
 def add_new_driver():
     return render_template('admin/add_new_driver.html')   
 
 @padmin.route("/ticket_verify", methods = ['GET'])
+@login_required
+@roles_required("1")
 def ticket_verify():
     return render_template('admin/test_qr.html')
 
 @padmin.route("/ticket_detail", methods = ['GET'])
+@login_required
 def ticket_detail():
     id = request.args.get('id')
     ve = app.db_session.query(datve).filter_by(MaVe=id).first()
