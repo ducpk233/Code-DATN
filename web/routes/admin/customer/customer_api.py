@@ -49,20 +49,22 @@ from sqlalchemy.orm import aliased
 @roles_required("3", "2")
 def customer_wallet(id):
     customer = app.db_session.query(nguoidung, khachhang).join(khachhang).filter(nguoidung.MaNguoiDung == id).first()
-    DatVeAlias = aliased(datve)
-    ChuyenXeAlias = aliased(chuyenxe)
-    PhuongThucThanhToanAlias = aliased(phuongthucthanhtoan)
+    wallet = app.db_session.query(vinguoidung).filter(vinguoidung.MaNguoiDung == id).first()
+    print(wallet.MaVi)
+    wallet_history = app.db_session.query(lichsuvi).filter(lichsuvi.MaVi == wallet.MaVi).order_by(lichsuvi.NgayGiaoDich.desc()).all()
+    return render_template('admin/profile_detail/customer_wallet.html', customer = customer, wallet = wallet, wallet_history = wallet_history)  
 
-	# Lọc thông tin từ các bảng
-    ticket_list = (
-		app.db_session.query(DatVeAlias, ChuyenXeAlias, PhuongThucThanhToanAlias)
-		.join(ChuyenXeAlias, DatVeAlias.MaChuyen == ChuyenXeAlias.MaChuyen)
-		.join(PhuongThucThanhToanAlias, DatVeAlias.MaVe == PhuongThucThanhToanAlias.MaVe)
-		.filter(DatVeAlias.MaKhachHang == customer.khachhang.MaKhachHang)
-		.all()
-	)
-    print(ticket_list)
-    return render_template('admin/profile_detail/customer_billing.html', customer = customer, ticket_list = ticket_list)  
+
+@padmin.route("/invoice_export/<int:id>")
+@login_required
+@roles_required("3", "2")
+def invoice_export(id):
+    now = datetime.now()
+    customer = app.db_session.query(nguoidung, khachhang).join(khachhang).filter(nguoidung.MaNguoiDung == id).first()
+    wallet = app.db_session.query(vinguoidung).filter(vinguoidung.MaNguoiDung == id).first()
+    print(wallet.MaVi)
+    wallet_history = app.db_session.query(lichsuvi).filter(lichsuvi.MaVi == wallet.MaVi).all()
+    return render_template('admin/invoice_export.html', customer = customer, wallet = wallet, wallet_history = wallet_history, now = now.date())  
 
 @padmin.route("/customer_detail/<int:id>", methods=['GET'])
 @login_required
@@ -268,3 +270,21 @@ def change_date_billing_api(id):
         return jsonify({'error' : False, 'message' : 'Cập nhật ngày vé tháng thành công!'})
     else:
         return jsonify({'error' : True, 'message' : 'Vé tháng không tồn tại! Vui lòng tải lại trang'})
+    
+#api cập nhật số dư
+@padmin.route('/update_customer_balance_api/<int:id>', methods=['POST'])
+def update_customer_balance_api(id):
+    _json = request.json
+    _money = _json['money']
+    _type = "+" if _json['type'] == 'add' else "-"
+    _total = int(_type + _money)
+    wallet = app.db_session.query(vinguoidung).filter_by(MaVi=id).first()
+    if wallet:
+        wallet.SoDu = wallet.SoDu + _total
+        evt = f"Trừ {_money}đ vào số dư tài khoản từ hệ thống quản lý" if _type == '-' else f'Nạp trực tiếp {_money}đ vào số dư từ hệ thống quản lý.'
+        his = lichsuvi(MaVi = id, TenGiaoDich = evt, NgayGiaoDich = datetime.now(), SoTien = _total)
+        app.db_session.add(his)
+        app.db_session.commit()
+        return jsonify({'error' : False, 'message' : 'Cập nhật số dư ví thành công!'})
+    else:
+        return jsonify({'error' : True, 'message' : 'Ví người dùng không tồn tại! Vui lòng tải lại trang'})

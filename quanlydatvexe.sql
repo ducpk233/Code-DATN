@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 17, 2023 at 08:51 AM
+-- Generation Time: Nov 24, 2023 at 01:23 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -664,6 +664,25 @@ INSERT INTO `ghexebus` (`MaGheXe`, `MaXeBus`, `TenGhe`, `SoGhe`, `DaDat`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `hoadon`
+--
+
+CREATE TABLE `hoadon` (
+  `MaHoaDon` int(11) NOT NULL,
+  `TenDichVu` varchar(5000) DEFAULT NULL,
+  `ChiTietDichVu` varchar(5000) DEFAULT NULL,
+  `TrangThai` bit(1) DEFAULT NULL,
+  `SoTien` int(11) DEFAULT NULL,
+  `PhuongThucThanhToan` varchar(100) DEFAULT NULL,
+  `MaNguoiDung` int(11) DEFAULT NULL,
+  `NgayLap` datetime DEFAULT NULL,
+  `NgayThanhToan` datetime DEFAULT NULL,
+  `LuuY` varchar(5000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `khachhang`
 --
 
@@ -833,7 +852,11 @@ INSERT INTO `lichsuvi` (`MaLichSuVi`, `MaVi`, `TenGiaoDich`, `NgayGiaoDich`, `So
 (5, 1, 'Nạp tiền từ VNPAY. +50000.0đ', '2023-11-08 22:23:55', 50000),
 (9, 1, 'Nạp tiền từ VNPAY. +50000.0đ', '2023-11-08 22:46:08', 50000),
 (10, 1, 'Nạp tiền từ VNPAY. +100000.0đ', '2023-11-08 22:49:06', 100000),
-(11, 1, 'Thanh toán cho vé có mã 43. -45000đ', '2023-11-14 09:57:58', 45000);
+(11, 1, 'Thanh toán cho vé có mã 43. -45000đ', '2023-11-14 09:57:58', 45000),
+(12, 1, 'Nạp trực tiếp 5000đ vào số dư từ hệ thống quản lý.', '2023-11-23 16:52:27', 5000),
+(13, 1, 'Nạp trực tiếp 5000đ vào số dư từ hệ thống quản lý.', '2023-11-23 16:53:22', -5000),
+(14, 1, 'Nạp trực tiếp 10000đ vào số dư từ hệ thống quản lý.', '2023-11-23 16:54:38', -10000),
+(15, 1, 'Trừ 11000đ vào số dư tài khoản từ hệ thống quản lý', '2023-11-23 16:55:14', -11000);
 
 -- --------------------------------------------------------
 
@@ -989,7 +1012,7 @@ CREATE TABLE `vinguoidung` (
 --
 
 INSERT INTO `vinguoidung` (`MaVi`, `MaNguoiDung`, `SoDu`) VALUES
-(1, 40, 395000),
+(1, 40, 374000),
 (2, 48, 0);
 
 -- --------------------------------------------------------
@@ -1054,6 +1077,13 @@ ALTER TABLE `dondangkyvethang`
 ALTER TABLE `ghexebus`
   ADD PRIMARY KEY (`MaGheXe`),
   ADD KEY `fk_GheXeBus_XeBus1_idx` (`MaXeBus`);
+
+--
+-- Indexes for table `hoadon`
+--
+ALTER TABLE `hoadon`
+  ADD PRIMARY KEY (`MaHoaDon`),
+  ADD KEY `fk_hoadon_nguoidung1_idx` (`MaNguoiDung`);
 
 --
 -- Indexes for table `khachhang`
@@ -1176,6 +1206,12 @@ ALTER TABLE `ghexebus`
   MODIFY `MaGheXe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=901;
 
 --
+-- AUTO_INCREMENT for table `hoadon`
+--
+ALTER TABLE `hoadon`
+  MODIFY `MaHoaDon` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `khachhang`
 --
 ALTER TABLE `khachhang`
@@ -1215,7 +1251,7 @@ ALTER TABLE `lichsuvethang`
 -- AUTO_INCREMENT for table `lichsuvi`
 --
 ALTER TABLE `lichsuvi`
-  MODIFY `MaLichSuVi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `MaLichSuVi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `lotrinh`
@@ -1281,6 +1317,12 @@ ALTER TABLE `dondangkyvethang`
 --
 ALTER TABLE `ghexebus`
   ADD CONSTRAINT `fk_GheXeBus_XeBus1` FOREIGN KEY (`MaXeBus`) REFERENCES `xebus` (`MaXeBus`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `hoadon`
+--
+ALTER TABLE `hoadon`
+  ADD CONSTRAINT `fk_hoadon_nguoidung1` FOREIGN KEY (`MaNguoiDung`) REFERENCES `nguoidung` (`MaNguoiDung`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `khachhang`
