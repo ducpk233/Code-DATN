@@ -21,6 +21,9 @@
 							<a href="my_ticket"><img src="static/images/icon/dbl1.png" alt="" /> Lịch sử đặt vé</a>
 						</li>
 						<li>
+							<a href="monthly_ticket"><img src="static/images/icon/dbl1.png" alt="" /> Vé tháng</a>
+						</li>
+						<li>
 							<a href="db-travel-booking.html"><img src="static/images/icon/dbl2.png" alt="" /> Travel Bookings</a>
 						</li>
 						<li>
@@ -86,7 +89,13 @@
 								<tr>
 									<td>Trạng thái vé</td>
 									<td>:</td>
-									<td><span class='{{"db-done" if ticket[0].TrangThai == 1 else "db-not-done" }}'>{{"ĐẶT THÀNH CÔNG" if ticket[0].TrangThai == 1 else "ĐÃ HỦY" }}</span>
+									<td><span class='{{ "db-done" if ticket[0].TrangThai == 1 else "db-not-done" if ticket[0].TrangThai == 0 else "db-not-done" }}'>
+										{{
+										  "ĐẶT THÀNH CÔNG" if ticket[0].TrangThai == 1
+										  else "ĐÃ HỦY" if ticket[0].TrangThai == 0
+										  else "ĐÃ SỬ DỤNG"
+										}}
+									  </span>
 									</td>
 								</tr>
                                 <tr>

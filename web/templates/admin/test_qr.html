@@ -8,8 +8,10 @@
   <body>
     <video id="preview"></video>
     <script type="text/javascript">
-      let scanner = new Instascan.Scanner({ video: document.getElementById('preview'), mirror: false });
+      
+      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
       scanner.addListener('scan', function (content) {
+        console.log(content);
           Swal.fire({
           title: 'Kiểm tra vé với ID vé?',
           text: content,
@@ -24,7 +26,7 @@
       });
       Instascan.Camera.getCameras().then(function (cameras) {
         if (cameras.length > 0) {
-          scanner.start(cameras[1]);
+          scanner.start(cameras[0]);
         } else {
           console.error('No cameras found.');
         }

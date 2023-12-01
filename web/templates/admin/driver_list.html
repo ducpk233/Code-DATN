@@ -3,7 +3,7 @@
 <!-- Content -->
 
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Danh sách tài xế /</span> Quản lý người dùng > Danh sách tài xế</h4>
+    <h4 class="py-3 mb-4"><span class="text-muted fw-light">Danh sách tài xế / thu ngân /</span> Quản lý người dùng > Danh sách tài xế / thu ngân</h4>
     
     <!-- DataTable with Buttons -->
     <div class="card">
@@ -29,9 +29,29 @@
     </div>
    
     <!--/ DataTable with Buttons -->
+    <div style="margin-top: 20px;" class="card">
+      <h5 class="card-header">Danh sách thu ngân</h5>
+      <button onclick="add_cashier()" class="btn btn-primary w-100 mb-0" style="max-width: 200px; margin: 20px;" >Thêm thu ngân</button>
+      <div class="card-datatable table-responsive pt-0 text-nowrap">
+        
+        <table id="cashier_list" class="datatables-basic table table-bordered">
+          <thead>
+            <tr>
+                <th>Mã thu ngân</th>
+                <th>Tài khoản</th>
+                <th>Số điện thoại</th>
+                <th>Ngày tạo</th>
+                <th>Tình trạng</th>
+                <th>Chi tiết</th>
+             
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
   </div>
   <!-- / Content -->
-<!-- add User Modal -->
+<!-- add tài xế Modal -->
 <div class="modal fade" id="editUser" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
       <div class="modal-content p-3 p-md-5">
@@ -58,7 +78,7 @@
             <div class="col-12 col-md-6">
               <div class="form-floating form-floating-outline">
                 <input
-                  type="text"
+                  type="number"
                   id="phone"
                   name="phone"
                   class="form-control"
@@ -139,7 +159,106 @@
       </div>
     </div>
   </div>
-  <!--/ add User Modal -->
+  
+  <!--/ add tài xế Modal -->
+
+<!-- add thu ngân Modal -->
+<div class="modal fade" id="addCashierModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+    <div class="modal-content p-3 p-md-5">
+      <div class="modal-body py-3 py-md-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="text-center mb-4">
+          <h3 class="mb-2">Thêm thu ngân</h3>
+          <p class="pt-1">Nhập thông tin thu ngân.</p>
+        </div>
+        <form id="addCashierForm" class="needs-validation row g-4" novalidate>
+          <div class="col-12 col-md-12">
+            <div class="form-floating form-floating-outline">
+              <input
+                type="email"
+                id="cmail"
+                name="cmail"
+                class="form-control"
+                required
+                placeholder="" />
+              <label for="cmail">Email</label>
+              <div class="invalid-feedback">Email không được để trống!</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+            <div class="form-floating form-floating-outline">
+              <input
+                type="number"
+                id="cphone"
+                name="cphone"
+                class="form-control"
+                required
+                 />
+              <label for="cphone">Số điện thoại</label>
+              <div class="invalid-feedback">Số điện thoại không được để trống!</div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6">
+              <div class="form-floating form-floating-outline">
+                <input
+                  type="text"
+                  id="cpw"
+                  name="cpw"
+                  class="form-control"
+                  required
+                   />
+                <label for="cphone">Mật khẩu</label>
+                <div class="invalid-feedback">Mật khẩu!</div>
+              </div>
+            </div>
+          <div class="col-12">
+            <div class="form-floating form-floating-outline">
+              <input
+                type="text"
+                id="cname"
+                name="cname"
+                class="form-control"
+                required
+                 />
+              <label for="cname">Họ và tên</label>
+              <div class="invalid-feedback">Họ và tên không được để trống</div>
+            </div>
+          </div>
+          
+          <div hidden class="col-12 col-md-6">
+            <div class="form-floating form-floating-outline">
+              <select
+                id=""
+                name=""
+                class="form-select"
+                aria-label="Default select example">
+                <option selected>Status</option>
+                <option value="1">Active</option>
+                <option value="2">Inactive</option>
+                <option value="3">Suspended</option>
+              </select>
+              <label for="modalEditUserStatus">Status</label>
+            </div>
+          </div>
+          
+
+          <div class="col-12 text-center">
+            <button type="button" onclick="add_cashier_submit()" class="btn btn-primary me-sm-3 me-1">Thêm thu ngân</button>
+            <button
+              type="reset"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+              aria-label="Close">
+              Hủy
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- Edit User Modal -->
 <div class="modal fade" id="UserInfoModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
@@ -249,6 +368,93 @@
     </div>
   </div>
   <!--/ Edit User Modal -->
+
+  <!-- Edit User Modal -->
+  <div class="modal fade" id="CashierInfoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+      <div class="modal-content p-3 p-md-5">
+        <div class="modal-body py-3 py-md-0">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <div class="text-center mb-4">
+            <h3 class="mb-2">Thông tin thu ngân</h3>
+          </div>
+          <form id="UserInfoForm" class="needs-validation row g-4" novalidate>
+            <div class="col-12 col-md-12">
+              <div class="form-floating form-floating-outline">
+                <input hidden id="cid_ud"  />
+                <input
+                  type="email"
+                  id="cmail_ud"
+                  name="cmail_ud"
+                  class="form-control"
+                  required
+                  placeholder="" />
+                <label for="cmail_ud">Email</label>
+                <div class="invalid-feedback">Email không được để trống!</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-floating form-floating-outline">
+                <input
+                  type="text"
+                  id="cphone_ud"
+                  name="cphone_ud"
+                  class="form-control"
+                  required
+                   />
+                <label for="phone_ud">Số điện thoại</label>
+                <div class="invalid-feedback">Số điện thoại không được để trống!</div>
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-floating form-floating-outline">
+                  <input
+                    type="text"
+                    id="cpw_ud"
+                    name="cpw_ud"
+                    class="form-control"
+                    required
+                     />
+                  <label for="cpw_ud">Mật khẩu</label>
+                  <div class="invalid-feedback">Mật khẩu!</div>
+                </div>
+              </div>
+            
+            <div class="col-12 col-md-6">
+                <div class="form-floating form-floating-outline">
+                  <select
+                    id="cstatus_ud"
+                    name="cstatus_ud"
+                    class="form-select"
+                    aria-label="Default select example">
+                    <option value="0">Không hoạt động</option>
+                   
+                    <option value="1">Đang hoạt động</option>
+                    
+                  </select>
+                  <label for="cstatus_ud">Trạng Thái</label>
+                </div>
+              </div>
+            
+            
+            
+
+            <div class="col-12 text-center">
+              <button type="button" onclick="update_cashier_submit()" class="btn btn-primary me-sm-3 me-1">Cập nhật thu ngân</button>
+              <button
+                type="reset"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+                aria-label="Close">
+                Hủy
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/ Edit User Modal -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     $table = $('#user_list').DataTable({
@@ -320,6 +526,80 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         
         );
+
+        //cashier table
+        $cashier_table = $('#cashier_list').DataTable({
+        ajax: '/admin/cashier_list_api',
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.12.1/i18n/vi.json'
+        },
+        columns: [
+                // columns according to JSON
+                { data: 'MaNguoiDung' },
+                { data: 'TaiKhoan' },
+                { data: 'SoDienThoai' },
+                { data: 'NgayTao' },
+                { data: 'TrangThai' },
+                { data: 'MaNguoiDung' },
+            
+            ],
+            
+        columnDefs: [
+        {
+          // Label
+          targets: -2,
+          render: function (data, type, full, meta) {
+            var $status_number = full['TrangThai'];
+            var $status = {
+              
+              1: { title: 'Đang hoạt động', class: 'bg-label-info' },  
+                
+              0: { title: 'Ngưng hoạt động', class: ' bg-label-danger' },
+             
+            };
+            if (typeof $status[$status_number] === 'undefined') {
+              return data;
+            }
+            return (
+              '<span class="badge rounded-pill ' +
+              $status[$status_number].class +
+              '">' +
+              $status[$status_number].title +
+              '</span>'
+            );
+          }
+        },
+        {
+          // Actions
+          targets: -1,
+          title: 'Hành động',
+          orderable: false,
+          render: function (data, type, full, meta) {
+            
+            return (
+              '<div class="d-inline-block">' +
+              '<a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>' +
+              '<div class="dropdown-menu dropdown-menu-end m-0">' +
+              '<a onclick="view_cashier(' + data + ')" class="dropdown-item">Chi tiết</a>' +
+              
+              '<div class="dropdown-divider"></div>' +
+              '<a onclick="delete_cashier(' + data + ')" class="dropdown-item text-danger delete-record">Xóa</a>' +
+              '</div>' +
+              '</div>'
+            );
+          }
+        }
+        ],
+            dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+            displayLength: 7,
+            lengthMenu: [7, 10, 25, 50, 75, 100],
+            
+        },
+        
+        );
+
+
+
         // Mã JavaScript của bạn ở đây
 		(function () {
 			// Init custom option check
@@ -370,6 +650,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 		})();
 })
+//driver
 function add_driver() {
     $('#editUser').modal('show');
 }
@@ -513,6 +794,166 @@ function add_driver_submit() {
                 error: function(err) {
                     console.log(err); }
             })   
+}
+//cashier
+function add_cashier() {
+    $('#addCashierModal').modal('show');
+}
+function add_cashier_submit() {
+            $fname = $('#cname').val();
+            $phone = $('#cphone').val();
+            $dmail = $('#cmail').val();
+            $pw = $('#cpw').val(); 
+            if (!fname || !$phone || !$dmail || !$pw) {
+              Swal.fire({
+                            title: "Lỗi!",
+                            text: "Thông tin thu ngân không được để trống",
+                            icon: "error",
+                        })
+              return false;
+            }
+            $.ajax({
+                method: "POST",
+                url: '/admin/add_cashier_api',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({'dmail' : $dmail, 'phone': $phone, 'pw': $pw, 'fname' : $fname}),
+                dataType: "json",
+                success: function(data) {
+                    
+                    if (data.error === false) {
+                        $('#addCashierModal').modal('hide');
+                        $('#addCashierForm').trigger('reset');
+                        $cashier_table.ajax.reload();
+                        Swal.fire({
+                            title: "Thành công!",
+                            text: data.message,
+                            icon: "success",
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Lỗi!",
+                            text: data.message,
+                            icon: "error",
+                        })
+                    }
+                     
+                },
+                error: function(err) {
+                    console.log(err); }
+            })   
+}
+function delete_cashier(id) {
+    console.log(id);
+    Swal.fire({
+        title: 'Xác nhận xóa thu ngân có mã là:' + id,
+        text : "Toàn bộ các dữ liệu liên quan tới thu ngân này sẽ bị xóa.",
+        showCancelButton: true,
+        confirmButtonText: 'Xác nhận',
+        
+        }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            $.ajax({
+                method: "POST",
+                url: '/admin/del_cashier_api',
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({'id' : id}),
+                dataType: "json",
+                success: function(data) {
+                    if (data.error === false) {
+                        Swal.fire('Thành công!', data.message , 'success')
+                        $cashier_table.ajax.reload();
+                    }
+                    else {
+                        Swal.fire('Thất bại!', data.message, 'error')
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+            
+        } 
+        })
+}
+function update_cashier_submit() {
+            $id = $('#cid_ud').val();
+            $fname = $('#cname_ud').val();
+            $phone = $('#cphone_ud').val();
+            $dmail = $('#cmail_ud').val();
+            $pw = $('#cpw_ud').val();
+            $status = $('#cstatus_ud').val();
+
+            
+            if (!$phone || !$dmail || !$pw) {
+              Swal.fire({
+                            title: "Lỗi!",
+                            text: "Thông tin thu ngân không được để trống",
+                            icon: "error",
+                        })
+              return false;
+            }
+            $.ajax({
+                method: "POST",
+                url: '/admin/update_cashier_api/' + $id,
+                contentType: 'application/json;charset=UTF-8',
+                data: JSON.stringify({'status' : $status, 'dmail' : $dmail, 'phone': $phone, 'pw': $pw, 'fname' : $fname}),
+                dataType: "json",
+                success: function(data) {
+                    
+                    if (data.error === false) {
+                        
+                        
+                        $cashier_table.ajax.reload();
+                        Swal.fire({
+                            title: "Thành công!",
+                            text: data.message,
+                            icon: "success",
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            title: "Lỗi!",
+                            text: data.message,
+                            icon: "error",
+                        })
+                    }
+                     
+                },
+                error: function(err) {
+                    console.log(err); }
+            })
+            
+        
+}
+function view_cashier(id) {
+    $.ajax({
+                method: "GET",
+                url: '/admin/get_cashier_api/' + id,
+              
+                dataType: "json",
+                success: function(data) {
+                    if (data.error === false) {
+                        console.log(data.data.cashier_info)
+                        $('#cid_ud').val(data.data.cashier_info.MaNguoiDung);
+                        
+                        $('#cphone_ud').val(data.data.cashier_info.SoDienThoai);
+                        $('#cmail_ud').val(data.data.cashier_info.TaiKhoan);
+                        $('#cpw_ud').val(data.data.cashier_info.MatKhau);
+                        
+                        $('#cstatus_ud').val(data.data.cashier_info.TrangThai);
+                        
+                    }
+                    else {
+                        Swal.fire('Thất bại!', data.message, 'error')
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+    $('#CashierInfoModal').modal('show');
 }
 </script>
 {% endblock %}

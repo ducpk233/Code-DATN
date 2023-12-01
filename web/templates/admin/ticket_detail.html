@@ -1,164 +1,165 @@
 {% extends "admin/admin_parent.html" %}
 {% block content %}
 
-<style >
-.events li { 
-  display: flex; 
-  color: #999;
-}
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="py-3 mb-4"><span class="text-muted fw-light">Vé/</span> Chi tiết vé</h4>
 
-.events time { 
-  position: relative;
-  padding: 0 3em;  }
-
-.events time::after { 
-   content: "";
-   position: absolute;
-   z-index: 2;
-   right: 0;
-   top: 0;
-   transform: translateX(50%);
-   border-radius: 50%;
-   background: #fff;
-   border: 1px #ccc solid;
-   width: 1em;
-   height: 1em;
-}
-
-
-.events span {
-  padding: 0 3em 3em 2em;
-  position: relative;
-}
-
-.events span::before {
-   content: "";
-   position: absolute;
-   z-index: 1;
-   left: 0;
-   height: 100%;
-   border-left: 1px #ccc solid;
-}
-
-.events strong {
-   display: block;
-   font-weight: bolder;
-}
-
-.events { margin: 1em; width: 50%; }
-.events, 
-.events *::before, 
-.events *::after { box-sizing: border-box; font-family: arial; }
-
-</style>
-
-    
-</script>
-		<div class="main-panel">
-			<div class="content">
-				<div class="page-inner">
-					<div class="page-header">
-						<h4 class="page-title">Thông tin vé</h4>
-						<ul class="breadcrumbs">
-							<li class="nav-home">
-								<a href="#">
-									<i class="flaticon-home"></i>
-								</a>
-							</li>
-							<li class="separator">
-								<i class="flaticon-right-arrow"></i>
-							</li>
-							<li class="nav-item">
-								<a href="#">Quản lý vé</a>
-							</li>
-							<li class="separator">
-								<i class="flaticon-right-arrow"></i>
-							</li>
-							<li class="nav-item">
-								<a href="#">Thêm vé mới</a>
-							</li>
-						</ul>
-					</div>
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<div class="card-title">Thông tin vé</div>
-								</div>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-6 col-lg-6">
-											<div class="form-group">
-												<label for="email2">Tên tuyến</label>
-												<input type="text" class="form-control" id="name" value="{{tuyen.TenChuyen}}">
-										
-											</div>
-											<div class="form-group">
-												<label for="password">Điểm bắt đầu</label>
-												<input type="text" class="form-control" id="name" value="{{tuyen.DiemBatDau}}">
-                                                
-											</div>
-
-										</div>
-										<div class="col-md-6 col-lg-6">				
-											<div class="form-group">
-												<label for="password">Điểm kết thúc</label>
-												<input type="text" class="form-control" id="name" value="{{tuyen.DiemKetThuc}}">
-                                                
-											</div>
-											<div class="form-group">
-												<label for="password">Giờ khởi hành</label>
-												<input type="text" class="form-control" id="name" value="{{tuyen.GioKhoiHanh}}">
-                                                
-											</div>
-										</div>
-                                        <div class="col-md-6 col-lg-6">				
-											<div class="form-group">
-												<label for="password">Gía vé</label>
-												<input type="text" class="form-control" id="name" value="{{tuyen.GiaVeNguoiLon}}">
-                                                
-											</div>
-											<div class="form-group">
-												<label for="password">Giá vé người lớn</label>
-												<input type="number" class="form-control" id="tkadlt">
-                                                
-											</div>
-										</div>
-                                        
-										<div class="col-md-12 col-lg-12">				
-											<div class="card-header">
-                                                <div class="card-title">Thông tin ghế đã đặt</div>
-                                            </div>
-										</div>
-                                        <div class="col-md-6 col-lg-6">				
-											<div class="form-group">
-												<label for="email2">Danh sách ghế đã đặt</label>
-												{% for ghe in dsghe%}
-													<input type="text" class="form-control"  value="{{ghe.IDGhe}}">
-												{% endfor %}
-											</div>
-											<div class="form-group">
-												<label for="password">Tổng tiền</label>
-												<input type="number" class="form-control" value="{{pttt.SoTien}}">
-											</div>
-										</div>
-                                        <div class="col-md-12 col-lg-12">	
-                                            
-										
-										</div>
-
-							</div>
-						</div>
-					</div>
-                    
+	<!-- Basic Layout & Basic with Icons -->
+	<div class="row">
+	  <!-- Basic Layout -->
+	  <div class="col-xxl">
+		<div class="card mb-4">
+		  <div class="card-header d-flex align-items-center justify-content-between">
+			<h5 class="mb-0">Thông tin vé</h5>
+			<small class="text-muted float-end">Default label</small>
+		  </div>
+		  <div class="card-body">
+			<form>
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-name">Ngày đặt vé</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="basic-default-name" readonly value="{{ticket[0].NgayDat}}" placeholder="John Doe" />
 				</div>
-			</div>
-<script>
-
-$(document).ready(function() {
-
-
-});
-
-</script>
+			  </div>
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-company">Ngày đi</label>
+				<div class="col-sm-10">
+				  <input
+				    value="{{ticket[0].NgayDi}}"	
+					type="text"
+					readonly
+					class="form-control"
+					id="basic-default-company"
+					placeholder="ACME Inc." />
+				</div>
+			  </div>
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-company">Tên tuyến</label>
+				<div class="col-sm-10">
+				  <input
+				    value="{{ticket[1].TenChuyen}}"	
+					type="text"
+					readonly
+					class="form-control"
+					id="basic-default-company"
+					placeholder="ACME Inc." />
+				</div>
+			  </div>
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-company">Tổng tiền</label>
+				<div class="col-sm-10">
+				  <input
+				    value="{{ticket[2].SoTien}}đ"	
+					type="text"
+					readonly
+					class="form-control"
+					id="basic-default-company"
+					placeholder="ACME Inc." />
+				</div>
+			  </div>
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-company">Ghế đã đặt</label>
+				<div class="col-sm-10">
+				  <input
+				    value="{% for s in taken_seat %}
+					{{s.IDGhe}},  
+					{% endfor %}"	
+					type="text"
+					readonly
+					class="form-control"
+					id="basic-default-company"
+					placeholder="ACME Inc." />
+				</div>
+			  </div>	
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-company">Trạng thái vé</label>
+				<div class="col-sm-10">
+				  <input
+				    value="{{
+						"ĐẶT THÀNH CÔNG" if ticket[0].TrangThai == 1
+						else "ĐÃ HỦY" if ticket[0].TrangThai == 0
+						else "ĐÃ SỬ DỤNG"
+					  }}"	
+					type="text"
+					readonly
+					class="form-control"
+					id="basic-default-company"
+					placeholder="ACME Inc." />
+				</div>
+			  </div>	
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-company">Trạng thái thanh toán</label>
+				<div class="col-sm-10">
+				  <input
+				    value="{{ "Đã thanh toán" if ticket[2].TrangThai == 1 else ("Chưa thanh toán" if ticket[2].TrangThai == 0 else "Đã hoàn tiền") }}"	
+					type="text"
+					readonly
+					class="form-control"
+					id="basic-default-company"
+					placeholder="ACME Inc." />
+				</div>
+			  </div>	
+			  
+			  
+			  <div class="row justify-content-end">
+				<div class="col-sm-10">
+				  <button type="button" onclick="ticket_confirm()" class="btn btn-primary">Xác nhận sử dụng</button>
+				</div>
+			  </div>
+			</form>
+		  </div>
+		</div>
+	  </div>
+	  <script>
+		function ticket_confirm() {
+			
+            Swal.fire({
+                title: 'Xác nhận sử dụng vé?',
+				text: 'Vé sẽ được sử dụng cho chuyến xe này. Sau khi xác nhận sẽ không thể hoàn trả.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Có',
+                cancelButtonText: 'Không',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                    type: "POST",
+                    url: "/admin/confirm_normal_ticket_api",
+                    data: JSON.stringify({'id' : '{{ticket[0].MaVe}}' }),
+                    dataType: 'json',
+                    contentType: "application/json;charset=utf-8",
+                    success: function(response) {
+                            if (response.error === false) {
+                                
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành công!',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500 
+                                });
+                                window.location.reload()
+                                
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi',
+                                    text: response.message,
+                                });
+                            }
+                        },
+                        
+                    });    
+                } else {
+                    
+                    
+                }
+                });
+            
+            
+       
+		}
+	  </script>
+ 	
+  </div>
 {% endblock %}

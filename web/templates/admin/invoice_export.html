@@ -144,19 +144,20 @@
               <div class="mb-3" data-repeater-list="group-a">
                 <div class="repeater-wrapper pt-0 pt-md-4" data-repeater-item>
                   <div class="d-flex border rounded position-relative pe-0">
-                    <div class="row w-100 p-3">
+                    <div class="invoice-item-row row w-100 p-3">
                       <div class="col-md-6 col-12 mb-md-0 mb-3">
                         <p class="mb-2 repeater-title">Dịch vụ</p>
                         <select class="form-select item-details mb-3">
                           <option selected disabled>Chọn dịch vụ</option>
-                          <option value="App Design">App Design</option>
-                          <option value="App Customization">App Customization</option>
-                          <option value="ABC Template">ABC Template</option>
-                          <option value="App Development">App Development</option>
+                          <option data-gia="55000" value="Ưu tiên - một tuyến (55k/tháng)">Ưu tiên - một tuyến (55k/tháng)</option>
+                          <option data-gia="100000" value="Ưu tiên - liên tuyến (100k/tháng)">Ưu tiên - liên tuyến (100k/tháng)</option>
+                          <option data-gia="100000" value="Bình thường - một tuyến (100k/tháng)">Bình thường - một tuyến (100k/tháng)</option>
+                          <option data-gia="200000" value="Bình thường - liên tuyến (200k/tháng)">Bình thường - liên tuyến (200k/tháng)</option>
+                          <option data-gia="0" value="Khác">Khác</option>
                         </select>
                         <textarea class="form-control" rows="2" placeholder="Item Information"></textarea>
                       </div>
-                      <div class="col-md-3 col-12 mb-md-0 mb-3">
+                      <div class="col-md-2 col-12 mb-md-0 mb-3">
                         <p class="mb-2 repeater-title">Số tiền</p>
                         <input
                           type="number"
@@ -174,71 +175,21 @@
                           min="1"
                           max="50" />
                       </div>
-                      <div class="col-md-1 col-12 pe-0">
+                      <div class="col-md-2 col-12 pe-0">
                         <p class="mb-2 repeater-title">Thành tiền</p>
-                        <p class="mb-0">$24.00</p>
+                        <p  class="rp-amount mb-0"></p>
                       </div>
                     </div>
-                    <div
-                      class="d-flex flex-column align-items-center justify-content-between border-start p-2">
-                      <i class="mdi mdi-close cursor-pointer" data-repeater-delete></i>
-                      <div class="dropdown">
-                        <i
-                          class="mdi mdi-cog-outline cursor-pointer more-options-dropdown"
-                          role="button"
-                          id="dropdownMenuButton"
-                          data-bs-toggle="dropdown"
-                          data-bs-auto-close="outside"
-                          aria-expanded="false">
-                        </i>
-                        <div
-                          class="dropdown-menu dropdown-menu-end w-px-300 p-3"
-                          aria-labelledby="dropdownMenuButton">
-                          <div class="row g-3">
-                            <div class="col-12">
-                              <label for="discountInput" class="form-label">Discount(%)</label>
-                              <input
-                                type="number"
-                                class="form-control"
-                                id="discountInput"
-                                min="0"
-                                max="100" />
-                            </div>
-                            <div class="col-md-6">
-                              <label for="taxInput1" class="form-label">Tax 1</label>
-                              <select name="tax-1-input" id="taxInput1" class="form-select tax-select">
-                                <option value="0%" selected>0%</option>
-                                <option value="1%">1%</option>
-                                <option value="10%">10%</option>
-                                <option value="18%">18%</option>
-                                <option value="40%">40%</option>
-                              </select>
-                            </div>
-                            <div class="col-md-6">
-                              <label for="taxInput2" class="form-label">Tax 2</label>
-                              <select name="tax-2-input" id="taxInput2" class="form-select tax-select">
-                                <option value="0%" selected>0%</option>
-                                <option value="1%">1%</option>
-                                <option value="10%">10%</option>
-                                <option value="18%">18%</option>
-                                <option value="40%">40%</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div class="dropdown-divider my-3"></div>
-                          <button type="button" class="btn btn-outline-primary btn-apply-changes">
-                            Apply
-                          </button>
-                        </div>
+                      <div class="rpt-deleter d-flex flex-column align-items-center justify-content-between border-start p-2">
+                                  <i class="mdi mdi-close cursor-pointer" data-repeater-delete></i>
                       </div>
-                    </div>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
                   <button type="button" class="btn btn-sm btn-primary" data-repeater-create>
-                    <i class="mdi mdi-plus me-1"></i> Add Item
+                    <i class="mdi mdi-plus me-1"></i> Thêm
                   </button>
                 </div>
               </div>
@@ -254,38 +205,38 @@
                     type="text"
                     class="form-control"
                     id="salesperson"
-                    placeholder="Edward Crowley"
-                    value="Edward Crowley" />
-                  <label for="salesperson" class="fw-medium">Salesperson</label>
+                    placeholder="Nhân viên VNBuz"
+                    value="Nhân viên VNBuz" />
+                  <label for="salesperson" class="fw-medium">Người thực hiện</label>
                 </div>
                 <div class="form-floating form-floating-outline mb-4">
                   <input
                     type="text"
                     class="form-control"
                     id="invoiceMsg"
-                    placeholder="Thanks for your business"
-                    value="Thanks for your business" />
-                  <label for="invoiceMsg">Customer Notes</label>
+                    placeholder="Cảm ơn đã sử dụng dịch vụ của VNBuz!"
+                    value="Cảm ơn đã sử dụng dịch vụ của VNBuz!" />
+                  <label for="invoiceMsg">Ghi chú</label>
                 </div>
               </div>
               <div class="col-md-6 d-flex justify-content-md-end mt-2">
                 <div class="invoice-calculations">
                   <div class="d-flex justify-content-between mb-2">
-                    <span class="w-px-150">Subtotal:</span>
-                    <h6 class="mb-0 pt-1">$5000.25</h6>
+                    <span class="w-px-150">Tạm tính:</span>
+                    <h6 class="mb-0 pt-1 i-subtotal">0</h6>đ
                   </div>
                   <div class="d-flex justify-content-between mb-2">
-                    <span class="w-px-150">Discount:</span>
-                    <h6 class="mb-0 pt-1">$00.00</h6>
+                    <span class="w-px-150">Khuyến mãi:</span>
+                    <h6 class="mb-0 pt-1">0đ</h6>
                   </div>
                   <div class="d-flex justify-content-between mb-2">
-                    <span class="w-px-150">Tax:</span>
-                    <h6 class="mb-0 pt-1">$100.00</h6>
+                    <span class="w-px-150">Thuế:</span>
+                    <h6 class="mb-0 pt-1">0đ</h6>
                   </div>
                   <hr />
                   <div class="d-flex justify-content-between">
-                    <span class="w-px-150">Total:</span>
-                    <h6 class="mb-0 pt-1">$5100.25</h6>
+                    <span class="w-px-150">Tổng tiền:</span>
+                    <h6 class="mb-0 pt-1" i-total>0</h6>đ
                   </div>
                 </div>
               </div>
@@ -296,8 +247,8 @@
             <div class="row">
               <div class="col-12">
                 <div class="mb-3">
-                  <label for="note" class="form-label fw-medium text-heading">Note:</label>
-                  <textarea class="form-control" rows="2" id="note" placeholder="Invoice note"></textarea>
+                  <label for="note" class="form-label fw-medium text-heading">Ghi chú hóa đơn:</label>
+                  <textarea class="form-control" rows="2" id="note" placeholder="Nhập ghi chú hóa đơn"></textarea>
                 </div>
               </div>
             </div>
@@ -308,137 +259,82 @@
 
       <!-- Invoice Actions -->
       <div class="col-lg-3 col-12 invoice-actions">
+        <div>
+          <div class="form-floating form-floating-outline mb-4">
+            <select class="form-select bg-body mb-4" id="payment-method">
+              <option value="0">Tiền mặt</option>
+              <option value="1">VNPay</option>
+              <option value="2">Số dư ví: {{wallet.SoDu}}</option>
+              <option value="3">VNPay</option>
+            </select>
+            <label for="payment-method" class="bg-body">Thanh toán qua</label>
+          </div>
+          
+        </div>
+        
         <div class="card mb-4">
+          
           <div class="card-body">
             <button
               class="btn btn-primary d-grid w-100 mb-3"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#sendInvoiceOffcanvas">
+              onclick="save_invoice()"
+              >
               <span class="d-flex align-items-center justify-content-center text-nowrap"
-                ><i class="mdi mdi-send-outline scaleX-n1-rtl me-2"></i>Send Invoice</span
+                ><i class="mdi mdi-send-outline scaleX-n1-rtl me-2"></i>LƯU HÓA ĐƠN</span
               >
             </button>
-            <a href="./app-invoice-preview.html" class="btn btn-outline-secondary d-grid w-100 mb-3"
-              >Preview</a
-            >
-            <button type="button" class="btn btn-outline-secondary d-grid w-100">Save</button>
+            
           </div>
         </div>
-        <div>
-          <div class="form-floating form-floating-outline mb-4">
-            <select class="form-select bg-body mb-4" id="select-payment-add">
-              <option value="Bank Account">Bank Account</option>
-              <option value="Paypal">Paypal</option>
-              <option value="Card">Credit/Debit Card</option>
-              <option value="UPI Transfer">UPI Transfer</option>
-            </select>
-            <label for="select-payment-add" class="bg-body">Accept payments via</label>
-          </div>
-          <div class="d-flex justify-content-between mb-2">
-            <label for="payment-terms" class="mb-0">Payment Terms</label>
-            <label class="switch switch-primary me-0">
-              <input type="checkbox" class="switch-input" id="payment-terms" checked />
-              <span class="switch-toggle-slider">
-                <span class="switch-on"></span>
-                <span class="switch-off"></span>
-              </span>
-              <span class="switch-label"></span>
-            </label>
-          </div>
-          <div class="d-flex justify-content-between mb-2">
-            <label for="client-notes" class="mb-0">Client Notes</label>
-            <label class="switch switch-primary me-0">
-              <input type="checkbox" class="switch-input" id="client-notes" />
-              <span class="switch-toggle-slider">
-                <span class="switch-on"></span>
-                <span class="switch-off"></span>
-              </span>
-              <span class="switch-label"></span>
-            </label>
-          </div>
-          <div class="d-flex justify-content-between">
-            <label for="payment-stub" class="mb-0">Payment Stub</label>
-            <label class="switch switch-primary me-0">
-              <input type="checkbox" class="switch-input" id="payment-stub" />
-              <span class="switch-toggle-slider">
-                <span class="switch-on"></span>
-                <span class="switch-off"></span>
-              </span>
-              <span class="switch-label"></span>
-            </label>
-          </div>
-        </div>
+        
       </div>
       <!-- /Invoice Actions -->
     </div>
-
-    <!-- Offcanvas -->
-    <!-- Send Invoice Sidebar -->
-    <div class="offcanvas offcanvas-end" id="sendInvoiceOffcanvas" aria-hidden="true">
-      <div class="offcanvas-header mb-3">
-        <h5 class="offcanvas-title">Send Invoice</h5>
-        <button
-          type="button"
-          class="btn-close text-reset"
-          data-bs-dismiss="offcanvas"
-          aria-label="Close"></button>
-      </div>
-      <div class="offcanvas-body flex-grow-1">
-        <form>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-from"
-              value="shelbyComapny@email.com"
-              placeholder="company@email.com" />
-            <label for="invoice-from">From</label>
+    <div class="modal fade" id="VNPayQRModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-simple">
+        <div class="modal-content p-3 p-md-5">
+          <div class="modal-body py-3 py-md-0">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="text-center mb-4">
+              <h3 class="mb-0">Thanh toán hóa đơn bằng mã QR VNPay</h3>
+            </div>
+            <h5 class="mb-3 pt-1 text-break">Sử dụng ứng dụng VNPay hoặc ngân hàng</h5>
+            <p class="mb-4">
+              Hoặc chọn chức năng quét mã QR trên máy sau đó quét mã bên dưới để tiếp tục.
+            </p>
+            <div class="text-center mb-4">
+              <img id="vnpay-qrcode" src="" alt="QR Code" width="122" />
+            </div>
+            <div class="alert alert-warning alert-dismissible my-4" role="alert">
+              <h5 class="alert-heading mb-2 text-break">Lưu ý</h5>
+              <p class="mb-0">Nếu đã thanh toán thành công trên VNPay nhưng kiểm tra kết quả giao dịch trả về kết quả lỗi chúng tôi sẽ xác minh và hoàn tiền trong vàng 3 - 5 ngày. Vui lòng không tắt trình duyệt cho tới khi kiểm tra kết quả hoàn thành!</p>
+            </div>
+            <div class="mb-4">
+              <input
+                type="email"
+                class="form-control form-control-lg"
+                id="twoFactorAuthInput"
+                placeholder="Nhập mã xác nhận" />
+            </div>
+            <div class="col-12 text-end">
+              <button
+                type="button"
+                class="btn btn-outline-secondary me-sm-3 me-1"
+                data-bs-toggle="modal"
+                data-bs-target="#twoFactorAuth">
+                <i class="mdi mdi-arrow-left me-1 scaleX-n1-rtl"></i
+                ><span class="align-middle d-none d-sm-inline-block">Trở về</span>
+              </button>
+              <button type="button" class="btn btn-primary" aria-label="Close">
+                <span class="align-middle d-none d-sm-inline-block">Kiểm tra giao dịch</span
+                ><i class="mdi mdi-arrow-right ms-1 scaleX-n1-rtl"></i>
+              </button>
+            </div>
           </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-to"
-              value="qConsolidated@email.com"
-              placeholder="company@email.com" />
-            <label for="invoice-to">To</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <input
-              type="text"
-              class="form-control"
-              id="invoice-subject"
-              value="Invoice of purchased Admin Templates"
-              placeholder="Invoice regarding goods" />
-            <label for="invoice-subject">Subject</label>
-          </div>
-          <div class="form-floating form-floating-outline mb-4">
-            <textarea class="form-control" name="invoice-message" id="invoice-message" style="height: 190px">
-                Dear Queen Consolidated,
-                Thank you for your business, always a pleasure to work with you!
-                We have generated a new invoice in the amount of $95.59
-                We would appreciate payment of this invoice by 05/11/2021</textarea
-            >
-            <label for="invoice-message">Message</label>
-          </div>
-          <div class="mb-4">
-            <span class="badge bg-label-primary rounded-pill">
-              <i class="mdi mdi-link-variant mdi-14px me-1"></i>
-              <span class="align-middle">Invoice Attached</span>
-            </span>
-          </div>
-          <div class="mb-3 d-flex flex-wrap">
-            <button type="button" class="btn btn-primary me-3" data-bs-dismiss="offcanvas">Send</button>
-            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">
-              Cancel
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
-    <!-- /Send Invoice Sidebar -->
-
-    <!-- /Offcanvas -->
+    
   </div>
   
   <!-- Vendors JS -->
@@ -446,8 +342,100 @@
   
   <!-- Page JS -->
   <script>
+    function getAllItemDetails() {
+      var itemDetails = [];
+
+      $('.repeater-wrapper:not([style*="display: none"])').each(function () {
+        var type = $(this).find('.item-details').val();
+        var description = $(this).find('textarea').val();
+        var quantity = parseInt($(this).find('.invoice-item-qty').val()) || 1;
+        var price = parseFloat($(this).find('.invoice-item-price').val()) || 0;
+        var totalPrice = price * quantity;
+
+        var itemDetail = {
+          type: type,
+          description: description,
+          quantity: quantity,
+          totalPrice: totalPrice
+        };
+
+        itemDetails.push(itemDetail);
+      });
+
+      return itemDetails;
+    }
+
+    function check_invoice(allItemDetails) {
+      var hasEmptyItem = false;
+      for (var i = 0; i < allItemDetails.length; i++) {
+        var item = allItemDetails[i];
+
+        if (!item.type || !item.description || !item.quantity || !item.totalPrice) {
+          hasEmptyItem = true;
+          break; 
+        }
+      }
+      return hasEmptyItem 
+    }
+    
+    function save_invoice() {
+      var note = $('#note').val();
+      var total = $('[i-total]').text();
+      var paymentMethod = $('#payment-method').val();
+      var userId = '{{customer.nguoidung.MaNguoiDung}}';
+      var itemDetails = getAllItemDetails();
+      var check = check_invoice(itemDetails);
+      console.log(check);
+      if (check) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Lỗi',
+          text: 'Vui lòng nhập đầy đủ thông tin cho tất cả các mục trong hóa đơn.',
+        });
+        return false;
+      }
+
+      var requestData = {
+        note: note,
+        paymentMethod: paymentMethod,
+        userId: userId,
+        total: total,
+        items: itemDetails
+      };
+
+      $.ajax({
+        type: 'POST',
+        url: '/admin/save_customer_invoice_api',
+        data: JSON.stringify(requestData),
+        contentType: 'application/json',
+        success: function (response) { 
+          Swal.fire({
+            icon: 'success',
+            title: 'Hóa đơn đã được lưu thành công!',
+            showCancelButton: false,
+            confirmButtonText: 'Xem chi tiết',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then((result) => {
+            
+            if (result.isConfirmed) {
+              window.location.href = '/admin/invoice_detail/' + response.id; 
+            }
+          });
+        },
+        error: function (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Lỗi',
+            text: 'Đã xảy ra lỗi khi lưu hóa đơn. Vui lòng thử lại sau.',
+          });
+        }
+      });
+    }
+
+
     document.addEventListener('DOMContentLoaded', function () {
-      
+    
       // repeater (jquery)
       $(function () {
         var applyChangesBtn = $('.btn-apply-changes'),
@@ -459,10 +447,11 @@
           tax2Input,
           sourceItem = $('.source-item'),
           adminDetails = {
-            'App Design': 'Designed UI kit & app pages.',
-            'App Customization': 'Customization & Bug Fixes.',
-            'ABC Template': 'Bootstrap 4 admin template.',
-            'App Development': 'Native App Development.'
+            'Ưu tiên - một tuyến (55k/tháng)': ['Dịch vụ vé tháng ưu tiên dành cho một tuyến cố định.', 55000],
+            'Ưu tiên - liên tuyến (100k/tháng)': ['Dịch vụ vé tháng  ưu tiên dành cho tất cả các tuyến hiện tại.', 100000],
+            'Bình thường - một tuyến (100k/tháng)': ['Dịch vụ vé thành dành cho người bình thường một tuyến cố định.', 100000],
+            'Bình thường - liên tuyến (200k/tháng)': ['Dịch vụ vé tháng dành cho người bình thường có thể sử dụng cho tất cả các tuyến hiện tại.', 200000],
+            'Khác': ['', 0]
           };
 
         // Prevent dropdown from closing on tax change
@@ -495,21 +484,74 @@
           });
         }
 
-        // Item details select onchange
         $(document).on('change', '.item-details', function () {
-          var $this = $(this),
-            value = adminDetails[$this.val()];
-          if ($this.next('textarea').length) {
-            $this.next('textarea').val(value);
-          } else {
-            $this.after('<textarea class="form-control" rows="2">' + value + '</textarea>');
-          }
+            var $this = $(this),
+              value = adminDetails[$this.val()];
+            var textarea = $this.next('textarea');
+            var inputPrice = $this.closest('.row').find('.invoice-item-price');
+            var inputQty = $this.closest('.row').find('.invoice-item-qty');
+            var rpAmount = $this.closest('.row').find('.rp-amount');
+
+            if (textarea.length) {
+              textarea.val(value[0]);
+              inputPrice.val(value[1]);
+              inputQty.val(1);
+            } else {
+              $this.after('<textarea class="form-control" rows="2">' + value[0] + '</textarea>');
+            }
+
+            var quantity = parseInt(inputQty.val()) || 1;
+            var totalPrice = parseFloat(value[1]) * quantity;
+            rpAmount.text(totalPrice.toFixed(0));
+            updateInvoiceCalculations();
+          });
         });
-      });
+        $(document).on('input', '.invoice-item-price, .invoice-item-qty', function () {
+          var row = $(this).closest('.row');
+          var priceInput = row.find('.invoice-item-price');
+          var qtyInput = row.find('.invoice-item-qty');
+          var rpAmount = row.find('.rp-amount');
 
+          var price = parseFloat(priceInput.val()) || 0;
+          var qty = parseInt(qtyInput.val()) || 1;
 
+          var totalPrice = price * qty;
+          rpAmount.text(totalPrice.toFixed(0));
 
+          updateInvoiceCalculations();
 
+        });
+
+        function updateInvoiceCalculations() {
+          var subtotal = calculateSubtotal();
+          var total = subtotal;
+          $('.i-subtotal').text(subtotal.toFixed(0));
+          $('[i-total]').text(total.toFixed(0));
+        }
+        function calculateSubtotal() {
+          var subtotal = 0;
+          $('.repeater-wrapper:not([style*="display: none"])').each(function () {
+            var price = parseFloat($(this).find('.invoice-item-price').val()) || 0;
+            var qty = parseInt($(this).find('.invoice-item-qty').val()) || 1;
+            subtotal += price * qty;
+          });
+          return subtotal;
+        }
+        $(document).on('click', '.rpt-deleter', function () {
+          var row = $(this).closest('.repeater-wrapper');
+            var price = parseFloat(row.find('.invoice-item-price').val()) || 0;
+            console.log(price)
+            var qty = parseInt(row.find('.invoice-item-qty').val()) || 1;
+            
+            var subtotal = calculateSubtotal();
+            console.log(subtotal);
+            var total = subtotal - price * qty;
+            console.log(total);
+    
+            $('.i-subtotal').text(total.toFixed(0));
+            $('[i-total]').text(total.toFixed(0));
+
+        });
 
      });
   </script>  

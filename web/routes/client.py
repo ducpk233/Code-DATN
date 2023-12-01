@@ -5,7 +5,7 @@ from json import dumps
 from lib2to3.pgen2 import driver
 from flask_qrcode import QRcode
 from sqlalchemy import false
-from app import app, chuyenxe, datve, lichsudatghe, lichsuvi, lotrinh, nguoidung, khachhang, phuongthucthanhtoan, taixe, vinguoidung, xebus
+from app import app, chuyenxe, datve, dondangky, lichsudatghe, lichsuve, lichsuvi, lotrinh, nguoidung, khachhang, phuongthucthanhtoan, taixe, vethang, vinguoidung, xebus
 from flask import Blueprint, redirect, render_template, session, url_for
 from datetime import datetime
 from flask import jsonify, request, flash
@@ -189,7 +189,35 @@ def profile_update():
 		app.db_session.commit()
 		flash('Cập nhật thành công!')
 	return render_template('profile_update.html', get_user = user, get_user_info = user_info)
-	
+
+#vé tháng	
+@client.route("/monthly_ticket")
+@login_required
+def monthly_ticket():
+	id = session['id']
+	customer = app.db_session.query(nguoidung, khachhang).join(khachhang).filter(nguoidung.MaNguoiDung == id).first()
+	#lịch sử đăng ký vé tháng
+	reg_history = app.db_session.query(dondangky).filter(dondangky.MaKhachHang == customer.khachhang.MaKhachHang).all()
+	#lấy vé tháng
+	plan = app.db_session.query(vethang).filter(vethang.MaKhachHang == customer.khachhang.MaKhachHang).first()
+    #lấy ds tuyến đq hoạt động
+	routes = app.db_session.query(chuyenxe).filter(chuyenxe.TrangThai == 1).all()
+	plan_history = None
+	route = None
+	diff = None
+	current_date = datetime.now().date()
+	if plan:
+		diff = plan.NgayKetThuc- current_date
+		diff = diff.days
+		plan_history = app.db_session.query(lichsuve).filter(plan.MaVeThang == lichsuve.MaVeThang).order_by(lichsuve.Ngay.desc()).all()
+		if plan.MaTuyenCoDinh:
+			route = app.db_session.query(chuyenxe).filter(vethang.MaTuyenCoDinh == chuyenxe.MaChuyen).first()
+    
+	return render_template('monthly-ticket.html', customer = customer, plan = plan , reg_history = reg_history, 
+                           plan_history = plan_history, route = route, diff = diff, current_date = current_date,
+                           routes = routes)  
+
+
 @client.route('/contact')
 def contact():
 	return render_template('contact.html')
@@ -198,6 +226,8 @@ def contact():
 def notification():
 	return render_template('notification.html')	
 
+
+#chọn ghế
 @client.route('/select_seat', methods=['GET'])
 def select_seat():
 	id = request.args.get("id")
@@ -210,7 +240,7 @@ def select_seat():
 	path = app.db_session.query(lotrinh).filter_by(MaChuyen = route.MaChuyen).all()
 	return render_template('select-seat.html', route = route, bus = bus, driver = driver, path = path, date = date)	
 
-
+#chọn tuyến
 @client.route('/select_route', methods=['GET'])
 def select_route():
 	bg_point = request.args.get('bg_point').strip()
@@ -316,6 +346,8 @@ def payment_return():
 	else:
 		return render_template("payment-return.html", title="Kết quả thanh toán", result="")
 
+
+
 #api
 @client.route("/build_vnpay_url", methods=['POST'])
 def build_vnpay_url():
@@ -367,7 +399,7 @@ def add_fund_build_url():
 	print(vnpay_payment_url)
 	return jsonify(vnpay_payment_url)
 
-
+#trả bằng ví
 @client.route("/pay_with_wallet", methods=['POST'])
 def pay_with_wallet():
 	user_id  = session['id']
@@ -402,7 +434,7 @@ def get_arr_point_api():
     unique_endp = list(set(endp))
     return unique_endp
 
-
+#hủy vé
 @client.route("/cancel_ticket_api", methods=['POST'])
 def cancel_ticket_api():
 	user_id  = session['id']
@@ -428,7 +460,7 @@ def cancel_ticket_api():
 			resp = {'error' : False, 'message' : 'Đã hủy vé thành công!'}
 		app.db_session.commit()
 		return resp
-
+#đặt vé
 @client.route("/book_ticket_api", methods=['POST'])
 def book_ticket_api():
 	seats  = request.json['seat']
@@ -454,7 +486,7 @@ def book_ticket_api():
 	resp = {'error' : 'false', 'message' : 'Đặt vé thành công', 'id' : vx.MaVe}
 	return resp
 
-
+#kiểm tra ghế trống
 @client.route("/check_avai_seat", methods=['POST'])
 def check_avai_seat():
     route_id  = request.json['route_id']
@@ -466,6 +498,43 @@ def check_avai_seat():
     resp = data_json
     return resp
 
+#khóa vé tháng
+@client.route('/lock_monthly_ticket_api', methods=['POST'])
+def lock_monthly_ticket_api():
+	id  = request.json['id']
+	bl = app.db_session.query(vethang).filter_by(MaVeThang=id).first()
+	if bl:
+		bl.TrangThai = 0
+		evt = "Người sử dụng khóa vé tháng"
+		his = lichsuve(MaVeThang = id, SuKien = evt, Ngay = datetime.now())
+		app.db_session.add(his)
+		app.db_session.commit()
+		return jsonify({'error' : False, 'message' : 'Cập nhật trạng thái vé tháng thành công!'})
+	else:
+	    return jsonify({'error' : True, 'message' : 'Vé tháng không tồn tại! Vui lòng tải lại trang'})
+
+from datetime import timedelta, date
+#gia hạn thêm vé tháng bằng ví
+@client.route("/add_date_with_wallet", methods=['POST'])
+def add_date_with_wallet():
+	user_id  = session['id']
+	id  = request.json['ticket_id']
+	
+	bl = app.db_session.query(vethang).filter_by(MaVeThang=id).first()
+	wallet = app.db_session.query(vinguoidung).filter_by(MaNguoiDung = user_id).first()
+	if wallet.SoDu > bl.GiaVe:
+		#cập nhật lại số dư ví, số tiền còn lại trong ví = số dư - giá vé
+		wallet.SoDu = wallet.SoDu - bl.GiaVe
+		bl.NgayKetThuc = bl.NgayKetThuc + + timedelta(days=30)
+		his = lichsuve(MaVeThang = id, SuKien = "Gia hạn vé thêm 30 ngày bằng ví cá nhân", Ngay = datetime.now())
+		now = datetime.now().date()
+		wallet_his = lichsuvi(MaVi = wallet.MaVi, TenGiaoDich = 'Gia hạn cho vé tháng. -' + str(bl.GiaVe) + 'đ' , NgayGiaoDich = datetime.now(), SoTien = -bl.GiaVe)
+		app.db_session.add(his)
+		app.db_session.add(wallet_his)
+		app.db_session.commit()
+		return jsonify({'error' : False, 'message' : 'Đã thanh toán bằng ví thành công!'})
+	else:
+		return jsonify({'error' : True, 'message' : 'Số dư ví không đủ! Vui lòng nạp thêm để tiếp tục'})
 
 
 def generate_unique_filename(filename):

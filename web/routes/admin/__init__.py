@@ -17,5 +17,5 @@ from .bus_route import route_api
 from routes.admin.admin_api import *
 from .customer import customer_api
 from .driver import driver_api
-
-
+from .cashier import cashier_api
+from .invoice import invoice_api

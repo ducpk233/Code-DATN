@@ -1,8 +1,9 @@
 from datetime import timedelta
 from flask import jsonify, render_template
-from app import app, datve, dondangky, khachhang, lichsuve, lichsuvi, nguoidung, vethang, vinguoidung
+from app import app, datve, dondangky, hoadon, khachhang, lichsuve, lichsuvi, nguoidung, vethang, vinguoidung
 from routes.admin.helper import  login_required, roles_required, serialize
 from routes.admin import  *
+from vnpay_config import settings, vnpay
 
 #quản lý người dùng (khach hang)  
 #page
@@ -55,17 +56,6 @@ def customer_wallet(id):
     return render_template('admin/profile_detail/customer_wallet.html', customer = customer, wallet = wallet, wallet_history = wallet_history)  
 
 
-@padmin.route("/invoice_export/<int:id>")
-@login_required
-@roles_required("3", "2")
-def invoice_export(id):
-    now = datetime.now()
-    customer = app.db_session.query(nguoidung, khachhang).join(khachhang).filter(nguoidung.MaNguoiDung == id).first()
-    wallet = app.db_session.query(vinguoidung).filter(vinguoidung.MaNguoiDung == id).first()
-    print(wallet.MaVi)
-    wallet_history = app.db_session.query(lichsuvi).filter(lichsuvi.MaVi == wallet.MaVi).all()
-    return render_template('admin/invoice_export.html', customer = customer, wallet = wallet, wallet_history = wallet_history, now = now.date())  
-
 @padmin.route("/customer_detail/<int:id>", methods=['GET'])
 @login_required
 @roles_required("3", "2")
@@ -85,7 +75,18 @@ def view_user_detail(id):
 		.all()
 	)
     print(ticket_list)
-    return render_template('admin/profile_detail/customer_detail.html', customer = customer, ticket_list = ticket_list, )   
+
+    HoaDonAlias = aliased(hoadon)
+    NguoiDungAlias = aliased(nguoidung)
+    KhachHangAlias = aliased(khachhang)
+    result = (
+		app.db_session.query(NguoiDungAlias, HoaDonAlias, KhachHangAlias)
+		.join(NguoiDungAlias, HoaDonAlias.MaNguoiDung == NguoiDungAlias.MaNguoiDung)
+		.join(KhachHangAlias, NguoiDungAlias.MaNguoiDung == KhachHangAlias.MaNguoiDung)
+        .filter(NguoiDungAlias.MaNguoiDung == id)
+		.all()
+	)
+    return render_template('admin/profile_detail/customer_detail.html', customer = customer, ticket_list = ticket_list, invoice_list = result )   
 
 @padmin.route("/customer_security/<int:id>", methods=['GET'])
 @login_required
@@ -288,3 +289,33 @@ def update_customer_balance_api(id):
         return jsonify({'error' : False, 'message' : 'Cập nhật số dư ví thành công!'})
     else:
         return jsonify({'error' : True, 'message' : 'Ví người dùng không tồn tại! Vui lòng tải lại trang'})
+    
+
+
+
+#url vnpay
+@padmin.route("/build_vnpay_url_for_invoice", methods=['POST'])
+def build_vnpay_url():
+	
+	od_desc  = request.json['desc']
+	
+	od_id  = request.json['id']
+	od_amount  = int(request.json['amount'])
+	#ipaddr = get_client_ip(request)
+	# Build URL Payment
+	vnp = vnpay()
+	vnp.requestData['vnp_Version'] = '2.1.0'
+	vnp.requestData['vnp_Command'] = 'pay'
+	vnp.requestData['vnp_TmnCode'] = settings.VNPAY_TMN_CODE
+	vnp.requestData['vnp_Amount'] = od_amount * 100
+	vnp.requestData['vnp_CurrCode'] = 'VND'
+	vnp.requestData['vnp_TxnRef'] = od_id
+	vnp.requestData['vnp_OrderInfo'] = od_desc
+	vnp.requestData['vnp_OrderType'] = 'billpayment'
+	vnp.requestData['vnp_Locale'] = 'vn'
+	vnp.requestData['vnp_CreateDate'] = datetime.now().strftime('%Y%m%d%H%M%S')  # 20150410063022
+	vnp.requestData['vnp_IpAddr'] = "127.0.0.1"
+	vnp.requestData['vnp_ReturnUrl'] = settings.VNPAY_RETURN_INVOICE
+	vnpay_payment_url = vnp.get_payment_url(settings.VNPAY_PAYMENT_URL, settings.VNPAY_HASH_SECRET_KEY)
+	print(vnpay_payment_url)
+	return jsonify(vnpay_payment_url)

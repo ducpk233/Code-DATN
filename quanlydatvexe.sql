@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2023 at 01:23 PM
+-- Generation Time: Nov 30, 2023 at 05:32 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -73,15 +73,16 @@ CREATE TABLE `datve` (
 --
 
 INSERT INTO `datve` (`MaVe`, `MaChuyen`, `MaKhachHang`, `NgayDat`, `TrangThai`, `NgayDi`, `DiemDon`, `DiemTra`) VALUES
-(36, 32, 10, '2023-11-08 10:33:14', 1, '2023-11-11', 'Ngã 3 Phong Vũ - 07:15:00', NULL),
+(36, 32, 10, '2023-11-08 10:33:14', 2, '2023-11-11', 'Ngã 3 Phong Vũ - 07:15:00', NULL),
 (37, 32, 10, '2023-11-08 15:20:03', 0, '2023-11-09', 'KCN Visip 1 - 10:00:00', NULL),
 (39, 33, 10, '2023-11-08 20:27:06', 0, '2023-11-11', 'Đại học Bình Dương - 14:00:00', NULL),
-(40, 32, 10, '2023-11-08 22:55:36', 1, '2023-11-09', 'Đại học Bình Dương - 07:00:00', NULL),
+(40, 32, 10, '2023-11-08 22:55:36', 2, '2023-11-30', 'Đại học Bình Dương - 07:00:00', NULL),
 (41, 32, 10, '2023-11-14 09:36:41', 1, '2023-11-14', 'Đại học Bình Dương - 07:00:00', NULL),
 (42, 32, 10, '2023-11-14 09:37:05', 1, '2023-11-14', 'Đại học Bình Dương - 07:00:00', NULL),
 (43, 33, 10, '2023-11-14 09:57:53', 1, '2023-11-15', 'Đại học Thủ Dầu Một - 13:00:00', NULL),
 (44, 33, 10, '2023-11-14 09:59:21', 1, '2023-11-15', 'Đại học Thủ Dầu Một - 13:00:00', NULL),
-(45, 33, 10, '2023-11-14 10:01:12', 1, '2023-11-15', 'Đại học Thủ Dầu Một - 13:00:00', NULL);
+(45, 33, 10, '2023-11-14 10:01:12', 1, '2023-11-15', 'Đại học Thủ Dầu Một - 13:00:00', NULL),
+(46, 33, 10, '2023-11-29 09:25:11', 0, '2023-12-02', 'Vòng xoay An Phú - 15:30:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -671,7 +672,7 @@ CREATE TABLE `hoadon` (
   `MaHoaDon` int(11) NOT NULL,
   `TenDichVu` varchar(5000) DEFAULT NULL,
   `ChiTietDichVu` varchar(5000) DEFAULT NULL,
-  `TrangThai` bit(1) DEFAULT NULL,
+  `TrangThai` int(11) DEFAULT NULL,
   `SoTien` int(11) DEFAULT NULL,
   `PhuongThucThanhToan` varchar(100) DEFAULT NULL,
   `MaNguoiDung` int(11) DEFAULT NULL,
@@ -679,6 +680,14 @@ CREATE TABLE `hoadon` (
   `NgayThanhToan` datetime DEFAULT NULL,
   `LuuY` varchar(5000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `hoadon`
+--
+
+INSERT INTO `hoadon` (`MaHoaDon`, `TenDichVu`, `ChiTietDichVu`, `TrangThai`, `SoTien`, `PhuongThucThanhToan`, `MaNguoiDung`, `NgayLap`, `NgayThanhToan`, `LuuY`) VALUES
+(3, NULL, '[{\"type\": \"B\\u00ecnh th\\u01b0\\u1eddng - li\\u00ean tuy\\u1ebfn (200k/th\\u00e1ng)\", \"description\": \"D\\u1ecbch v\\u1ee5 v\\u00e9 th\\u00e1ng d\\u00e0nh cho ng\\u01b0\\u1eddi b\\u00ecnh th\\u01b0\\u1eddng c\\u00f3 th\\u1ec3 s\\u1eed d\\u1ee5ng cho t\\u1ea5t c\\u1ea3 c\\u00e1c tuy\\u1ebfn hi\\u1ec7n t\\u1ea1i.\", \"quantity\": 2, \"totalPrice\": 400000}, {\"type\": \"Kh\\u00e1c\", \"description\": \"Mua v\\u00e9 m\\u1ed9t tuy\\u1ebfn\", \"quantity\": 2, \"totalPrice\": 15000}, {\"type\": \"\\u01afu ti\\u00ean - m\\u1ed9t tuy\\u1ebfn (55k/th\\u00e1ng)\", \"description\": \"D\\u1ecbch v\\u1ee5 v\\u00e9 th\\u00e1ng \\u01b0u ti\\u00ean d\\u00e0nh cho m\\u1ed9t tuy\\u1ebfn c\\u1ed1 \\u0111\\u1ecbnh.\", \"quantity\": 2, \"totalPrice\": 110000}]', 0, 525000, '1', 40, '2023-11-29 10:35:44', NULL, 'zzzzzzzzzzzzzzzzzzzzzzzzzz'),
+(6, NULL, '[{\"type\": \"B\\u00ecnh th\\u01b0\\u1eddng - li\\u00ean tuy\\u1ebfn (200k/th\\u00e1ng)\", \"description\": \"D\\u1ecbch v\\u1ee5 v\\u00e9 th\\u00e1ng d\\u00e0nh cho ng\\u01b0\\u1eddi b\\u00ecnh th\\u01b0\\u1eddng c\\u00f3 th\\u1ec3 s\\u1eed d\\u1ee5ng cho t\\u1ea5t c\\u1ea3 c\\u00e1c tuy\\u1ebfn hi\\u1ec7n t\\u1ea1i.\", \"quantity\": 1, \"totalPrice\": 200000}]', 1, 200000, '0', 48, '2023-11-29 20:08:34', '2023-11-29 20:08:48', '');
 
 -- --------------------------------------------------------
 
@@ -740,8 +749,6 @@ CREATE TABLE `lichsudatghe` (
 INSERT INTO `lichsudatghe` (`id`, `MaChuyen`, `MaNguoiDung`, `IDGhe`, `NgayDat`, `MaVe`, `MaXeBus`) VALUES
 (62, 32, 40, '1A', '2023-11-11', 36, NULL),
 (63, 32, 40, '2A', '2023-11-11', 36, NULL),
-(64, 32, 40, '9D', '2023-11-08', 40, NULL),
-(65, 32, 40, '10D', '2023-11-08', 40, NULL),
 (66, 32, 40, '10C', '2023-11-14', 41, NULL),
 (67, 32, 40, '10D', '2023-11-14', 41, NULL),
 (68, 32, 40, '9D', '2023-11-14', 42, NULL),
@@ -798,7 +805,8 @@ INSERT INTO `lichsuthanhtoan` (`id`, `MaKhachHang`, `MaVe`, `PhuongThucThanhToan
 (39, 10, 42, '0', 0, 30000, NULL),
 (40, 10, 43, '2', 1, 45000, NULL),
 (41, 10, 44, '0', 0, 45000, NULL),
-(42, 10, 45, '0', 0, 45000, NULL);
+(42, 10, 45, '0', 0, 45000, NULL),
+(43, 10, 46, '0', 0, 45000, NULL);
 
 -- --------------------------------------------------------
 
@@ -824,7 +832,16 @@ INSERT INTO `lichsuvethang` (`MaLichSuVeThang`, `MaVeThang`, `SuKien`, `Ngay`) V
 (5, 3, 'Cập nhật ngày kết thúc vé tháng: 2023-12-15', '2023-11-15 23:23:07'),
 (6, 3, 'Thay đổi gói vé tháng sang: Ưu tiên - liên tuyến (100k/tháng)', '2023-11-15 23:23:26'),
 (7, 3, 'Khóa vé tháng', '2023-11-15 23:23:34'),
-(8, 3, 'Kích hoạt vé tháng', '2023-11-15 23:23:38');
+(8, 3, 'Kích hoạt vé tháng', '2023-11-15 23:23:38'),
+(9, 3, 'Người sử dụng khóa vé tháng', '2023-11-29 23:10:22'),
+(10, 3, 'Kích hoạt vé tháng', '2023-11-29 23:10:40'),
+(11, 3, 'Gia hạn vé thêm 30 ngày bằng ví cá nhân', '2023-11-29 23:18:45'),
+(12, 3, 'Gia hạn vé thêm 30 ngày bằng ví cá nhân', '2023-11-29 23:29:21'),
+(13, 3, 'Thay đổi gói vé tháng sang: Ưu tiên - một tuyến (55k/tháng)', '2023-11-29 23:31:21'),
+(14, 3, 'Gia hạn vé thêm 30 ngày bằng ví cá nhân', '2023-11-29 23:31:29'),
+(15, 3, 'Gia hạn vé thêm 30 ngày bằng ví cá nhân', '2023-11-29 23:31:57'),
+(16, 3, 'Sử dụng vé tháng trên xe bus.', '2023-11-30 00:41:08'),
+(17, 3, 'Sử dụng vé tháng trên xe bus.', '2023-11-30 00:42:40');
 
 -- --------------------------------------------------------
 
@@ -856,7 +873,13 @@ INSERT INTO `lichsuvi` (`MaLichSuVi`, `MaVi`, `TenGiaoDich`, `NgayGiaoDich`, `So
 (12, 1, 'Nạp trực tiếp 5000đ vào số dư từ hệ thống quản lý.', '2023-11-23 16:52:27', 5000),
 (13, 1, 'Nạp trực tiếp 5000đ vào số dư từ hệ thống quản lý.', '2023-11-23 16:53:22', -5000),
 (14, 1, 'Nạp trực tiếp 10000đ vào số dư từ hệ thống quản lý.', '2023-11-23 16:54:38', -10000),
-(15, 1, 'Trừ 11000đ vào số dư tài khoản từ hệ thống quản lý', '2023-11-23 16:55:14', -11000);
+(15, 1, 'Trừ 11000đ vào số dư tài khoản từ hệ thống quản lý', '2023-11-23 16:55:14', -11000),
+(16, 1, 'Gia hạn cho vé tháng. -100000đ', '2023-11-29 23:18:45', 100000),
+(17, 1, 'Trừ 274000đ vào số dư tài khoản từ hệ thống quản lý', '2023-11-29 23:20:22', -274000),
+(18, 1, 'Nạp trực tiếp 274000đ vào số dư từ hệ thống quản lý.', '2023-11-29 23:20:44', 274000),
+(19, 1, 'Gia hạn cho vé tháng. -100000đ', '2023-11-29 23:29:21', -100000),
+(20, 1, 'Gia hạn cho vé tháng. -55000đ', '2023-11-29 23:31:29', -55000),
+(21, 1, 'Gia hạn cho vé tháng. -55000đ', '2023-11-29 23:31:57', -55000);
 
 -- --------------------------------------------------------
 
@@ -921,14 +944,14 @@ CREATE TABLE `nguoidung` (
 --
 
 INSERT INTO `nguoidung` (`MaNguoiDung`, `TaiKhoan`, `MatKhau`, `SoDienThoai`, `TrangThai`, `NgayTao`, `VaiTro`) VALUES
-(14, 'driver@g.com', '123', '31231555', 1, '2022-07-02', 1),
+(14, 'driver@g.com', '123', '31231', 1, '2022-07-02', 1),
 (15, '123@admin.com', '123', '31231', 1, '2022-07-02', 3),
-(16, 'cashier@g.com', '123', '3333', 1, '2022-07-02', 2),
-(17, '1213131', '123', '1213131', 1, '2022-07-03', 1),
-(21, '123123', '123', '123123', 1, '2022-07-04', 1),
+(16, 'driver1@g.com', '123', '3333', 1, '2022-07-02', 1),
+(17, '1213131@z.com', '123', '1213131', 1, '2022-07-03', 1),
+(21, '123123@c.com', '123', '123123', 1, '2022-07-04', 1),
 (24, '0857822083@gmail.com', '123', '0857822083', 1, '2022-07-04', 1),
-(25, '0344118081', '123', '0344118081', 1, '2022-07-04', 1),
-(26, '03441456565', '123', '03441456565', 1, '2022-07-04', 1),
+(25, '03441128081@z.com', '123', '0344118081', 1, '2022-07-04', 1),
+(26, '03441456565@g.com', '123', '03441456565', 1, '2022-07-04', 1),
 (28, '0123456789', '123', '0123456789', 1, '2022-07-05', 1),
 (29, '012345678', '123', '012345678', 1, '2022-07-05', 1),
 (30, '023456789', '123', '023456789', 1, '2022-07-05', 1),
@@ -936,7 +959,8 @@ INSERT INTO `nguoidung` (`MaNguoiDung`, `TaiKhoan`, `MatKhau`, `SoDienThoai`, `T
 (34, '{}', '112', '+84843067467', 1, '2023-10-18', 1),
 (40, 's2kirbys2@gmail.com', '123', '034411808', 1, '2022-06-16', 0),
 (46, 'drv1@gmail.com', '123', '0999222111', 1, '2023-11-07', 1),
-(48, '123zzz@gmail.com', '123', '9123333', 1, '2023-11-15', 0);
+(48, '123zzz@gmail.com', '123', '9123333', 1, '2023-11-15', 0),
+(51, 'cashier@g.com', '123123', '111111', 1, '2023-11-28', 2);
 
 -- --------------------------------------------------------
 
@@ -992,7 +1016,7 @@ CREATE TABLE `vethang` (
 --
 
 INSERT INTO `vethang` (`MaVeThang`, `MaKhachHang`, `GoiDangKy`, `GiaVe`, `TrangThai`, `NgayBatDau`, `NgayKetThuc`, `MaTuyenCoDinh`) VALUES
-(3, 10, 'Ưu tiên - liên tuyến (100k/tháng)', 100000, 1, '2023-11-15', '2023-12-15', NULL),
+(3, 10, 'Ưu tiên - một tuyến (55k/tháng)', 55000, 1, '2023-11-15', '2024-03-01', 32),
 (4, 16, 'Ưu tiên - một tuyến (55k/tháng)', 55000, 1, '2023-11-15', '2023-12-15', 32);
 
 -- --------------------------------------------------------
@@ -1012,7 +1036,7 @@ CREATE TABLE `vinguoidung` (
 --
 
 INSERT INTO `vinguoidung` (`MaVi`, `MaNguoiDung`, `SoDu`) VALUES
-(1, 40, 374000),
+(1, 40, 64000),
 (2, 48, 0);
 
 -- --------------------------------------------------------
@@ -1191,7 +1215,7 @@ ALTER TABLE `chuyenxe`
 -- AUTO_INCREMENT for table `datve`
 --
 ALTER TABLE `datve`
-  MODIFY `MaVe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `MaVe` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `dondangkyvethang`
@@ -1209,7 +1233,7 @@ ALTER TABLE `ghexebus`
 -- AUTO_INCREMENT for table `hoadon`
 --
 ALTER TABLE `hoadon`
-  MODIFY `MaHoaDon` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `MaHoaDon` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `khachhang`
@@ -1227,7 +1251,7 @@ ALTER TABLE `lichlaixe`
 -- AUTO_INCREMENT for table `lichsudatghe`
 --
 ALTER TABLE `lichsudatghe`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `lichsukhachhang`
@@ -1239,19 +1263,19 @@ ALTER TABLE `lichsukhachhang`
 -- AUTO_INCREMENT for table `lichsuthanhtoan`
 --
 ALTER TABLE `lichsuthanhtoan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `lichsuvethang`
 --
 ALTER TABLE `lichsuvethang`
-  MODIFY `MaLichSuVeThang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `MaLichSuVeThang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `lichsuvi`
 --
 ALTER TABLE `lichsuvi`
-  MODIFY `MaLichSuVi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `MaLichSuVi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `lotrinh`
@@ -1263,7 +1287,7 @@ ALTER TABLE `lotrinh`
 -- AUTO_INCREMENT for table `nguoidung`
 --
 ALTER TABLE `nguoidung`
-  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `MaNguoiDung` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `taixe`
@@ -1322,7 +1346,7 @@ ALTER TABLE `ghexebus`
 -- Constraints for table `hoadon`
 --
 ALTER TABLE `hoadon`
-  ADD CONSTRAINT `fk_hoadon_nguoidung1` FOREIGN KEY (`MaNguoiDung`) REFERENCES `nguoidung` (`MaNguoiDung`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_hoadon_nguoidung1` FOREIGN KEY (`MaNguoiDung`) REFERENCES `nguoidung` (`MaNguoiDung`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `khachhang`

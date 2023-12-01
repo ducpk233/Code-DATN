@@ -1,7 +1,7 @@
 from json import dumps
 from flask import jsonify, render_template, request, session
 from routes.admin.helper import login_required, roles_required, serialize
-from app import app, chuyenxe, datve, khachhang, lichsudatghe, nguoidung, phuongthucthanhtoan, taixe
+from app import app, chuyenxe, datve, dondangky, khachhang, lichsudatghe, lichsuve, nguoidung, phuongthucthanhtoan, taixe, vethang
 from datetime import datetime
 from routes.admin import  *
 
@@ -32,15 +32,59 @@ def add_new_driver():
 def ticket_verify():
     return render_template('admin/test_qr.html')
 
+@padmin.route("/monthly_verify", methods = ['GET'])
+@login_required
+@roles_required("1")
+def monthly_verify():
+    return render_template('admin/test_qr_monthly.html')
+
+from sqlalchemy.orm import aliased
 @padmin.route("/ticket_detail", methods = ['GET'])
 @login_required
 def ticket_detail():
-    id = request.args.get('id')
-    ve = app.db_session.query(datve).filter_by(MaVe=id).first()
-    dsghe = app.db_session.query(lichsudatghe).filter_by(MaChuyen = ve.MaChuyen, NgayDat = ve.NgayDi).all()
-    pttt = app.db_session.query(phuongthucthanhtoan).filter_by(MaVe= ve.MaVe).first()
-    tuyen = app.db_session.query(chuyenxe).filter_by(MaChuyen = ve.MaChuyen).first()
-    return render_template('admin/ticket_detail.html', tuyen = tuyen, ve = ve, pttt = pttt, dsghe = dsghe)
+	id = request.args.get("id")
+	# Tạo các alias cho các bảng
+	DatVeAlias = aliased(datve)
+	ChuyenXeAlias = aliased(chuyenxe)
+	PhuongThucThanhToanAlias = aliased(phuongthucthanhtoan)
+	
+	ticket = (
+		app.db_session.query(DatVeAlias, ChuyenXeAlias, PhuongThucThanhToanAlias)
+		.join(ChuyenXeAlias, DatVeAlias.MaChuyen == ChuyenXeAlias.MaChuyen)
+		.join(PhuongThucThanhToanAlias, DatVeAlias.MaVe == PhuongThucThanhToanAlias.MaVe)
+		.filter(DatVeAlias.MaVe == id)
+		.first()
+	)
+	taken_seat = app.db_session.query(lichsudatghe).filter_by(MaVe=id).all()	
+	now = datetime.now().date()
+	
+	return render_template('admin/ticket_detail.html', ticket = ticket, fmt_now = now, taken_seat = taken_seat)
+
+@padmin.route("/monthly_ticket_detail", methods = ['GET'])
+@login_required
+def monthly_ticket_detail():
+    id = request.args.get("id")
+	#lấy vé tháng
+    plan = app.db_session.query(vethang).filter(vethang.MaVeThang == id).first()
+    cus_info = app.db_session.query(khachhang).filter(khachhang.MaKhachHang == plan.MaKhachHang).first()
+    customer = app.db_session.query(nguoidung, khachhang).join(khachhang).filter(nguoidung.MaNguoiDung == cus_info.MaNguoiDung).first()
+    #lấy ds tuyến đq hoạt động
+    routes = app.db_session.query(chuyenxe).filter(chuyenxe.TrangThai == 1).all()
+    plan_history = None
+    route = None
+    diff = None
+    current_date = datetime.now().date()
+    if plan:
+        diff = plan.NgayKetThuc- current_date
+        diff = diff.days
+        
+        if plan.MaTuyenCoDinh:
+            route = app.db_session.query(chuyenxe).filter(vethang.MaTuyenCoDinh == chuyenxe.MaChuyen).first()
+    
+    return render_template('admin/monthly-ticket-detail.html', customer = customer, plan = plan , 
+                            route = route, diff = diff, current_date = current_date,
+                           routes = routes)
+
 
 #api
 @padmin.route('/add_driver_api', methods=['POST'])
@@ -154,3 +198,40 @@ def update_driver_api(id):
     app.db_session.commit()
     return jsonify({'error' : False, 'message' : 'Cập nhật tài xế thành công!'})
     
+#xác nhận vé thừuong
+@padmin.route("/confirm_normal_ticket_api", methods=['POST'])
+def confirm_normal_ticket_api():
+    id  = request.json['id']
+    tick = app.db_session.query(datve).filter_by(MaVe = id).first()
+    pay = app.db_session.query(phuongthucthanhtoan).filter_by(MaVe = id).first()
+    now = datetime.now().date()
+    if tick.TrangThai == 2 or tick.TrangThai == 0:
+        return jsonify({'error' : True, 'message' : 'Vé đã được sử dụng hoặc đã hủy!'})
+    elif tick.NgayDi < now or tick.NgayDi > now:
+        return jsonify({'error' : True, 'message' : 'Vé đang xác nhận đang trước hoặc quá ngày đi!'})
+    
+    else:
+        tick.TrangThai = 2
+        pay.TrangThai = 1
+        resp = {'error' : False, 'message' : 'Xác nhận vé thành công'}
+        app.db_session.commit()
+        return resp
+    
+#xác nhận vé tháng
+@padmin.route("/confirm_monthly_ticket_api", methods=['POST'])
+def confirm_monthly_ticket_api():
+    id  = request.json['id']
+    bl = app.db_session.query(vethang).filter_by(MaVeThang=id).first()
+    
+    now = datetime.now().date()
+    if bl.TrangThai == 0:
+        return jsonify({'error' : True, 'message' : 'Vé tháng đã bị khóa!'})
+    elif bl.NgayKetThuc < now :
+        return jsonify({'error' : True, 'message' : 'Vé tháng đã hết hạn!'})
+    else:
+        his = lichsuve(MaVeThang = id, SuKien = "Sử dụng vé tháng trên xe bus.", Ngay = datetime.now())
+        app.db_session.add(his)
+        
+        app.db_session.commit()
+        resp = {'error' : False, 'message' : 'Xác nhận vé thành công'}
+        return resp

@@ -1,0 +1,113 @@
+{% extends "admin/admin_parent.html" %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+	<h4 class="py-3 mb-4"><span class="text-muted fw-light">Vé/</span> Chi tiết vé tháng</h4>
+
+	<!-- Basic Layout & Basic with Icons -->
+	<div class="row">
+	  <!-- Basic Layout -->
+	  <div class="col-xxl">
+		<div class="card mb-4">
+		  <div class="card-header d-flex align-items-center justify-content-between">
+			<h5 class="mb-0">Thông tin vé tháng</h5>
+			<small class="text-muted float-end">Default label</small>
+		  </div>
+		  {% if diff < 0  %}
+								<p class="bg-danger">Vé tháng đã hết hạn!</p>
+							
+			{% endif %}
+		  <div class="card-body">
+			<form>
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-name">Gói vé tháng</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="basic-default-name" readonly value="{{plan.GoiDangKy}}" placeholder="John Doe" />
+				</div>
+			  </div>
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-name">Ngày hết hạn</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="basic-default-name" readonly value="{{plan.NgayKetThuc}}" placeholder="John Doe" />
+				</div>
+			  </div>
+			  {% if plan.MaTuyenCoDinh %}
+				<div class="row mb-3">
+					<label class="col-sm-2 col-form-label" for="basic-default-name">Tuyến</label>
+					<div class="col-sm-10">
+					<input type="text" class="form-control" id="basic-default-name" readonly value="{{route.TenChuyen}}" placeholder="John Doe" />
+					</div>
+				</div>
+			  {% endif %}
+			  <div class="row mb-3">
+				<label class="col-sm-2 col-form-label" for="basic-default-name">Trạng thái vé</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="basic-default-name" readonly value="{{ "Đang sử dụng" if plan.TrangThai == 1 else "Đã bị khóa" }}" placeholder="John Doe" />
+				</div>
+			  </div>
+
+
+			  
+			  
+			  <div class="row justify-content-end">
+				<div class="col-sm-10">
+				  <button type="button" onclick="ticket_confirm()" class="btn btn-primary">Xác nhận sử dụng</button>
+				</div>
+			  </div>
+			</form>
+		  </div>
+		</div>
+	  </div>
+	  <script>
+		function ticket_confirm() {
+			
+            Swal.fire({
+                title: 'Xác nhận sử dụng vé tháng?',
+				text: 'Vé tháng sẽ được sử dụng cho chuyến xe này. Lịch sử đi sẽ được lưu lại.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Có',
+                cancelButtonText: 'Không',
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                    type: "POST",
+                    url: "/admin/confirm_monthly_ticket_api",
+                    data: JSON.stringify({'id' : '{{plan.MaVeThang}}' }),
+                    dataType: 'json',
+                    contentType: "application/json;charset=utf-8",
+                    success: function(response) {
+                            if (response.error === false) {
+                                
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thành công!',
+                                    text: response.message,
+                                    showConfirmButton: false,
+                                    timer: 1500 
+                                });
+                                window.location.reload()
+                                
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi',
+                                    text: response.message,
+                                });
+                            }
+                        },
+                        
+                    });    
+                } else {
+                    
+                    
+                }
+                });
+            
+            
+       
+		}
+	  </script>
+ 	
+  </div>
+{% endblock %}
